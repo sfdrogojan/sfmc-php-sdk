@@ -40,14 +40,10 @@ Creates the definition for an email.
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $body = new \SalesForce\MarketingCloud\PHPSDK\Model\CreateEmailDefinitionRequest(); // \SalesForce\MarketingCloud\PHPSDK\Model\CreateEmailDefinitionRequest | JSON Parameters
 
@@ -72,7 +68,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -93,14 +89,10 @@ Creates the definition for an SMS.
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $body = new \SalesForce\MarketingCloud\PHPSDK\Model\CreateSmsDefinitionRequest(); // \SalesForce\MarketingCloud\PHPSDK\Model\CreateSmsDefinitionRequest | JSON Parameters
 
@@ -125,7 +117,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -146,14 +138,10 @@ Deletes an email definition. You can't restore a deleted definition. The deleted
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $definition_key = "definition_key_example"; // string | Unique identifier of the definition to delete
 
@@ -178,7 +166,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -199,14 +187,10 @@ Deletes the queue for an email definition. The email definition must be in inact
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $definition_key = "definition_key_example"; // string | Unique identifier of the email definition
 
@@ -231,7 +215,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -252,14 +236,10 @@ Deletes the queue for a SMS definition. The SMS definition must be in inactive s
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $definition_key = "definition_key_example"; // string | Unique identifier of the SMS definition
 
@@ -284,7 +264,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -305,14 +285,10 @@ Deletes an sms definition. You can't restore a deleted definition. The deleted d
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $definition_key = "definition_key_example"; // string | Unique identifier of the definition to delete
 
@@ -337,7 +313,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -358,14 +334,10 @@ Gets email definition configuration details for a definition key.
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $definition_key = "definition_key_example"; // string | Unique identifier of the definition to get
 
@@ -390,7 +362,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -411,14 +383,10 @@ Gets a list of email definitions.
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $status = "status_example"; // string | Filter by status type. Accepted values are active, inactive, or deleted. Valid operations are eq and neq.
 $page_size = 8.14; // float | Number of definitions, which are array elements, to return per paged response.
@@ -449,7 +417,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -470,14 +438,10 @@ Gets the send status for a message. Because this route is rate-limited, use it f
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $message_key = "message_key_example"; // string | Unique identifier to track message send status. You must provide it in singleton requests using the recipient attribute. To provide it in batch requests, use the recipients array attribute. If you don’t provide the message key for recipients, it’s generated in the response.
 
@@ -502,7 +466,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -523,14 +487,10 @@ Gets a paginated list of messages that were not sent, ordered from oldest to new
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $type = "type_example"; // string | Only notSent is supported.
 $page_size = 56; // int | Number of messageKeys (array elements) to return per response page.
@@ -559,7 +519,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -580,14 +540,10 @@ Gets metrics for the messages of an email definition. Applies to messages that a
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $definition_key = "definition_key_example"; // string | Unique identifier of the email definition
 
@@ -612,7 +568,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -633,14 +589,10 @@ Gets metrics for the messages of a SMS definition. Applies to messages that are 
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $definition_key = "definition_key_example"; // string | Unique identifier of the SMS definition
 
@@ -665,7 +617,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -686,14 +638,10 @@ Gets a paginated list of messages that were not sent, ordered from oldest to new
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $type = "type_example"; // string | Only notSent is supported.
 $page_size = 56; // int | Number of messageKeys (array elements) to return per response page.
@@ -722,7 +670,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -743,14 +691,10 @@ Gets SMS definition configuration details for a definition key.
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $definition_key = "definition_key_example"; // string | Unique identifier of the definition to get
 
@@ -775,7 +719,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -796,14 +740,10 @@ Gets a list of SMS definitions.
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $status = "status_example"; // string | Filter by status type. Accepted values are active, inactive, or deleted. Valid operations are eq and neq.
 $page_size = 8.14; // float | Number of definitions, which are array elements, to return per paged response.
@@ -834,7 +774,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -855,14 +795,10 @@ Gets the send status for a message. Because this route is rate-limited, use it f
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $message_key = "message_key_example"; // string | Unique identifier to track message send status. You must provide it in singleton requests using the recipient attribute. To provide message key in batch requests, use the recipients array attribute. If you don’t provide the message key for recipients, it’s generated in the response.
 
@@ -887,7 +823,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -908,14 +844,10 @@ Updates a specific email definition.
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $definition_key = "definition_key_example"; // string | Unique identifier of the definition.
 $body = new \SalesForce\MarketingCloud\PHPSDK\Model\UpdateEmailDefinitionRequest(); // \SalesForce\MarketingCloud\PHPSDK\Model\UpdateEmailDefinitionRequest | JSON Parameters
@@ -942,7 +874,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -963,14 +895,10 @@ Updates a specific SMS definition.
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $definition_key = "definition_key_example"; // string | Unique identifier of the definition.
 $body = new \SalesForce\MarketingCloud\PHPSDK\Model\UpdateSmsDefinitionRequest(); // \SalesForce\MarketingCloud\PHPSDK\Model\UpdateSmsDefinitionRequest | JSON Parameters
@@ -997,7 +925,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -1018,14 +946,10 @@ Sends a message to multiple recipients using an email definition. You can provid
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $body = new \SalesForce\MarketingCloud\PHPSDK\Model\SendEmailToMultipleRecipientsRequest(); // \SalesForce\MarketingCloud\PHPSDK\Model\SendEmailToMultipleRecipientsRequest | JSON Parameters
 
@@ -1050,7 +974,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -1071,14 +995,10 @@ Sends a message to a single recipient via an email definition using a messageKey
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $message_key = "message_key_example"; // string | Unique identifier used to track message status. Can be automatically created when you create a message or provided as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected.
 $body = new \SalesForce\MarketingCloud\PHPSDK\Model\SendEmailToSingleRecipientRequest(); // \SalesForce\MarketingCloud\PHPSDK\Model\SendEmailToSingleRecipientRequest | JSON Parameters
@@ -1105,7 +1025,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -1126,14 +1046,10 @@ Sends a message to multiple recipients using an email definition. You can provid
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $body = new \SalesForce\MarketingCloud\PHPSDK\Model\SendSmsToMultipleRecipientsRequest(); // \SalesForce\MarketingCloud\PHPSDK\Model\SendSmsToMultipleRecipientsRequest | JSON Parameters
 
@@ -1158,7 +1074,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -1179,14 +1095,10 @@ Sends a message to a single recipient via a SMS definition using a messageKey pa
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-// Configure OAuth2 access token for authorization: OAuth2
-$config = SalesForce\MarketingCloud\PHPSDK\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
-
 $apiInstance = new SalesForce\MarketingCloud\PHPSDK\Api\TransactionalMessagingApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+    new GuzzleHttp\Client()
 );
 $message_key = "message_key_example"; // string | Unique identifier of the definition used to track message status. The messageKey can be created automatically when you create a message, or you can provide it as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected.
 $body = new \SalesForce\MarketingCloud\PHPSDK\Model\SendSmsToSingleRecipientRequest(); // \SalesForce\MarketingCloud\PHPSDK\Model\SendSmsToSingleRecipientRequest | JSON Parameters
@@ -1213,7 +1125,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../../README.md#OAuth2)
+No authorization required
 
 ### HTTP request headers
 
