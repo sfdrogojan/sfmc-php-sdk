@@ -8,7 +8,11 @@ use Symfony\Component\Cache\Adapter\Psr16Adapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use League\OAuth2\Client\Provider\GenericProvider as AuthClient;
 
-
+/**
+ * Class AuthServiceFactory
+ *
+ * @package SalesForce\MarketingCloud\PHPSDK\Authorization
+ */
 class AuthServiceFactory
 {
     /**

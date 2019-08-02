@@ -6,6 +6,11 @@ use SalesForce\MarketingCloud\PHPSDK\Cache\CacheAwareInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use League\OAuth2\Client\Provider\GenericProvider;
 
+/**
+ * Class AuthService
+ *
+ * @package SalesForce\MarketingCloud\PHPSDK\Authorization
+ */
 class AuthService implements CacheAwareInterface
 {
     /**
