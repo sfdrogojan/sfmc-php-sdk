@@ -30,7 +30,7 @@ class AuthServiceFactory
 
         $service = new AuthService();
         $service->setCache($cache);
-        $service->setClient($client);
+        $service->setClient(static::createAuthClient($clientConfig));
     }
 
     /**

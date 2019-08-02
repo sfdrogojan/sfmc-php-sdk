@@ -31,7 +31,7 @@ class AuthService implements CacheAwareInterface
      */
     public function setCache(CacheItemPoolInterface $cache)
     {
-        // TODO: Implement setCacheItemPool() method.
+        $this->cache = $cache;
     }
 
     /**
