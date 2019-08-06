@@ -28,6 +28,8 @@
 
 namespace SalesForce\MarketingCloud;
 
+use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
+use SalesForce\MarketingCloud\Authorization\AuthServiceFactory;
 use \SalesForce\MarketingCloud\Configuration;
 use \SalesForce\MarketingCloud\ApiException;
 use \SalesForce\MarketingCloud\ObjectSerializer;
@@ -69,6 +71,24 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
      */
     public static function tearDownAfterClass()
     {
+    }
+
+    /**
+     * Test case for new AssetApi()
+     */
+    public function testCreateTMApiClient()
+    {
+        $client = new TransactionalMessagingApi();
+    }
+
+    /**
+     * Test case for new AssetApi()
+     */
+    public function testCreateTMApiClientWithAuthService()
+    {
+        $client = new TransactionalMessagingApi(function () {
+            return AuthServiceFactory::factory();
+        }, null, null, null);
     }
 
     /**

@@ -11,7 +11,7 @@ use League\OAuth2\Client\Provider\GenericProvider;
  *
  * @package SalesForce\MarketingCloud\Authorization
  */
-class AuthService implements CacheAwareInterface
+class AuthService implements CacheAwareInterface, AuthServiceInterface
 {
     /**
      * @var CacheItemPoolInterface
@@ -27,9 +27,8 @@ class AuthService implements CacheAwareInterface
      * Sets the cache
      *
      * @param CacheItemPoolInterface $cache
-     * @return mixed
      */
-    public function setCache(CacheItemPoolInterface $cache)
+    public function setCache(CacheItemPoolInterface $cache): void
     {
         $this->cache = $cache;
     }

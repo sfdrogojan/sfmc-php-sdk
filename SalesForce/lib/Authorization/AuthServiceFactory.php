@@ -16,12 +16,34 @@ use League\OAuth2\Client\Provider\GenericProvider as AuthClient;
 class AuthServiceFactory
 {
     /**
+     * @var array
+     */
+    private static $config = [
+        'clientId' => '',
+        'clientSecret' => '',
+        'redirectUri' => '',
+        'urlAuthorize' => '',
+        'urlAccessToken' => '',
+        'urlResourceOwnerDetails' => ''
+    ];
+
+    /**
+     * Sets the configuration to be used by the authorization factory
+     *
+     * @param array $config
+     */
+    public static function setConfig(array $config): void
+    {
+        static::$config = array_merge(static::$config, $config);
+    }
+
+    /**
      * Creates a new instance of the authorization service
      *
-     * @param array $clientConfig
      * @param CacheInterface|null $cache
+     * @return AuthServiceInterface
      */
-    public static function factory(array $clientConfig, CacheInterface $cache = null)
+    public static function factory(CacheInterface $cache = null): AuthServiceInterface
     {
         // Default cache scenario
         if (null === $cache) {
@@ -30,7 +52,9 @@ class AuthServiceFactory
 
         $service = new AuthService();
         $service->setCache($cache);
-        $service->setClient(static::createAuthClient($clientConfig));
+        $service->setClient(new AuthClient(static::$config));
+
+        return $service;
     }
 
     /**
@@ -38,28 +62,8 @@ class AuthServiceFactory
      *
      * @return SimpleCacheInterface
      */
-    private static function createDefaultCachePool(): SimpleCacheInterface
+    protected static function createDefaultCachePool(): SimpleCacheInterface
     {
         return new FilesystemAdapter();
-    }
-
-    /**
-     * Creates the client used for authorization
-     *
-     * @param array $config
-     * @return AuthClient
-     */
-    private static function createAuthClient(array $config): AuthClient
-    {
-        $config = array_merge([
-            'clientId' => 'XXXXXX',    // The client ID assigned to you by the provider
-            'clientSecret' => 'XXXXXX',    // The client password assigned to you by the provider
-            'redirectUri' => 'http://my.example.com/your-redirect-url/',
-            'urlAuthorize' => 'http://service.example.com/authorize',
-            'urlAccessToken' => 'http://service.example.com/token',
-            'urlResourceOwnerDetails' => 'http://service.example.com/resource'
-        ], $config);
-
-        return new AuthClient($config);
     }
 }

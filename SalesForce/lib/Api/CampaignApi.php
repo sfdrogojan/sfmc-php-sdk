@@ -35,6 +35,7 @@ use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use SalesForce\MarketingCloud\ApiException;
+use SalesForce\MarketingCloud\Api\Exception\ClientUnauthorizedException;
 use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\HeaderSelector;
 use SalesForce\MarketingCloud\ObjectSerializer;
@@ -65,15 +66,19 @@ class CampaignApi extends AbstractApi
     protected $headerSelector;
 
     /**
+     * @param callable        $authServiceCallable
      * @param ClientInterface $client
      * @param Configuration   $config
      * @param HeaderSelector  $selector
      */
     public function __construct(
+        callable $authServiceCallable = null,
         ClientInterface $client = null,
         Configuration $config = null,
         HeaderSelector $selector = null
     ) {
+        parent::__construct($authServiceCallable);
+
         $this->client = $client ?: new Client();
         $this->config = $config ?: new Configuration();
         $this->headerSelector = $selector ?: new HeaderSelector();
@@ -257,10 +262,16 @@ class CampaignApi extends AbstractApi
      * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function createCampaignRequest($body = null)
     {
+        $accessToken = $this->authorizeClient();
+        if (empty($accessToken)) {
+            throw new ClientUnauthorizedException();
+        }
+
 
         $resourcePath = '/hub/v1/campaigns';
         $formParams = [];
@@ -317,6 +328,9 @@ class CampaignApi extends AbstractApi
             }
         }
 
+
+        // Set the header for the authorization access token
+        $headers['Authorization'] = 'Bearer ' . $accessToken;
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -487,10 +501,16 @@ class CampaignApi extends AbstractApi
      * @param  string $id The ID of the campaign to delete (required)
      *
      * @throws \InvalidArgumentException
+     * @throws ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function deleteCampaignByIdRequest($id)
     {
+        $accessToken = $this->authorizeClient();
+        if (empty($accessToken)) {
+            throw new ClientUnauthorizedException();
+        }
+
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
@@ -558,6 +578,9 @@ class CampaignApi extends AbstractApi
             }
         }
 
+
+        // Set the header for the authorization access token
+        $headers['Authorization'] = 'Bearer ' . $accessToken;
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -749,10 +772,16 @@ class CampaignApi extends AbstractApi
      * @param  string $id Campaign ID (required)
      *
      * @throws \InvalidArgumentException
+     * @throws ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getCampaignByIdRequest($id)
     {
+        $accessToken = $this->authorizeClient();
+        if (empty($accessToken)) {
+            throw new ClientUnauthorizedException();
+        }
+
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
@@ -820,6 +849,9 @@ class CampaignApi extends AbstractApi
             }
         }
 
+
+        // Set the header for the authorization access token
+        $headers['Authorization'] = 'Bearer ' . $accessToken;
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
