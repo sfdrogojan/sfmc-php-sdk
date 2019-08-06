@@ -46,6 +46,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 .phpunit.result.cache
+phpunit.xml
 
 # Translations
 *.mo
