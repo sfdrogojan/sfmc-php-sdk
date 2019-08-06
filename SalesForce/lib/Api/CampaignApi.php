@@ -52,8 +52,9 @@ class CampaignApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\Campaign
      */
     public function createCampaign($body = null)
@@ -69,9 +70,10 @@ class CampaignApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\Campaign, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function createCampaignWithHttpInfo($body = null)
     {
@@ -112,7 +114,7 @@ class CampaignApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -144,8 +146,9 @@ class CampaignApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function createCampaignAsync($body = null)
     {
@@ -164,8 +167,9 @@ class CampaignApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function createCampaignAsyncWithHttpInfo($body = null)
     {
@@ -182,7 +186,7 @@ class CampaignApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -311,8 +315,9 @@ class CampaignApi extends AbstractApi
      *
      * @param  string $id The ID of the campaign to delete (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return void
      */
     public function deleteCampaignById($id)
@@ -327,9 +332,10 @@ class CampaignApi extends AbstractApi
      *
      * @param  string $id The ID of the campaign to delete (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function deleteCampaignByIdWithHttpInfo($id)
     {
@@ -396,8 +402,9 @@ class CampaignApi extends AbstractApi
      *
      * @param  string $id The ID of the campaign to delete (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function deleteCampaignByIdAsync($id)
     {
@@ -416,8 +423,9 @@ class CampaignApi extends AbstractApi
      *
      * @param  string $id The ID of the campaign to delete (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function deleteCampaignByIdAsyncWithHttpInfo($id)
     {
@@ -560,8 +568,9 @@ class CampaignApi extends AbstractApi
      *
      * @param  string $id Campaign ID (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\Campaign
      */
     public function getCampaignById($id)
@@ -577,9 +586,10 @@ class CampaignApi extends AbstractApi
      *
      * @param  string $id Campaign ID (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\Campaign, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function getCampaignByIdWithHttpInfo($id)
     {
@@ -620,7 +630,7 @@ class CampaignApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -652,8 +662,9 @@ class CampaignApi extends AbstractApi
      *
      * @param  string $id Campaign ID (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function getCampaignByIdAsync($id)
     {
@@ -672,8 +683,9 @@ class CampaignApi extends AbstractApi
      *
      * @param  string $id Campaign ID (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function getCampaignByIdAsyncWithHttpInfo($id)
     {
@@ -690,7 +702,7 @@ class CampaignApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 

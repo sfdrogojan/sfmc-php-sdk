@@ -52,8 +52,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest
      */
     public function createEmailDefinition($body = null)
@@ -69,9 +70,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function createEmailDefinitionWithHttpInfo($body = null)
     {
@@ -112,7 +114,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -176,8 +178,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function createEmailDefinitionAsync($body = null)
     {
@@ -196,8 +199,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function createEmailDefinitionAsyncWithHttpInfo($body = null)
     {
@@ -214,7 +218,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -343,8 +347,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest
      */
     public function createSmsDefinition($body = null)
@@ -360,9 +365,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function createSmsDefinitionWithHttpInfo($body = null)
     {
@@ -403,7 +409,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -467,8 +473,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function createSmsDefinitionAsync($body = null)
     {
@@ -487,8 +494,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function createSmsDefinitionAsyncWithHttpInfo($body = null)
     {
@@ -505,7 +513,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -634,8 +642,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to delete (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse
      */
     public function deleteEmailDefinition($definitionKey)
@@ -651,9 +660,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to delete (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function deleteEmailDefinitionWithHttpInfo($definitionKey)
     {
@@ -694,7 +704,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -758,8 +768,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to delete (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function deleteEmailDefinitionAsync($definitionKey)
     {
@@ -778,8 +789,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to delete (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function deleteEmailDefinitionAsyncWithHttpInfo($definitionKey)
     {
@@ -796,7 +808,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -936,8 +948,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the email definition (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse
      */
     public function deleteQueuedMessagesForEmailDefinition($definitionKey)
@@ -953,9 +966,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the email definition (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function deleteQueuedMessagesForEmailDefinitionWithHttpInfo($definitionKey)
     {
@@ -996,7 +1010,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -1044,8 +1058,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the email definition (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function deleteQueuedMessagesForEmailDefinitionAsync($definitionKey)
     {
@@ -1064,8 +1079,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the email definition (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function deleteQueuedMessagesForEmailDefinitionAsyncWithHttpInfo($definitionKey)
     {
@@ -1082,7 +1098,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -1222,8 +1238,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the SMS definition (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse
      */
     public function deleteQueuedMessagesForSmsDefinition($definitionKey)
@@ -1239,9 +1256,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the SMS definition (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function deleteQueuedMessagesForSmsDefinitionWithHttpInfo($definitionKey)
     {
@@ -1282,7 +1300,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -1330,8 +1348,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the SMS definition (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function deleteQueuedMessagesForSmsDefinitionAsync($definitionKey)
     {
@@ -1350,8 +1369,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the SMS definition (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function deleteQueuedMessagesForSmsDefinitionAsyncWithHttpInfo($definitionKey)
     {
@@ -1368,7 +1388,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -1508,8 +1528,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to delete (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse
      */
     public function deleteSmsDefinition($definitionKey)
@@ -1525,9 +1546,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to delete (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function deleteSmsDefinitionWithHttpInfo($definitionKey)
     {
@@ -1568,7 +1590,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -1632,8 +1654,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to delete (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function deleteSmsDefinitionAsync($definitionKey)
     {
@@ -1652,8 +1675,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to delete (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function deleteSmsDefinitionAsyncWithHttpInfo($definitionKey)
     {
@@ -1670,7 +1694,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -1810,8 +1834,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to get (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest
      */
     public function getEmailDefinition($definitionKey)
@@ -1827,9 +1852,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to get (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function getEmailDefinitionWithHttpInfo($definitionKey)
     {
@@ -1870,7 +1896,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -1934,8 +1960,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to get (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function getEmailDefinitionAsync($definitionKey)
     {
@@ -1954,8 +1981,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to get (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function getEmailDefinitionAsyncWithHttpInfo($definitionKey)
     {
@@ -1972,7 +2000,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -2115,8 +2143,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  float $page Page number to return. (optional)
      * @param  string $orderBy Sort by a dimension. You can sort by only one dimension. Accepted values are definitionKey, name, createdDate, modifiedDate, and status. (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetEmailDefinitionsResponse
      */
     public function getEmailDefinitions($status = null, $pageSize = null, $page = null, $orderBy = null)
@@ -2135,9 +2164,10 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  float $page Page number to return. (optional)
      * @param  string $orderBy Sort by a dimension. You can sort by only one dimension. Accepted values are definitionKey, name, createdDate, modifiedDate, and status. (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\GetEmailDefinitionsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function getEmailDefinitionsWithHttpInfo($status = null, $pageSize = null, $page = null, $orderBy = null)
     {
@@ -2178,7 +2208,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -2237,8 +2267,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  float $page Page number to return. (optional)
      * @param  string $orderBy Sort by a dimension. You can sort by only one dimension. Accepted values are definitionKey, name, createdDate, modifiedDate, and status. (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function getEmailDefinitionsAsync($status = null, $pageSize = null, $page = null, $orderBy = null)
     {
@@ -2260,8 +2291,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  float $page Page number to return. (optional)
      * @param  string $orderBy Sort by a dimension. You can sort by only one dimension. Accepted values are definitionKey, name, createdDate, modifiedDate, and status. (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function getEmailDefinitionsAsyncWithHttpInfo($status = null, $pageSize = null, $page = null, $orderBy = null)
     {
@@ -2278,7 +2310,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -2423,8 +2455,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $messageKey Unique identifier to track message send status. You must provide it in singleton requests using the recipient attribute. To provide it in batch requests, use the recipients array attribute. If you don’t provide the message key for recipients, it’s generated in the response. (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse
      */
     public function getEmailSendStatusForRecipient($messageKey)
@@ -2440,9 +2473,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $messageKey Unique identifier to track message send status. You must provide it in singleton requests using the recipient attribute. To provide it in batch requests, use the recipients array attribute. If you don’t provide the message key for recipients, it’s generated in the response. (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function getEmailSendStatusForRecipientWithHttpInfo($messageKey)
     {
@@ -2483,7 +2517,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -2539,8 +2573,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $messageKey Unique identifier to track message send status. You must provide it in singleton requests using the recipient attribute. To provide it in batch requests, use the recipients array attribute. If you don’t provide the message key for recipients, it’s generated in the response. (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function getEmailSendStatusForRecipientAsync($messageKey)
     {
@@ -2559,8 +2594,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $messageKey Unique identifier to track message send status. You must provide it in singleton requests using the recipient attribute. To provide it in batch requests, use the recipients array attribute. If you don’t provide the message key for recipients, it’s generated in the response. (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function getEmailSendStatusForRecipientAsyncWithHttpInfo($messageKey)
     {
@@ -2577,7 +2613,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -2719,8 +2755,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  int $pageSize Number of messageKeys (array elements) to return per response page. (optional)
      * @param  int $lastEventId Event ID from which you want the response to start. To obtain the initial event ID, submit a request without a lastEventId. The events in the response are listed top to bottom from oldest to newest. (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse
      */
     public function getEmailsNotSentToRecipients($type, $pageSize = null, $lastEventId = null)
@@ -2738,9 +2775,10 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  int $pageSize Number of messageKeys (array elements) to return per response page. (optional)
      * @param  int $lastEventId Event ID from which you want the response to start. To obtain the initial event ID, submit a request without a lastEventId. The events in the response are listed top to bottom from oldest to newest. (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function getEmailsNotSentToRecipientsWithHttpInfo($type, $pageSize = null, $lastEventId = null)
     {
@@ -2781,7 +2819,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -2839,8 +2877,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  int $pageSize Number of messageKeys (array elements) to return per response page. (optional)
      * @param  int $lastEventId Event ID from which you want the response to start. To obtain the initial event ID, submit a request without a lastEventId. The events in the response are listed top to bottom from oldest to newest. (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function getEmailsNotSentToRecipientsAsync($type, $pageSize = null, $lastEventId = null)
     {
@@ -2861,8 +2900,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  int $pageSize Number of messageKeys (array elements) to return per response page. (optional)
      * @param  int $lastEventId Event ID from which you want the response to start. To obtain the initial event ID, submit a request without a lastEventId. The events in the response are listed top to bottom from oldest to newest. (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function getEmailsNotSentToRecipientsAsyncWithHttpInfo($type, $pageSize = null, $lastEventId = null)
     {
@@ -2879,7 +2919,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -3025,8 +3065,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the email definition (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse
      */
     public function getQueueMetricsForEmailDefinition($definitionKey)
@@ -3042,9 +3083,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the email definition (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function getQueueMetricsForEmailDefinitionWithHttpInfo($definitionKey)
     {
@@ -3085,7 +3127,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -3133,8 +3175,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the email definition (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function getQueueMetricsForEmailDefinitionAsync($definitionKey)
     {
@@ -3153,8 +3196,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the email definition (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function getQueueMetricsForEmailDefinitionAsyncWithHttpInfo($definitionKey)
     {
@@ -3171,7 +3215,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -3311,8 +3355,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the SMS definition (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse
      */
     public function getQueueMetricsForSmsDefinition($definitionKey)
@@ -3328,9 +3373,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the SMS definition (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function getQueueMetricsForSmsDefinitionWithHttpInfo($definitionKey)
     {
@@ -3371,7 +3417,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -3419,8 +3465,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the SMS definition (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function getQueueMetricsForSmsDefinitionAsync($definitionKey)
     {
@@ -3439,8 +3486,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the SMS definition (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function getQueueMetricsForSmsDefinitionAsyncWithHttpInfo($definitionKey)
     {
@@ -3457,7 +3505,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -3599,8 +3647,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  int $pageSize Number of messageKeys (array elements) to return per response page. (optional)
      * @param  int $lastEventId Event ID from which you want the response to start. To obtain the initial event ID, submit a request without a lastEventId. The events in the response are listed top to bottom from oldest to newest. (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse
      */
     public function getSMSsNotSentToRecipients($type, $pageSize = null, $lastEventId = null)
@@ -3618,9 +3667,10 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  int $pageSize Number of messageKeys (array elements) to return per response page. (optional)
      * @param  int $lastEventId Event ID from which you want the response to start. To obtain the initial event ID, submit a request without a lastEventId. The events in the response are listed top to bottom from oldest to newest. (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function getSMSsNotSentToRecipientsWithHttpInfo($type, $pageSize = null, $lastEventId = null)
     {
@@ -3661,7 +3711,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -3719,8 +3769,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  int $pageSize Number of messageKeys (array elements) to return per response page. (optional)
      * @param  int $lastEventId Event ID from which you want the response to start. To obtain the initial event ID, submit a request without a lastEventId. The events in the response are listed top to bottom from oldest to newest. (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function getSMSsNotSentToRecipientsAsync($type, $pageSize = null, $lastEventId = null)
     {
@@ -3741,8 +3792,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  int $pageSize Number of messageKeys (array elements) to return per response page. (optional)
      * @param  int $lastEventId Event ID from which you want the response to start. To obtain the initial event ID, submit a request without a lastEventId. The events in the response are listed top to bottom from oldest to newest. (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function getSMSsNotSentToRecipientsAsyncWithHttpInfo($type, $pageSize = null, $lastEventId = null)
     {
@@ -3759,7 +3811,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -3905,8 +3957,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to get (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest
      */
     public function getSmsDefinition($definitionKey)
@@ -3922,9 +3975,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to get (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function getSmsDefinitionWithHttpInfo($definitionKey)
     {
@@ -3965,7 +4019,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -4029,8 +4083,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to get (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function getSmsDefinitionAsync($definitionKey)
     {
@@ -4049,8 +4104,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $definitionKey Unique identifier of the definition to get (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function getSmsDefinitionAsyncWithHttpInfo($definitionKey)
     {
@@ -4067,7 +4123,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -4210,8 +4266,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  float $page Page number to return. (optional)
      * @param  string $orderBy Sort by a dimension. You can sort by only one dimension. Accepted values are definitionKey, name, createdDate, modifiedDate, and status. (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetSmsDefinitionsResponse
      */
     public function getSmsDefinitions($status = null, $pageSize = null, $page = null, $orderBy = null)
@@ -4230,9 +4287,10 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  float $page Page number to return. (optional)
      * @param  string $orderBy Sort by a dimension. You can sort by only one dimension. Accepted values are definitionKey, name, createdDate, modifiedDate, and status. (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\GetSmsDefinitionsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function getSmsDefinitionsWithHttpInfo($status = null, $pageSize = null, $page = null, $orderBy = null)
     {
@@ -4273,7 +4331,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -4332,8 +4390,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  float $page Page number to return. (optional)
      * @param  string $orderBy Sort by a dimension. You can sort by only one dimension. Accepted values are definitionKey, name, createdDate, modifiedDate, and status. (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function getSmsDefinitionsAsync($status = null, $pageSize = null, $page = null, $orderBy = null)
     {
@@ -4355,8 +4414,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  float $page Page number to return. (optional)
      * @param  string $orderBy Sort by a dimension. You can sort by only one dimension. Accepted values are definitionKey, name, createdDate, modifiedDate, and status. (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function getSmsDefinitionsAsyncWithHttpInfo($status = null, $pageSize = null, $page = null, $orderBy = null)
     {
@@ -4373,7 +4433,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -4518,8 +4578,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $messageKey Unique identifier to track message send status. You must provide it in singleton requests using the recipient attribute. To provide message key in batch requests, use the recipients array attribute. If you don’t provide the message key for recipients, it’s generated in the response. (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse
      */
     public function getSmsSendStatusForRecipient($messageKey)
@@ -4535,9 +4596,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $messageKey Unique identifier to track message send status. You must provide it in singleton requests using the recipient attribute. To provide message key in batch requests, use the recipients array attribute. If you don’t provide the message key for recipients, it’s generated in the response. (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function getSmsSendStatusForRecipientWithHttpInfo($messageKey)
     {
@@ -4578,7 +4640,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -4634,8 +4696,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $messageKey Unique identifier to track message send status. You must provide it in singleton requests using the recipient attribute. To provide message key in batch requests, use the recipients array attribute. If you don’t provide the message key for recipients, it’s generated in the response. (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function getSmsSendStatusForRecipientAsync($messageKey)
     {
@@ -4654,8 +4717,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  string $messageKey Unique identifier to track message send status. You must provide it in singleton requests using the recipient attribute. To provide message key in batch requests, use the recipients array attribute. If you don’t provide the message key for recipients, it’s generated in the response. (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function getSmsSendStatusForRecipientAsyncWithHttpInfo($messageKey)
     {
@@ -4672,7 +4736,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -4813,8 +4877,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the definition. (required)
      * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest
      */
     public function partiallyUpdateEmailDefinition($definitionKey, $body = null)
@@ -4831,9 +4896,10 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the definition. (required)
      * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function partiallyUpdateEmailDefinitionWithHttpInfo($definitionKey, $body = null)
     {
@@ -4874,7 +4940,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -4931,8 +4997,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the definition. (required)
      * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function partiallyUpdateEmailDefinitionAsync($definitionKey, $body = null)
     {
@@ -4952,8 +5019,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the definition. (required)
      * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function partiallyUpdateEmailDefinitionAsyncWithHttpInfo($definitionKey, $body = null)
     {
@@ -4970,7 +5038,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -5115,8 +5183,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the definition. (required)
      * @param  \SalesForce\MarketingCloud\Model\UpdateSmsDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest
      */
     public function partiallyUpdateSmsDefinition($definitionKey, $body = null)
@@ -5133,9 +5202,10 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the definition. (required)
      * @param  \SalesForce\MarketingCloud\Model\UpdateSmsDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function partiallyUpdateSmsDefinitionWithHttpInfo($definitionKey, $body = null)
     {
@@ -5176,7 +5246,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -5233,8 +5303,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the definition. (required)
      * @param  \SalesForce\MarketingCloud\Model\UpdateSmsDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function partiallyUpdateSmsDefinitionAsync($definitionKey, $body = null)
     {
@@ -5254,8 +5325,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the definition. (required)
      * @param  \SalesForce\MarketingCloud\Model\UpdateSmsDefinitionRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function partiallyUpdateSmsDefinitionAsyncWithHttpInfo($definitionKey, $body = null)
     {
@@ -5272,7 +5344,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -5416,8 +5488,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse
      */
     public function sendEmailToMultipleRecipients($body = null)
@@ -5433,9 +5506,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function sendEmailToMultipleRecipientsWithHttpInfo($body = null)
     {
@@ -5476,7 +5550,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -5532,8 +5606,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function sendEmailToMultipleRecipientsAsync($body = null)
     {
@@ -5552,8 +5627,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function sendEmailToMultipleRecipientsAsyncWithHttpInfo($body = null)
     {
@@ -5570,7 +5646,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -5700,8 +5776,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $messageKey Unique identifier used to track message status. Can be automatically created when you create a message or provided as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
      * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse
      */
     public function sendEmailToSingleRecipient($messageKey, $body = null)
@@ -5718,9 +5795,10 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $messageKey Unique identifier used to track message status. Can be automatically created when you create a message or provided as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
      * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function sendEmailToSingleRecipientWithHttpInfo($messageKey, $body = null)
     {
@@ -5761,7 +5839,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -5826,8 +5904,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $messageKey Unique identifier used to track message status. Can be automatically created when you create a message or provided as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
      * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function sendEmailToSingleRecipientAsync($messageKey, $body = null)
     {
@@ -5847,8 +5926,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $messageKey Unique identifier used to track message status. Can be automatically created when you create a message or provided as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
      * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function sendEmailToSingleRecipientAsyncWithHttpInfo($messageKey, $body = null)
     {
@@ -5865,7 +5945,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -6009,8 +6089,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse
      */
     public function sendSmsToMultipleRecipients($body = null)
@@ -6026,9 +6107,10 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function sendSmsToMultipleRecipientsWithHttpInfo($body = null)
     {
@@ -6069,7 +6151,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -6125,8 +6207,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function sendSmsToMultipleRecipientsAsync($body = null)
     {
@@ -6145,8 +6228,9 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function sendSmsToMultipleRecipientsAsyncWithHttpInfo($body = null)
     {
@@ -6163,7 +6247,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -6293,8 +6377,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $messageKey Unique identifier of the definition used to track message status. The messageKey can be created automatically when you create a message, or you can provide it as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
      * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse
      */
     public function sendSmsToSingleRecipient($messageKey, $body = null)
@@ -6311,9 +6396,10 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $messageKey Unique identifier of the definition used to track message status. The messageKey can be created automatically when you create a message, or you can provide it as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
      * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function sendSmsToSingleRecipientWithHttpInfo($messageKey, $body = null)
     {
@@ -6354,7 +6440,7 @@ class TransactionalMessagingApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -6419,8 +6505,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $messageKey Unique identifier of the definition used to track message status. The messageKey can be created automatically when you create a message, or you can provide it as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
      * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function sendSmsToSingleRecipientAsync($messageKey, $body = null)
     {
@@ -6440,8 +6527,9 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $messageKey Unique identifier of the definition used to track message status. The messageKey can be created automatically when you create a message, or you can provide it as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
      * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function sendSmsToSingleRecipientAsyncWithHttpInfo($messageKey, $body = null)
     {
@@ -6458,7 +6546,7 @@ class TransactionalMessagingApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 

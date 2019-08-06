@@ -52,8 +52,9 @@ class AssetApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\Asset
      */
     public function createAsset($body = null)
@@ -67,10 +68,11 @@ class AssetApi extends AbstractApi
      *
      * createAsset
      *
-     * @param \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
      *
      * @return array of \SalesForce\MarketingCloud\Model\Asset, HTTP status code, HTTP response headers (array of strings)
-     * @throws \InvalidArgumentException*@throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function createAssetWithHttpInfo($body = null)
@@ -100,7 +102,7 @@ class AssetApi extends AbstractApi
                         $statusCode,
                         $request->getUri()
                     ),
-                     $statusCode,
+                    $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
                 );
@@ -112,7 +114,7 @@ class AssetApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -160,8 +162,9 @@ class AssetApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function createAssetAsync($body = null)
     {
@@ -180,8 +183,9 @@ class AssetApi extends AbstractApi
      *
      * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function createAssetAsyncWithHttpInfo($body = null)
     {
@@ -198,7 +202,7 @@ class AssetApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -327,8 +331,9 @@ class AssetApi extends AbstractApi
      *
      * @param  float $id The ID of the asset to delete (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return void
      */
     public function deleteAssetById($id)
@@ -343,9 +348,10 @@ class AssetApi extends AbstractApi
      *
      * @param  float $id The ID of the asset to delete (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function deleteAssetByIdWithHttpInfo($id)
     {
@@ -412,8 +418,9 @@ class AssetApi extends AbstractApi
      *
      * @param  float $id The ID of the asset to delete (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function deleteAssetByIdAsync($id)
     {
@@ -432,8 +439,9 @@ class AssetApi extends AbstractApi
      *
      * @param  float $id The ID of the asset to delete (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function deleteAssetByIdAsyncWithHttpInfo($id)
     {
@@ -576,8 +584,9 @@ class AssetApi extends AbstractApi
      *
      * @param  float $id The ID of the asset (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\Asset
      */
     public function getAssetById($id)
@@ -593,9 +602,10 @@ class AssetApi extends AbstractApi
      *
      * @param  float $id The ID of the asset (required)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\Asset, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function getAssetByIdWithHttpInfo($id)
     {
@@ -636,7 +646,7 @@ class AssetApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -684,8 +694,9 @@ class AssetApi extends AbstractApi
      *
      * @param  float $id The ID of the asset (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function getAssetByIdAsync($id)
     {
@@ -704,8 +715,9 @@ class AssetApi extends AbstractApi
      *
      * @param  float $id The ID of the asset (required)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function getAssetByIdAsyncWithHttpInfo($id)
     {
@@ -722,7 +734,7 @@ class AssetApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
@@ -863,8 +875,9 @@ class AssetApi extends AbstractApi
      * @param  float $id The ID of the asset to update (required)
      * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\Asset
      */
     public function partiallyUpdateAssetById($id, $body = null)
@@ -881,9 +894,10 @@ class AssetApi extends AbstractApi
      * @param  float $id The ID of the asset to update (required)
      * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
      *
-     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
      * @return array of \SalesForce\MarketingCloud\Model\Asset, HTTP status code, HTTP response headers (array of strings)
+     * @throws \InvalidArgumentException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
     public function partiallyUpdateAssetByIdWithHttpInfo($id, $body = null)
     {
@@ -924,7 +938,7 @@ class AssetApi extends AbstractApi
             } else {
                 $content = $responseBody->getContents();
                 if ($returnType !== 'string') {
-                    $content = json_decode($content);
+                    $content = \GuzzleHttp\json_decode($content);
                 }
             }
 
@@ -973,8 +987,9 @@ class AssetApi extends AbstractApi
      * @param  float $id The ID of the asset to update (required)
      * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      */
     public function partiallyUpdateAssetByIdAsync($id, $body = null)
     {
@@ -994,8 +1009,9 @@ class AssetApi extends AbstractApi
      * @param  float $id The ID of the asset to update (required)
      * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
      *
-     * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws Exception\ClientUnauthorizedException
+     * @throws \InvalidArgumentException
      */
     public function partiallyUpdateAssetByIdAsyncWithHttpInfo($id, $body = null)
     {
@@ -1012,7 +1028,7 @@ class AssetApi extends AbstractApi
                     } else {
                         $content = $responseBody->getContents();
                         if ($returnType !== 'string') {
-                            $content = json_decode($content);
+                            $content = \GuzzleHttp\json_decode($content);
                         }
                     }
 
