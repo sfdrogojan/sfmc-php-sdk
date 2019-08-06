@@ -6,7 +6,7 @@
          convertWarningsToExceptions="true"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Tests">
+        <testsuite name="php-sdk">
             <directory>./test/Api</directory>
             <directory>./test/Model</directory>
         </testsuite>
