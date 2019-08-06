@@ -3,8 +3,6 @@
 namespace SalesForce\MarketingCloud\Authorization;
 
 use Psr\Cache\CacheItemPoolInterface as CacheInterface;
-use Psr\SimpleCache\CacheInterface as SimpleCacheInterface;
-use Symfony\Component\Cache\Adapter\Psr16Adapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use League\OAuth2\Client\Provider\GenericProvider as AuthClient;
 
@@ -45,13 +43,8 @@ class AuthServiceFactory
      */
     public static function factory(CacheInterface $cache = null): AuthServiceInterface
     {
-        // Default cache scenario
-        if (null === $cache) {
-            $cache = new Psr16Adapter(static::createDefaultCachePool());
-        }
-
         $service = new AuthService();
-        $service->setCache($cache);
+        $service->setCache($cache ?? static::createDefaultCachePool());
         $service->setClient(new AuthClient(static::$config));
 
         return $service;
@@ -60,9 +53,9 @@ class AuthServiceFactory
     /**
      * Creates a default cache handler
      *
-     * @return SimpleCacheInterface
+     * @return CacheInterface
      */
-    protected static function createDefaultCachePool(): SimpleCacheInterface
+    protected static function createDefaultCachePool(): CacheInterface
     {
         return new FilesystemAdapter();
     }
