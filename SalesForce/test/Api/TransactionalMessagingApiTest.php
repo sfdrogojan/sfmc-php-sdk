@@ -28,11 +28,7 @@
 
 namespace SalesForce\MarketingCloud;
 
-use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
-use SalesForce\MarketingCloud\Authorization\AuthServiceFactory;
-use \SalesForce\MarketingCloud\Configuration;
-use \SalesForce\MarketingCloud\ApiException;
-use \SalesForce\MarketingCloud\ObjectSerializer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * TransactionalMessagingApiTest Class Doc Comment
@@ -42,55 +38,9 @@ use \SalesForce\MarketingCloud\ObjectSerializer;
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
+class TransactionalMessagingApiTest extends TestCase
 {
-
-    /**
-     * Setup before running any test cases
-     */
-    public static function setUpBeforeClass()
-    {
-    }
-
-    /**
-     * Setup before running each test case
-     */
-    public function setUp()
-    {
-    }
-
-    /**
-     * Clean up after running each test case
-     */
-    public function tearDown()
-    {
-    }
-
-    /**
-     * Clean up after running all test cases
-     */
-    public static function tearDownAfterClass()
-    {
-    }
-
-    /**
-     * Test case for new AssetApi()
-     */
-    public function testCreateTMApiClient()
-    {
-        $client = new TransactionalMessagingApi();
-    }
-
-    /**
-     * Test case for new AssetApi()
-     */
-    public function testCreateTMApiClientWithAuthService()
-    {
-        $client = new TransactionalMessagingApi(function () {
-            return AuthServiceFactory::factory();
-        }, null, null, null);
-    }
-
+    
     /**
      * Test case for createEmailDefinition
      *
@@ -100,7 +50,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testCreateEmailDefinition()
     {
     }
-
+    
     /**
      * Test case for createSmsDefinition
      *
@@ -110,7 +60,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testCreateSmsDefinition()
     {
     }
-
+    
     /**
      * Test case for deleteEmailDefinition
      *
@@ -120,7 +70,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testDeleteEmailDefinition()
     {
     }
-
+    
     /**
      * Test case for deleteQueuedMessagesForEmailDefinition
      *
@@ -130,7 +80,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testDeleteQueuedMessagesForEmailDefinition()
     {
     }
-
+    
     /**
      * Test case for deleteQueuedMessagesForSmsDefinition
      *
@@ -140,7 +90,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testDeleteQueuedMessagesForSmsDefinition()
     {
     }
-
+    
     /**
      * Test case for deleteSmsDefinition
      *
@@ -150,7 +100,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testDeleteSmsDefinition()
     {
     }
-
+    
     /**
      * Test case for getEmailDefinition
      *
@@ -160,7 +110,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testGetEmailDefinition()
     {
     }
-
+    
     /**
      * Test case for getEmailDefinitions
      *
@@ -170,7 +120,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testGetEmailDefinitions()
     {
     }
-
+    
     /**
      * Test case for getEmailSendStatusForRecipient
      *
@@ -180,7 +130,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testGetEmailSendStatusForRecipient()
     {
     }
-
+    
     /**
      * Test case for getEmailsNotSentToRecipients
      *
@@ -190,7 +140,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testGetEmailsNotSentToRecipients()
     {
     }
-
+    
     /**
      * Test case for getQueueMetricsForEmailDefinition
      *
@@ -200,7 +150,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testGetQueueMetricsForEmailDefinition()
     {
     }
-
+    
     /**
      * Test case for getQueueMetricsForSmsDefinition
      *
@@ -210,7 +160,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testGetQueueMetricsForSmsDefinition()
     {
     }
-
+    
     /**
      * Test case for getSMSsNotSentToRecipients
      *
@@ -220,7 +170,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testGetSMSsNotSentToRecipients()
     {
     }
-
+    
     /**
      * Test case for getSmsDefinition
      *
@@ -230,7 +180,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testGetSmsDefinition()
     {
     }
-
+    
     /**
      * Test case for getSmsDefinitions
      *
@@ -240,7 +190,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testGetSmsDefinitions()
     {
     }
-
+    
     /**
      * Test case for getSmsSendStatusForRecipient
      *
@@ -250,7 +200,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testGetSmsSendStatusForRecipient()
     {
     }
-
+    
     /**
      * Test case for partiallyUpdateEmailDefinition
      *
@@ -260,7 +210,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testPartiallyUpdateEmailDefinition()
     {
     }
-
+    
     /**
      * Test case for partiallyUpdateSmsDefinition
      *
@@ -270,7 +220,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testPartiallyUpdateSmsDefinition()
     {
     }
-
+    
     /**
      * Test case for sendEmailToMultipleRecipients
      *
@@ -280,7 +230,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testSendEmailToMultipleRecipients()
     {
     }
-
+    
     /**
      * Test case for sendEmailToSingleRecipient
      *
@@ -290,7 +240,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testSendEmailToSingleRecipient()
     {
     }
-
+    
     /**
      * Test case for sendSmsToMultipleRecipients
      *
@@ -300,7 +250,7 @@ class TransactionalMessagingApiTest extends \PHPUnit_Framework_TestCase
     public function testSendSmsToMultipleRecipients()
     {
     }
-
+    
     /**
      * Test case for sendSmsToSingleRecipient
      *

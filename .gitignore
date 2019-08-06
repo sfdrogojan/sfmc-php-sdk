@@ -17,6 +17,7 @@ eggs/
 parts/
 sdist/
 var/
+vendor/
 wheels/
 *.egg-info/
 .installed.cfg
@@ -44,6 +45,7 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+.phpunit.result.cache
 
 # Translations
 *.mo

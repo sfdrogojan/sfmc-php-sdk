@@ -28,9 +28,7 @@
 
 namespace SalesForce\MarketingCloud;
 
-use \SalesForce\MarketingCloud\Configuration;
-use \SalesForce\MarketingCloud\ApiException;
-use \SalesForce\MarketingCloud\ObjectSerializer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * CampaignApiTest Class Doc Comment
@@ -40,37 +38,9 @@ use \SalesForce\MarketingCloud\ObjectSerializer;
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class CampaignApiTest extends \PHPUnit_Framework_TestCase
+class CampaignApiTest extends TestCase
 {
-
-    /**
-     * Setup before running any test cases
-     */
-    public static function setUpBeforeClass()
-    {
-    }
-
-    /**
-     * Setup before running each test case
-     */
-    public function setUp()
-    {
-    }
-
-    /**
-     * Clean up after running each test case
-     */
-    public function tearDown()
-    {
-    }
-
-    /**
-     * Clean up after running all test cases
-     */
-    public static function tearDownAfterClass()
-    {
-    }
-
+    
     /**
      * Test case for createCampaign
      *
@@ -80,7 +50,7 @@ class CampaignApiTest extends \PHPUnit_Framework_TestCase
     public function testCreateCampaign()
     {
     }
-
+    
     /**
      * Test case for deleteCampaignById
      *
@@ -90,7 +60,7 @@ class CampaignApiTest extends \PHPUnit_Framework_TestCase
     public function testDeleteCampaignById()
     {
     }
-
+    
     /**
      * Test case for getCampaignById
      *

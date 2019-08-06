@@ -28,9 +28,7 @@
 
 namespace SalesForce\MarketingCloud;
 
-use \SalesForce\MarketingCloud\Configuration;
-use \SalesForce\MarketingCloud\ApiException;
-use \SalesForce\MarketingCloud\ObjectSerializer;
+use PHPUnit\Framework\TestCase;
 
 /**
  * AssetApiTest Class Doc Comment
@@ -40,37 +38,9 @@ use \SalesForce\MarketingCloud\ObjectSerializer;
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class AssetApiTest extends \PHPUnit_Framework_TestCase
+class AssetApiTest extends TestCase
 {
-
-    /**
-     * Setup before running any test cases
-     */
-    public static function setUpBeforeClass()
-    {
-    }
-
-    /**
-     * Setup before running each test case
-     */
-    public function setUp()
-    {
-    }
-
-    /**
-     * Clean up after running each test case
-     */
-    public function tearDown()
-    {
-    }
-
-    /**
-     * Clean up after running all test cases
-     */
-    public static function tearDownAfterClass()
-    {
-    }
-
+    
     /**
      * Test case for createAsset
      *
@@ -80,7 +50,7 @@ class AssetApiTest extends \PHPUnit_Framework_TestCase
     public function testCreateAsset()
     {
     }
-
+    
     /**
      * Test case for deleteAssetById
      *
@@ -90,7 +60,7 @@ class AssetApiTest extends \PHPUnit_Framework_TestCase
     public function testDeleteAssetById()
     {
     }
-
+    
     /**
      * Test case for getAssetById
      *
@@ -100,7 +70,7 @@ class AssetApiTest extends \PHPUnit_Framework_TestCase
     public function testGetAssetById()
     {
     }
-
+    
     /**
      * Test case for partiallyUpdateAssetById
      *
