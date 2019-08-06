@@ -37,6 +37,7 @@ abstract class AbstractApi
      * @var AuthServiceInterface
      */
     private $authService;
+
     /**
      * @var callable|\Closure
      */
@@ -64,16 +65,6 @@ abstract class AbstractApi
         $this->client = $client ?: new Client();
         $this->config = $config ?: new Configuration();
         $this->headerSelector = $selector ?: new HeaderSelector();
-    }
-
-    /**
-     * Returns the client's configuration
-     *
-     * @return Configuration
-     */
-    public function getConfig()
-    {
-        return $this->config;
     }
 
     /**
