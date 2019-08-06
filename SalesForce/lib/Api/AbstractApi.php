@@ -2,6 +2,7 @@
 
 namespace SalesForce\MarketingCloud\Api;
 
+use SalesForce\MarketingCloud\Api\Exception\ClientUnauthorizedException;
 use SalesForce\MarketingCloud\Authorization\AuthServiceFactory;
 use SalesForce\MarketingCloud\Authorization\AuthServiceInterface;
 
@@ -55,11 +56,18 @@ abstract class AbstractApi
      * Authorize the client and retrieves a valid access token
      *
      * @return string The accessToken for the request
+     * @throws ClientUnauthorizedException
      */
     protected function authorizeClient(): string
     {
         // TODO: implement this;
 
-        return "";
+        $accessToken = "";
+
+        if (empty($accessToken)) {
+            throw new ClientUnauthorizedException();
+        }
+
+        return $accessToken;
     }
 }

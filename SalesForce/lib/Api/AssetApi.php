@@ -35,7 +35,6 @@ use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use SalesForce\MarketingCloud\ApiException;
-use SalesForce\MarketingCloud\Api\Exception\ClientUnauthorizedException;
 use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\HeaderSelector;
 use SalesForce\MarketingCloud\ObjectSerializer;
@@ -278,15 +277,11 @@ class AssetApi extends AbstractApi
      * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
      *
      * @throws \InvalidArgumentException
-     * @throws ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function createAssetRequest($body = null)
     {
         $accessToken = $this->authorizeClient();
-        if (empty($accessToken)) {
-            throw new ClientUnauthorizedException();
-        }
 
 
         $resourcePath = '/asset/v1/content/assets';
@@ -517,15 +512,11 @@ class AssetApi extends AbstractApi
      * @param  float $id The ID of the asset to delete (required)
      *
      * @throws \InvalidArgumentException
-     * @throws ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function deleteAssetByIdRequest($id)
     {
         $accessToken = $this->authorizeClient();
-        if (empty($accessToken)) {
-            throw new ClientUnauthorizedException();
-        }
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -804,15 +795,11 @@ class AssetApi extends AbstractApi
      * @param  float $id The ID of the asset (required)
      *
      * @throws \InvalidArgumentException
-     * @throws ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getAssetByIdRequest($id)
     {
         $accessToken = $this->authorizeClient();
-        if (empty($accessToken)) {
-            throw new ClientUnauthorizedException();
-        }
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
@@ -1096,15 +1083,11 @@ class AssetApi extends AbstractApi
      * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
      *
      * @throws \InvalidArgumentException
-     * @throws ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function partiallyUpdateAssetByIdRequest($id, $body = null)
     {
         $accessToken = $this->authorizeClient();
-        if (empty($accessToken)) {
-            throw new ClientUnauthorizedException();
-        }
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
