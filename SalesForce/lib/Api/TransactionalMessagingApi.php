@@ -28,15 +28,10 @@
 
 namespace SalesForce\MarketingCloud\Api;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\RequestOptions;
 use SalesForce\MarketingCloud\ApiException;
-use SalesForce\MarketingCloud\Configuration;
-use SalesForce\MarketingCloud\HeaderSelector;
 use SalesForce\MarketingCloud\ObjectSerializer;
 
 /**
@@ -49,47 +44,6 @@ use SalesForce\MarketingCloud\ObjectSerializer;
  */
 class TransactionalMessagingApi extends AbstractApi
 {
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
-
-    /**
-     * @var Configuration
-     */
-    protected $config;
-
-    /**
-     * @var HeaderSelector
-     */
-    protected $headerSelector;
-
-    /**
-     * @param callable        $authServiceCallable
-     * @param ClientInterface $client
-     * @param Configuration   $config
-     * @param HeaderSelector  $selector
-     */
-    public function __construct(
-        callable $authServiceCallable = null,
-        ClientInterface $client = null,
-        Configuration $config = null,
-        HeaderSelector $selector = null
-    ) {
-        parent::__construct($authServiceCallable);
-
-        $this->client = $client ?: new Client();
-        $this->config = $config ?: new Configuration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
-    }
-
-    /**
-     * @return Configuration
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
 
     /**
      * Operation createEmailDefinition
@@ -293,11 +247,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function createEmailDefinitionRequest($body = null)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
 
         $resourcePath = '/messaging/v1/email/definitions/';
@@ -357,7 +312,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -581,11 +538,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function createSmsDefinitionRequest($body = null)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
 
         $resourcePath = '/messaging/v1/sms/definitions';
@@ -645,7 +603,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -869,11 +829,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the definition to delete (required)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function deleteEmailDefinitionRequest($definitionKey)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
         if ($definitionKey === null || (is_array($definitionKey) && count($definitionKey) === 0)) {
@@ -944,7 +905,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1152,11 +1115,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the email definition (required)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function deleteQueuedMessagesForEmailDefinitionRequest($definitionKey)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
         if ($definitionKey === null || (is_array($definitionKey) && count($definitionKey) === 0)) {
@@ -1227,7 +1191,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1435,11 +1401,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the SMS definition (required)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function deleteQueuedMessagesForSmsDefinitionRequest($definitionKey)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
         if ($definitionKey === null || (is_array($definitionKey) && count($definitionKey) === 0)) {
@@ -1510,7 +1477,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1734,11 +1703,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the definition to delete (required)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function deleteSmsDefinitionRequest($definitionKey)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
         if ($definitionKey === null || (is_array($definitionKey) && count($definitionKey) === 0)) {
@@ -1809,7 +1779,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2033,11 +2005,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the definition to get (required)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getEmailDefinitionRequest($definitionKey)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
         if ($definitionKey === null || (is_array($definitionKey) && count($definitionKey) === 0)) {
@@ -2108,7 +2081,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2339,11 +2314,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $orderBy Sort by a dimension. You can sort by only one dimension. Accepted values are definitionKey, name, createdDate, modifiedDate, and status. (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getEmailDefinitionsRequest($status = null, $pageSize = null, $page = null, $orderBy = null)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
 
         $resourcePath = '/messaging/v1/email/definitions/';
@@ -2416,7 +2392,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2632,11 +2610,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $messageKey Unique identifier to track message send status. You must provide it in singleton requests using the recipient attribute. To provide it in batch requests, use the recipients array attribute. If you don’t provide the message key for recipients, it’s generated in the response. (required)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getEmailSendStatusForRecipientRequest($messageKey)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'messageKey' is set
         if ($messageKey === null || (is_array($messageKey) && count($messageKey) === 0)) {
@@ -2707,7 +2686,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -2933,11 +2914,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  int $lastEventId Event ID from which you want the response to start. To obtain the initial event ID, submit a request without a lastEventId. The events in the response are listed top to bottom from oldest to newest. (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getEmailsNotSentToRecipientsRequest($type, $pageSize = null, $lastEventId = null)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'type' is set
         if ($type === null || (is_array($type) && count($type) === 0)) {
@@ -3012,7 +2994,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3220,11 +3204,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the email definition (required)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getQueueMetricsForEmailDefinitionRequest($definitionKey)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
         if ($definitionKey === null || (is_array($definitionKey) && count($definitionKey) === 0)) {
@@ -3295,7 +3280,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3503,11 +3490,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the SMS definition (required)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getQueueMetricsForSmsDefinitionRequest($definitionKey)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
         if ($definitionKey === null || (is_array($definitionKey) && count($definitionKey) === 0)) {
@@ -3578,7 +3566,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -3804,11 +3794,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  int $lastEventId Event ID from which you want the response to start. To obtain the initial event ID, submit a request without a lastEventId. The events in the response are listed top to bottom from oldest to newest. (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getSMSsNotSentToRecipientsRequest($type, $pageSize = null, $lastEventId = null)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'type' is set
         if ($type === null || (is_array($type) && count($type) === 0)) {
@@ -3883,7 +3874,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -4107,11 +4100,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $definitionKey Unique identifier of the definition to get (required)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getSmsDefinitionRequest($definitionKey)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
         if ($definitionKey === null || (is_array($definitionKey) && count($definitionKey) === 0)) {
@@ -4182,7 +4176,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -4413,11 +4409,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $orderBy Sort by a dimension. You can sort by only one dimension. Accepted values are definitionKey, name, createdDate, modifiedDate, and status. (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getSmsDefinitionsRequest($status = null, $pageSize = null, $page = null, $orderBy = null)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
 
         $resourcePath = '/messaging/v1/sms/definitions';
@@ -4490,7 +4487,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -4706,11 +4705,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  string $messageKey Unique identifier to track message send status. You must provide it in singleton requests using the recipient attribute. To provide message key in batch requests, use the recipients array attribute. If you don’t provide the message key for recipients, it’s generated in the response. (required)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function getSmsSendStatusForRecipientRequest($messageKey)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'messageKey' is set
         if ($messageKey === null || (is_array($messageKey) && count($messageKey) === 0)) {
@@ -4781,7 +4781,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -5002,11 +5004,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function partiallyUpdateEmailDefinitionRequest($definitionKey, $body = null)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
         if ($definitionKey === null || (is_array($definitionKey) && count($definitionKey) === 0)) {
@@ -5080,7 +5083,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -5301,11 +5306,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  \SalesForce\MarketingCloud\Model\UpdateSmsDefinitionRequest $body JSON Parameters (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function partiallyUpdateSmsDefinitionRequest($definitionKey, $body = null)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
         if ($definitionKey === null || (is_array($definitionKey) && count($definitionKey) === 0)) {
@@ -5379,7 +5385,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -5595,11 +5603,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function sendEmailToMultipleRecipientsRequest($body = null)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
 
         $resourcePath = '/messaging/v1/email/messages/';
@@ -5659,7 +5668,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -5888,11 +5899,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function sendEmailToSingleRecipientRequest($messageKey, $body = null)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'messageKey' is set
         if ($messageKey === null || (is_array($messageKey) && count($messageKey) === 0)) {
@@ -5966,7 +5978,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -6182,11 +6196,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function sendSmsToMultipleRecipientsRequest($body = null)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
 
         $resourcePath = '/messaging/v1/sms/messages/';
@@ -6246,7 +6261,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -6475,11 +6492,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (optional)
      *
      * @throws \InvalidArgumentException
+     * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
     protected function sendSmsToSingleRecipientRequest($messageKey, $body = null)
     {
-        $accessToken = $this->authorizeClient();
+        $this->authorizeClient();
 
         // verify the required parameter 'messageKey' is set
         if ($messageKey === null || (is_array($messageKey) && count($messageKey) === 0)) {
@@ -6553,7 +6571,9 @@ class TransactionalMessagingApi extends AbstractApi
 
 
         // Set the header for the authorization access token
-        $headers['Authorization'] = 'Bearer ' . $accessToken;
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

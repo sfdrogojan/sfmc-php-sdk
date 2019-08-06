@@ -2,9 +2,14 @@
 
 namespace SalesForce\MarketingCloud\Api;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\RequestOptions;
 use SalesForce\MarketingCloud\Api\Exception\ClientUnauthorizedException;
 use SalesForce\MarketingCloud\Authorization\AuthServiceFactory;
 use SalesForce\MarketingCloud\Authorization\AuthServiceInterface;
+use SalesForce\MarketingCloud\Configuration;
+use SalesForce\MarketingCloud\HeaderSelector;
 
 /**
  * Class AbstractApi
@@ -13,6 +18,21 @@ use SalesForce\MarketingCloud\Authorization\AuthServiceInterface;
  */
 abstract class AbstractApi
 {
+    /**
+     * @var ClientInterface
+     */
+    protected $client;
+
+    /**
+     * @var Configuration
+     */
+    protected $config;
+
+    /**
+     * @var HeaderSelector
+     */
+    protected $headerSelector;
+
     /**
      * @var AuthServiceInterface
      */
@@ -23,19 +43,37 @@ abstract class AbstractApi
     private $authServiceCallable;
 
     /**
-     * AbstractApi constructor.
-     *
-     * @param callable|null $authServiceCallable
+     * @param callable $authServiceCallable
+     * @param ClientInterface $client
+     * @param Configuration $config
+     * @param HeaderSelector $selector
      */
-    public function __construct(callable $authServiceCallable = null)
-    {
+    public function __construct(
+        callable $authServiceCallable = null,
+        ClientInterface $client = null,
+        Configuration $config = null,
+        HeaderSelector $selector = null
+    ) {
+        // Default callable
         if (null === $authServiceCallable) {
-            $authServiceCallable = function () {
-                return AuthServiceFactory::factory();
-            };
+            $authServiceCallable = array(AuthServiceFactory::class, "factory");
         }
 
+        // Setting the properties
         $this->authServiceCallable = $authServiceCallable;
+        $this->client = $client ?: new Client();
+        $this->config = $config ?: new Configuration();
+        $this->headerSelector = $selector ?: new HeaderSelector();
+    }
+
+    /**
+     * Returns the client's configuration
+     *
+     * @return Configuration
+     */
+    public function getConfig()
+    {
+        return $this->config;
     }
 
     /**
@@ -53,12 +91,30 @@ abstract class AbstractApi
     }
 
     /**
+     * Create http client option
+     *
+     * @return array of http client options
+     * @throws \RuntimeException on file opening failure
+     */
+    protected function createHttpClientOption()
+    {
+        $options = [];
+        if ($this->config->getDebug()) {
+            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
+            if (!$options[RequestOptions::DEBUG]) {
+                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
+            }
+        }
+
+        return $options;
+    }
+
+    /**
      * Authorize the client and retrieves a valid access token
      *
-     * @return string The accessToken for the request
      * @throws ClientUnauthorizedException
      */
-    protected function authorizeClient(): string
+    protected function authorizeClient(): void
     {
         // TODO: implement this;
 
@@ -68,6 +124,6 @@ abstract class AbstractApi
             throw new ClientUnauthorizedException();
         }
 
-        return $accessToken;
+        $this->config->setAccessToken($accessToken);
     }
 }
