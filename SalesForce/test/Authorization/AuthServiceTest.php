@@ -11,6 +11,7 @@ use Psr\Cache\InvalidArgumentException;
 use SalesForce\MarketingCloud\Authorization\AuthService;
 use SalesForce\MarketingCloud\Authorization\AuthServiceFactory;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
  * Class AuthServiceTest
@@ -27,11 +28,28 @@ class AuthServiceTest extends TestCase
         );
     }
 
-    public function testAuthorizeWithDummyAuthClient()
+    public function authCacheStatesDataProvider()
+    {
+        // Params are: $expires_in, $callCount, $sleep,
+        return [
+            [60, 1, 0], // 60s cache, getAccessToken() method should be called 1 time
+            [0,  2, 3], // 00s cache, getAccessToken() method should be called 2 times
+            [1, 2, 3]   // 02s cache, getAccessToken() method should be called 2 times
+        ];
+    }
+
+    /**
+     * @dataProvider authCacheStatesDataProvider
+     * @param int $expires_in Time in seconds that the AccessToken is valid
+     * @param int $callCount How many times the getAccessToken() method should be called
+     * @param int $sleep Sleep time in seconds
+     * @throws \Exception
+     */
+    public function testAuthorizeWithDummyAuthClient(int $expires_in, int $callCount, int $sleep = 3)
     {
         $accessToken = new AccessToken([
             "access_token" => "test",
-            "expires_in" => 0
+            "expires_in" => $expires_in
         ]);
 
         /** @var GenericProvider|MockObject $clientMock */
@@ -39,7 +57,7 @@ class AuthServiceTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $clientMock->expects($this->once())
+        $clientMock->expects($this->exactly($callCount))
             ->method("getAccessToken")
             ->willReturn($accessToken);
 
@@ -49,6 +67,8 @@ class AuthServiceTest extends TestCase
         $service->setClient($clientMock);
 
         try {
+            $service->authorize();
+            sleep($sleep);
             $service->authorize();
         } catch (IdentityProviderException $e) {
             $this->fail("Authorization failed");
@@ -57,36 +77,5 @@ class AuthServiceTest extends TestCase
         }
 
         $this->assertEquals("test", $service->getAccessToken());
-    }
-
-    public function testAuthorizeWithDummyAuthClientAndCache()
-    {
-        $accessToken = new AccessToken([
-            "access_token" => "test",
-            "expires_in" => 60
-        ]);
-
-        /** @var GenericProvider|MockObject $clientMock */
-        $clientMock = $this->getMockBuilder(GenericProvider::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $clientMock->expects($this->once())
-            ->method("getAccessToken")
-            ->willReturn($accessToken);
-
-        // SUT
-        $service = new AuthService();
-        $service->setCache(new ArrayAdapter());
-        $service->setClient($clientMock);
-
-        try {
-            $service->authorize();
-            $service->authorize();
-        } catch (IdentityProviderException $e) {
-            $this->fail("Authorization failed");
-        } catch (InvalidArgumentException $e) {
-            $this->fail("Authorization failed");
-        }
     }
 }

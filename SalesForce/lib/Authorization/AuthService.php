@@ -69,6 +69,7 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
      * @throws IdentityProviderException
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws IdentityProviderException
+     * @throws \Exception
      */
     public function authorize(): void
     {
@@ -77,9 +78,12 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
         if (!$cacheItem->isHit()) {
             $accessToken = $this->client->getAccessToken('client_credentials');
 
+            $dateTime = new \DateTime();
+            $dateTime->setTimestamp($accessToken->getExpires());
+
             // Configuring the cache item
             $cacheItem->set($accessToken);
-            $cacheItem->expiresAfter($accessToken->getExpires() ?? 0);
+            $cacheItem->expiresAt($dateTime);
 
             // Saves the cache item
             $this->cache->save($cacheItem);
