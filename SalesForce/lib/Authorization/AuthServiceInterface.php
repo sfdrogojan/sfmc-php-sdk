@@ -26,4 +26,11 @@ interface AuthServiceInterface
      * @param GenericProvider $client
      */
     public function setClient(GenericProvider $client): void;
+
+    /**
+     * Performs the authorization process
+     *
+     * @return void
+     */
+    public function authorize(): void;
 }
