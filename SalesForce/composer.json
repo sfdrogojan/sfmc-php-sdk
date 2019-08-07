@@ -36,6 +36,6 @@
         "psr-4": { "SalesForce\\MarketingCloud\\" : "lib/" }
     },
     "autoload-dev": {
-        "psr-4": { "SalesForce\\MarketingCloud\\" : "test/" }
+        "psr-4": { "SalesForce\\MarketingCloud\\Test\\" : "test/" }
     }
 }

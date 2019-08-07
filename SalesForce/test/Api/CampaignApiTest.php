@@ -26,7 +26,7 @@
  * Please update the test case below to test the endpoint.
  */
 
-namespace SalesForce\MarketingCloud;
+namespace SalesForce\MarketingCloud\Test\Api;
 
 use PHPUnit\Framework\TestCase;
 

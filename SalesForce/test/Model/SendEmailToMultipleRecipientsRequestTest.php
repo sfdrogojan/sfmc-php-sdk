@@ -27,7 +27,7 @@
  * Please update the test case below to test the model.
  */
 
-namespace SalesForce\MarketingCloud;
+namespace SalesForce\MarketingCloud\Test\Model;
 
 use PHPUnit\Framework\TestCase;
 

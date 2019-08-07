@@ -26,7 +26,7 @@
  * Please update the test case below to test the endpoint.
  */
 
-namespace SalesForce\MarketingCloud;
+namespace SalesForce\MarketingCloud\Test\Api;
 
 use PHPUnit\Framework\TestCase;
 
@@ -40,7 +40,7 @@ use PHPUnit\Framework\TestCase;
  */
 class TransactionalMessagingApiTest extends TestCase
 {
-
+    
     /**
      * Test case for createEmailDefinition
      *
