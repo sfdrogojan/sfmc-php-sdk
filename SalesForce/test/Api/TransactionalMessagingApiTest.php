@@ -40,10 +40,6 @@ use PHPUnit\Framework\TestCase;
  */
 class TransactionalMessagingApiTest extends TestCase
 {
-    public function testCreateApiClient()
-    {
-
-    }
 
     /**
      * Test case for createEmailDefinition
