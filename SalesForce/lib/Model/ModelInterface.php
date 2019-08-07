@@ -93,4 +93,11 @@ interface ModelInterface
      * @return bool
      */
     public function valid();
+
+    /**
+     * Converts the object to a JSON representation
+     *
+     * @return string
+     */
+    public function __toString();
 }

@@ -26,9 +26,16 @@
  * Please update the test case below to test the endpoint.
  */
 
-namespace SalesForce\MarketingCloud;
+namespace SalesForce\MarketingCloud\Test\Api;
 
-use PHPUnit\Framework\TestCase;
+use GuzzleHttp\Client;
+use SalesForce\MarketingCloud\Api\AbstractApi;
+use SalesForce\MarketingCloud\Api\AssetApi;
+use SalesForce\MarketingCloud\Authorization\TestHelper\AuthServiceTestFactory;
+use SalesForce\MarketingCloud\Configuration;
+use SalesForce\MarketingCloud\Model\Asset;
+use SalesForce\MarketingCloud\Model\AssetType;
+use SalesForce\MarketingCloud\Model\ModelInterface;
 
 /**
  * AssetApiTest Class Doc Comment
@@ -38,46 +45,115 @@ use PHPUnit\Framework\TestCase;
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class AssetApiTest extends TestCase
+class AssetApiTest extends AbstractApiTest
 {
-    
+    /**
+     * Creates a new asset object
+     *
+     * @return ModelInterface|Asset
+     */
+    protected function createResource(): ModelInterface
+    {
+        $customerKey = (string)rand(0, 1000);
+        $name = "AssetName {$customerKey}"; // Asset names within a category and asset type must be unique
+
+        $resource = new Asset([
+            "name" => $name,
+            "description" => "AssetDescription",
+            "customerKey" => $customerKey,
+            "assetType" => new AssetType([
+                "id" => 196,
+                "name" => "textblock",
+                "displayName" => "Text Block"
+            ])
+        ]);
+
+        return $resource;
+    }
+
+    /**
+     * Creates the client required to do the API calls
+     *
+     * @return AssetApi|AbstractApi
+     */
+    protected function createClient(): AbstractApi
+    {
+        $config = new Configuration();
+        $config->setHost(getenv("API_URL"));
+
+        return new AssetApi(
+            [AuthServiceTestFactory::class, 'factory'],
+            new Client(['verify' => false]),
+            $config
+        );
+    }
+
+    /**
+     * Performs the delete assert
+     *
+     * @param string $clientMethod
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException
+     */
+    protected function doDeleteAction(string $clientMethod): void
+    {
+        parent::doDeleteAction($clientMethod);
+
+        $this->createClient()->getAssetById(static::$resourceId);
+    }
+
     /**
      * Test case for createAsset
-     *
-     * createAsset.
      *
      */
     public function testCreateAsset()
     {
+        $actionMethod = $this->selectActionMethod("POST");
+        $this->$actionMethod(lcfirst("CreateAsset"));
     }
     
     /**
      * Test case for deleteAssetById
      *
-     * deleteAssetById.
-     *
+     * @depends testPartiallyUpdateAssetById
      */
     public function testDeleteAssetById()
     {
+        $actionMethod = $this->selectActionMethod("DELETE");
+        $this->$actionMethod(lcfirst("DeleteAssetById"));
     }
     
     /**
      * Test case for getAssetById
      *
-     * getAssetById.
-     *
+     * @depends testCreateAsset
      */
     public function testGetAssetById()
     {
+        $actionMethod = $this->selectActionMethod("GET");
+        $this->$actionMethod(lcfirst("GetAssetById"));
     }
     
     /**
      * Test case for partiallyUpdateAssetById
      *
-     * partiallyUpdateAssetById.
-     *
+     * @depends testGetAssetById
      */
     public function testPartiallyUpdateAssetById()
     {
+        $newData = "Some random content";
+        $client = $this->createClient();
+        $resource = $client->getAssetById(static::$resourceId);
+
+        if (!$resource instanceof Asset) {
+            $this->fail("Asset with ID " . static::$resourceId . " not found.");
+        }
+
+        $updatedAsset = $client->partiallyUpdateAssetById(
+            static::$resourceId,
+            $resource->setContent($newData)->__toString()
+        );
+
+        $this->assertEquals($newData, $updatedAsset->getContent());
     }
 }
