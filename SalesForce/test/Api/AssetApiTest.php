@@ -48,6 +48,11 @@ use SalesForce\MarketingCloud\Model\ModelInterface;
 class AssetApiTest extends AbstractApiTest
 {
     /**
+     * @var string
+     */
+    protected $getByIdMethod = "getAssetById";
+
+    /**
      * Creates a new asset object
      *
      * @return ModelInterface|Asset
@@ -72,6 +77,19 @@ class AssetApiTest extends AbstractApiTest
     }
 
     /**
+     * Updates a given resource
+     *
+     * @param Asset|ModelInterface $resource
+     * @return ModelInterface
+     */
+    protected function updateResource(ModelInterface $resource): ModelInterface
+    {
+        $resource->setContent("Some random content");
+
+        return $resource;
+    }
+
+    /**
      * Creates the client required to do the API calls
      *
      * @return AssetApi|AbstractApi
@@ -89,20 +107,6 @@ class AssetApiTest extends AbstractApiTest
     }
 
     /**
-     * Performs the delete assert
-     *
-     * @param string $clientMethod
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SalesForce\MarketingCloud\ApiException
-     */
-    protected function doDeleteAction(string $clientMethod): void
-    {
-        parent::doDeleteAction($clientMethod);
-
-        $this->createClient()->getAssetById(static::$resourceId);
-    }
-
-    /**
      * Test case for createAsset
      *
      */
@@ -111,7 +115,7 @@ class AssetApiTest extends AbstractApiTest
         $actionMethod = $this->selectActionMethod("POST");
         $this->$actionMethod(lcfirst("CreateAsset"));
     }
-    
+
     /**
      * Test case for deleteAssetById
      *
@@ -122,7 +126,7 @@ class AssetApiTest extends AbstractApiTest
         $actionMethod = $this->selectActionMethod("DELETE");
         $this->$actionMethod(lcfirst("DeleteAssetById"));
     }
-    
+
     /**
      * Test case for getAssetById
      *
@@ -133,7 +137,7 @@ class AssetApiTest extends AbstractApiTest
         $actionMethod = $this->selectActionMethod("GET");
         $this->$actionMethod(lcfirst("GetAssetById"));
     }
-    
+
     /**
      * Test case for partiallyUpdateAssetById
      *
@@ -141,19 +145,7 @@ class AssetApiTest extends AbstractApiTest
      */
     public function testPartiallyUpdateAssetById()
     {
-        $newData = "Some random content";
-        $client = $this->createClient();
-        $resource = $client->getAssetById(static::$resourceId);
-
-        if (!$resource instanceof Asset) {
-            $this->fail("Asset with ID " . static::$resourceId . " not found.");
-        }
-
-        $updatedAsset = $client->partiallyUpdateAssetById(
-            static::$resourceId,
-            $resource->setContent($newData)->__toString()
-        );
-
-        $this->assertEquals($newData, $updatedAsset->getContent());
+        $actionMethod = $this->selectActionMethod("PATCH");
+        $this->$actionMethod(lcfirst("partiallyUpdateAssetById"));
     }
 }

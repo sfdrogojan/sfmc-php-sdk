@@ -24,6 +24,13 @@ abstract class AbstractApiTest extends TestCase
     protected static $resourceId;
 
     /**
+     * The method to use for resource by ID retrieval
+     *
+     * @var string
+     */
+    protected $getByIdMethod = "";
+
+    /**
      * @inheritDoc
      */
     public static function setUpBeforeClass(): void
@@ -47,6 +54,14 @@ abstract class AbstractApiTest extends TestCase
     protected abstract function createResource(): ModelInterface;
 
     /**
+     * Updates a given resource
+     *
+     * @param ModelInterface $resource
+     * @return ModelInterface
+     */
+    protected abstract function updateResource(ModelInterface $resource): ModelInterface;
+
+    /**
      * Creates the client required to do the API calls
      *
      * @return AbstractApi
@@ -67,6 +82,9 @@ abstract class AbstractApiTest extends TestCase
 
             case "POST":
                 return "doCreateAction";
+
+            case "PATCH":
+                return "doPatchAction";
 
             case "DELETE":
                 return "doDeleteAction";
@@ -109,6 +127,27 @@ abstract class AbstractApiTest extends TestCase
     }
 
     /**
+     * Performs the PATCH action for the test
+     *
+     * @param string $clientMethod
+     */
+    protected function doPatchAction(string $clientMethod): void
+    {
+        $client = $this->createClient();
+
+        /** @var ModelInterface $resource */
+        $resource = $client->{$this->getByIdMethod}(static::$resourceId);
+
+        $updatedResource = call_user_func(
+            [$client, $clientMethod],
+            static::$resourceId,
+            $this->updateResource($resource)->__toString()
+        );
+
+        $this->assertEquals($resource->__toString(), $updatedResource->__toString());
+    }
+
+    /**
      * Performs the delete action for the test
      *
      * @param string $clientMethod
@@ -120,5 +159,7 @@ abstract class AbstractApiTest extends TestCase
 
         $client = $this->createClient();
         call_user_func([$client, $clientMethod], static::$resourceId);
+
+        $client->{$this->getByIdMethod}(static::$resourceId);
     }
 }
