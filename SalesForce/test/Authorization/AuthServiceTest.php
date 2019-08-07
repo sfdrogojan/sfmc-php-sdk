@@ -11,7 +11,6 @@ use Psr\Cache\InvalidArgumentException;
 use SalesForce\MarketingCloud\Authorization\AuthService;
 use SalesForce\MarketingCloud\Authorization\AuthServiceFactory;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
-use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
  * Class AuthServiceTest
@@ -30,11 +29,10 @@ class AuthServiceTest extends TestCase
 
     public function authCacheStatesDataProvider()
     {
-        // Params are: $expires_in, $callCount, $sleep,
+        // Params are: $expires_in, $callCount, $sleep
         return [
             [60, 1, 0], // 60s cache, getAccessToken() method should be called 1 time
-            [0,  2, 3], // 00s cache, getAccessToken() method should be called 2 times
-            [1, 2, 3]   // 02s cache, getAccessToken() method should be called 2 times
+            [3, 2, 5]   // 03s cache, getAccessToken() method should be called 2 times
         ];
     }
 
@@ -44,14 +42,10 @@ class AuthServiceTest extends TestCase
      * @param int $callCount How many times the getAccessToken() method should be called
      * @param int $sleep Sleep time in seconds
      * @throws \Exception
+     * @throws InvalidArgumentException
      */
     public function testAuthorizeWithDummyAuthClient(int $expires_in, int $callCount, int $sleep = 3)
     {
-        $accessToken = new AccessToken([
-            "access_token" => "test",
-            "expires_in" => $expires_in
-        ]);
-
         /** @var GenericProvider|MockObject $clientMock */
         $clientMock = $this->getMockBuilder(GenericProvider::class)
             ->disableOriginalConstructor()
@@ -59,11 +53,17 @@ class AuthServiceTest extends TestCase
 
         $clientMock->expects($this->exactly($callCount))
             ->method("getAccessToken")
-            ->willReturn($accessToken);
+            ->willReturnCallback(function () use ($expires_in) {
+                return new AccessToken([
+                    "access_token" => "test",
+                    "expires_in" => $expires_in
+                ]);
+            });
 
         // SUT
         $service = new AuthService();
         $service->setCache(new ArrayAdapter());
+        $service->setCacheKey("access_token_test");
         $service->setClient($clientMock);
 
         try {

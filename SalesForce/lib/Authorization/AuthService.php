@@ -21,16 +21,19 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
     private $cache;
 
     /**
+     * @var string
+     */
+    private $cacheKey = 'access_token';
+
+    /**
      * @var GenericProvider
      */
     private $client;
 
     /**
-     * The access token retrieved by the client after the authorization
-     *
      * @var string
      */
-    private $accessToken;
+    private $grantType = 'client_credentials';
 
     /**
      * Sets the cache
@@ -40,6 +43,16 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
     public function setCache(CacheItemPoolInterface $cache): void
     {
         $this->cache = $cache;
+    }
+
+    /**
+     * Sets the cache key to be used when caching the accessToken
+     *
+     * @param string $cacheKey
+     */
+    public function setCacheKey(string $cacheKey): void
+    {
+        $this->cacheKey = $cacheKey;
     }
 
     /**
@@ -53,30 +66,28 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
     }
 
     /**
-     * Returns the last valid access token
-     *
-     * @return string
+     * @param string $grantType
      */
-    public function getAccessToken(): string
+    public function setGrantType(string $grantType): void
     {
-        return $this->accessToken;
+        $this->grantType = $grantType;
     }
 
     /**
      * Authorizes the client
      *
-     * @return void
+     * @return AuthServiceInterface
      * @throws IdentityProviderException
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws IdentityProviderException
      * @throws \Exception
      */
-    public function authorize(): void
+    public function authorize(): AuthServiceInterface
     {
         // First we look into the cache
-        $cacheItem = $this->cache->getItem("accessToken");
+        $cacheItem = $this->cache->getItem($this->cacheKey);
         if (!$cacheItem->isHit()) {
-            $accessToken = $this->client->getAccessToken('client_credentials');
+            $accessToken = $this->client->getAccessToken($this->grantType);
 
             $dateTime = new \DateTime();
             $dateTime->setTimestamp($accessToken->getExpires());
@@ -87,11 +98,28 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
 
             // Saves the cache item
             $this->cache->save($cacheItem);
-        } else {
-            /** @var AccessTokenInterface $accessToken */
-            $accessToken = $cacheItem->get();
         }
 
-        $this->accessToken = $accessToken->getToken();
+        return $this;
+    }
+
+    /**
+     * Returns the access token
+     *
+     * @return string
+     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws Exception\TokenExpiredException
+     */
+    public function getAccessToken(): string
+    {
+        $cacheItem = $this->cache->getItem($this->cacheKey);
+        if ($cacheItem->isHit()) {
+            /** @var AccessTokenInterface $accessToken */
+            $accessToken = $cacheItem->get();
+
+            return $accessToken->getToken();
+        }
+
+        throw new Exception\TokenExpiredException('The access token has expired');
     }
 }

@@ -28,9 +28,23 @@ interface AuthServiceInterface
     public function setClient(GenericProvider $client): void;
 
     /**
+     * Set the type of grant type for the authorization server
+     *
+     * @param string $grantType
+     */
+    public function setGrantType(string $grantType): void;
+
+    /**
      * Performs the authorization process
      *
-     * @return void
+     * @return AuthServiceInterface
      */
-    public function authorize(): void;
+    public function authorize(): AuthServiceInterface;
+
+    /**
+     * Returns a valid access token that was obtain via the call to authorize()
+     *
+     * @return string
+     */
+    public function getAccessToken(): string;
 }
