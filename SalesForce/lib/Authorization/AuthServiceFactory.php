@@ -3,7 +3,7 @@
 namespace SalesForce\MarketingCloud\Authorization;
 
 use Psr\Cache\CacheItemPoolInterface as CacheInterface;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use League\OAuth2\Client\Provider\GenericProvider as AuthClient;
 
 /**
@@ -16,7 +16,8 @@ class AuthServiceFactory
     /**
      * @var array
      */
-    private static $config = [
+    protected static $config = [
+        'accountId' => '',
         'clientId' => '',
         'clientSecret' => '',
         'redirectUri' => '',
@@ -43,9 +44,11 @@ class AuthServiceFactory
      */
     public static function factory(CacheInterface $cache = null): AuthServiceInterface
     {
+        // Building the service
         $service = new AuthService();
         $service->setCache($cache ?? static::createDefaultCachePool());
-        $service->setClient(new AuthClient(static::$config));
+        $service->setCacheKey(static::$config["clientId"] . static::$config["accountId"]);
+        $service->setClient(static::createAuthClient());
 
         return $service;
     }
@@ -57,6 +60,16 @@ class AuthServiceFactory
      */
     protected static function createDefaultCachePool(): CacheInterface
     {
-        return new FilesystemAdapter();
+        return new ArrayAdapter();
+    }
+
+    /**
+     * Returns an instance of the authorization client
+     *
+     * @return AuthClient
+     */
+    protected static function createAuthClient(): AuthClient
+    {
+        return new AuthClient(static::$config);
     }
 }

@@ -57,7 +57,7 @@ abstract class AbstractApi
     ) {
         // Default callable
         if (null === $authServiceCallable) {
-            $authServiceCallable = array(AuthServiceFactory::class, "factory");
+            $authServiceCallable = [AuthServiceFactory::class, "factory"];
         }
 
         // Setting the properties
@@ -107,9 +107,7 @@ abstract class AbstractApi
      */
     protected function authorizeClient(): void
     {
-        // TODO: implement this;
-
-        $accessToken = "";
+        $accessToken = $this->getAuthService()->authorize()->getAccessToken();
 
         if (empty($accessToken)) {
             throw new ClientUnauthorizedException();
