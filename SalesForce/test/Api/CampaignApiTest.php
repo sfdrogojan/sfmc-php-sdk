@@ -1,6 +1,6 @@
 <?php
 /**
- * AssetApiTest
+ * CampaignApiTest
  * PHP version 5
  *
  * @category Class
@@ -32,17 +32,17 @@ use GuzzleHttp\Client;
 use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\Api\AbstractApi;
-use SalesForce\MarketingCloud\Api\AssetApi;
+use SalesForce\MarketingCloud\Api\CampaignApi;
 
 /**
- * AssetApiTest Class Doc Comment
+ * CampaignApiTest Class Doc Comment
  *
  * @category Class
  * @package  SalesForce\MarketingCloud
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class AssetApiTest extends AbstractApiTest
+class CampaignApiTest extends AbstractApiTest
 {
     /**
      * @var string
@@ -52,7 +52,7 @@ class AssetApiTest extends AbstractApiTest
     /**
      * Creates the client required to do the API calls
      *
-     * @return AssetApi|AbstractApi
+     * @return CampaignApi|AbstractApi
      */
     protected function createClient(): AbstractApi
     {
@@ -60,7 +60,7 @@ class AssetApiTest extends AbstractApiTest
             $config = new Configuration();
             $config->setHost(getenv("API_URL"));
 
-            $this->client = new AssetApi(
+            $this->client = new CampaignApi(
                 [AuthServiceTestFactory::class, 'factory'],
                 new Client(['verify' => false]),
                 $config
@@ -72,78 +72,59 @@ class AssetApiTest extends AbstractApiTest
 
     
     /**
-     * Test case for createAsset
+     * Test case for createCampaign
      *
-     * createAsset.
+     * createCampaign.
      *
      */
-    public function testCreateAsset()
+    public function testCreateCampaign()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\Asset";
+        $modelClass = "\SalesForce\MarketingCloud\Model\Campaign";
         if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("createAsset");
+            $modelClass = $this->guessModelClass("createCampaign");
         }
 
         $this->createResourceOnEndpoint($modelClass);
 
         $actionMethod = $this->selectActionMethod("POST");
-        $this->$actionMethod("createAsset");
+        $this->$actionMethod("createCampaign");
     }
     
     /**
-     * Test case for deleteAssetById
+     * Test case for deleteCampaignById
      *
-     * deleteAssetById.
+     * deleteCampaignById.
      *
      */
-    public function testDeleteAssetById()
+    public function testDeleteCampaignById()
     {
         $modelClass = "";
         if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("deleteAssetById");
+            $modelClass = $this->guessModelClass("deleteCampaignById");
         }
 
         $this->createResourceOnEndpoint($modelClass);
 
         $actionMethod = $this->selectActionMethod("DELETE");
-        $this->$actionMethod("deleteAssetById");
+        $this->$actionMethod("deleteCampaignById");
     }
     
     /**
-     * Test case for getAssetById
+     * Test case for getCampaignById
      *
-     * getAssetById.
+     * getCampaignById.
      *
      */
-    public function testGetAssetById()
+    public function testGetCampaignById()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\Asset";
+        $modelClass = "\SalesForce\MarketingCloud\Model\Campaign";
         if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getAssetById");
+            $modelClass = $this->guessModelClass("getCampaignById");
         }
 
         $this->createResourceOnEndpoint($modelClass);
 
         $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getAssetById");
-    }
-    
-    /**
-     * Test case for partiallyUpdateAssetById
-     *
-     * partiallyUpdateAssetById.
-     *
-     */
-    public function testPartiallyUpdateAssetById()
-    {
-        $modelClass = "\SalesForce\MarketingCloud\Model\Asset";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("partiallyUpdateAssetById");
-        }
-
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("PATCH");
-        $this->$actionMethod("partiallyUpdateAssetById");
+        $this->$actionMethod("getCampaignById");
     }
 }

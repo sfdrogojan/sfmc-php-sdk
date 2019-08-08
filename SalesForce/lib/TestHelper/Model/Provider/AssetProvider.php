@@ -1,20 +1,18 @@
 <?php
 
-namespace SalesForce\MarketingCloud\Test\Model\Addon;
+namespace SalesForce\MarketingCloud\TestHelper\Model\Provider;
 
 use SalesForce\MarketingCloud\Model\Asset;
 use SalesForce\MarketingCloud\Model\AssetType;
 use SalesForce\MarketingCloud\Model\ModelInterface;
 
 /**
- * Trait AssetAddon
+ * Class AssetProvider
  *
- * @package SalesForce\MarketingCloud\Test\Model\Addon
+ * @package SalesForce\MarketingCloud\TestHelper\Model\Provider
  */
-trait AssetAddon
+class AssetProvider extends AbstractModelProvider
 {
-    use BaseAddon;
-
     /**
      * Creates a test object
      *
@@ -33,7 +31,12 @@ trait AssetAddon
                 "id" => 196,
                 "name" => "text_block",
                 "displayName" => "Text Block"
-            ])
+            ]),
+            "views" => [
+                "subjectline" => [
+                    "content" => "New TS Subject Line"
+                ]
+            ]
         ]);
 
         return $object;

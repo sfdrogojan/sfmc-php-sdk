@@ -1,6 +1,6 @@
 <?php
 
-namespace SalesForce\MarketingCloud\Authorization\TestHelper;
+namespace SalesForce\MarketingCloud\TestHelper\Authorization;
 
 use GuzzleHttp\Client;
 use League\OAuth2\Client\Provider\GenericProvider as AuthClient;
@@ -9,7 +9,7 @@ use SalesForce\MarketingCloud\Authorization\AuthServiceFactory;
 /**
  * Class AuthServiceTestFactory
  *
- * @package SalesForce\MarketingCloud\Authorization\TestHelper
+ * @package SalesForce\MarketingCloud\TestHelper\Authorization
  */
 class AuthServiceTestFactory extends AuthServiceFactory
 {

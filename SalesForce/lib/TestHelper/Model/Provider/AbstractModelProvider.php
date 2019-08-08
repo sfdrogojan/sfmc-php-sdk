@@ -1,15 +1,15 @@
 <?php
 
-namespace SalesForce\MarketingCloud\Test\Model\Addon;
+namespace SalesForce\MarketingCloud\TestHelper\Model\Provider;
 
 use SalesForce\MarketingCloud\Model\ModelInterface;
 
 /**
- * Trait BaseAddon
+ * Class AbstractModelProvider
  *
- * @package SalesForce\MarketingCloud\Test\Model\Addon
+ * @package SalesForce\MarketingCloud\TestHelper\Model\Provider
  */
-trait BaseAddon
+abstract class AbstractModelProvider
 {
     /**
      * Creates a test object

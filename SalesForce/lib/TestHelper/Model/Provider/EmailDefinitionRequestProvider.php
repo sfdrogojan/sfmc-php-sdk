@@ -1,23 +1,18 @@
 <?php
 
-namespace SalesForce\MarketingCloud\Test\Model\Addon;
+namespace SalesForce\MarketingCloud\TestHelper\Model\Provider;
 
-use SalesForce\MarketingCloud\Model\Asset;
-use SalesForce\MarketingCloud\Model\AssetType;
-use SalesForce\MarketingCloud\Model\CreateEmailDefinitionContent;
 use SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest;
 use SalesForce\MarketingCloud\Model\CreateEmailDefinitionSubscriptions;
 use SalesForce\MarketingCloud\Model\ModelInterface;
 
 /**
- * Trait CreateEmailDefinitionRequestAddon
+ * Class EmailDefinitionRequestProvider
  *
- * @package SalesForce\MarketingCloud\Test\Model\Addon
+ * @package TestHelper\Model\Provider
  */
-trait CreateEmailDefinitionRequestAddon
+class EmailDefinitionRequestProvider extends AbstractModelProvider
 {
-    use BaseAddon;
-
     /**
      * Creates a test object
      *
@@ -31,7 +26,7 @@ trait CreateEmailDefinitionRequestAddon
         $object = new CreateEmailDefinitionRequest([
             "name" => $name,
             "definitionKey" => $uniqueKey,
-            "subscriptions" => new CreateEmailDefinitionSubscriptions(["list" => "All Subscribers"])
+            "subscriptions" => new CreateEmailDefinitionSubscriptions(["list" => "All Subscribers"]),
         ]);
 
         return $object;
@@ -40,12 +35,13 @@ trait CreateEmailDefinitionRequestAddon
     /**
      * Updates some field of the test object
      *
-     * @param ModelInterface|Asset $object
+     * @param ModelInterface|CreateEmailDefinitionRequest $object
      * @return ModelInterface
      */
     public static function updateTestModel(ModelInterface $object): ModelInterface
     {
         $object->setName("Some random content");
+        $object->setRequestId("");
 
         return $object;
     }
