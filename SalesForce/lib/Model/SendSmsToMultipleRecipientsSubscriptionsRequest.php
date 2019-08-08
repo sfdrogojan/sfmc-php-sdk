@@ -158,16 +158,6 @@ class SendSmsToMultipleRecipientsSubscriptionsRequest implements ModelInterface,
         return self::$swaggerModelName;
     }
 
-    /**
-     * The test name of the model.
-     *
-     * @return string
-     */
-    public static function getTestModelClass(): string
-    {
-        return "\SalesForce\MarketingCloud\Test\Model\SendSmsToMultipleRecipientsSubscriptionsRequestTest";
-    }
-
     
 
     

@@ -168,16 +168,6 @@ class SendDefinitionToSingleRecipientResponse implements ModelInterface, ArrayAc
         return self::$swaggerModelName;
     }
 
-    /**
-     * The test name of the model.
-     *
-     * @return string
-     */
-    public static function getTestModelClass(): string
-    {
-        return "\SalesForce\MarketingCloud\Test\Model\SendDefinitionToSingleRecipientResponseTest";
-    }
-
     
 
     
