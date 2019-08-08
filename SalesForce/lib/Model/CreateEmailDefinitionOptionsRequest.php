@@ -158,6 +158,16 @@ class CreateEmailDefinitionOptionsRequest implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
+    /**
+     * The test name of the model.
+     *
+     * @return string
+     */
+    public static function getTestModelClass(): string
+    {
+        return "\SalesForce\MarketingCloud\Test\Model\CreateEmailDefinitionOptionsRequestTest";
+    }
+
     
 
     
@@ -297,5 +307,4 @@ class CreateEmailDefinitionOptionsRequest implements ModelInterface, ArrayAccess
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

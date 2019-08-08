@@ -168,6 +168,16 @@ class GetDefinitionsNotSentToRecipientsMessageInfo implements ModelInterface, Ar
         return self::$swaggerModelName;
     }
 
+    /**
+     * The test name of the model.
+     *
+     * @return string
+     */
+    public static function getTestModelClass(): string
+    {
+        return "\SalesForce\MarketingCloud\Test\Model\GetDefinitionsNotSentToRecipientsMessageInfoTest";
+    }
+
     
 
     
@@ -357,5 +367,4 @@ class GetDefinitionsNotSentToRecipientsMessageInfo implements ModelInterface, Ar
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

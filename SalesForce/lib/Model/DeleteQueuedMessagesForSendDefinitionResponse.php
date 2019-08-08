@@ -158,6 +158,16 @@ class DeleteQueuedMessagesForSendDefinitionResponse implements ModelInterface, A
         return self::$swaggerModelName;
     }
 
+    /**
+     * The test name of the model.
+     *
+     * @return string
+     */
+    public static function getTestModelClass(): string
+    {
+        return "\SalesForce\MarketingCloud\Test\Model\DeleteQueuedMessagesForSendDefinitionResponseTest";
+    }
+
     
 
     
@@ -297,5 +307,4 @@ class DeleteQueuedMessagesForSendDefinitionResponse implements ModelInterface, A
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

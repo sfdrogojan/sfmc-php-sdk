@@ -163,6 +163,16 @@ class SharingProperties implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
+    /**
+     * The test name of the model.
+     *
+     * @return string
+     */
+    public static function getTestModelClass(): string
+    {
+        return "\SalesForce\MarketingCloud\Test\Model\SharingPropertiesTest";
+    }
+
     const SHARING_TYPE_VIEW = 'view';
     const SHARING_TYPE_EDIT = 'edit';
     const SHARING_TYPE_LOCAL = 'local';
@@ -361,5 +371,4 @@ class SharingProperties implements ModelInterface, ArrayAccess
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 

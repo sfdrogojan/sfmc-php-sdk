@@ -168,6 +168,16 @@ class SendEmailToMultipleRecipientsRequest implements ModelInterface, ArrayAcces
         return self::$swaggerModelName;
     }
 
+    /**
+     * The test name of the model.
+     *
+     * @return string
+     */
+    public static function getTestModelClass(): string
+    {
+        return "\SalesForce\MarketingCloud\Test\Model\SendEmailToMultipleRecipientsRequestTest";
+    }
+
     
 
     
@@ -363,5 +373,4 @@ class SendEmailToMultipleRecipientsRequest implements ModelInterface, ArrayAcces
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
 
