@@ -30,7 +30,6 @@
 namespace SalesForce\MarketingCloud\Test\Model;
 
 use PHPUnit\Framework\TestCase;
-use SalesForce\MarketingCloud\Test\Model\Addon\CampaignAddon;
 
 /**
  * CampaignTest Class Doc Comment
@@ -43,8 +42,6 @@ use SalesForce\MarketingCloud\Test\Model\Addon\CampaignAddon;
  */
 class CampaignTest extends TestCase
 {
-    use CampaignAddon;
-
     /**
      * Test "Campaign"
      */

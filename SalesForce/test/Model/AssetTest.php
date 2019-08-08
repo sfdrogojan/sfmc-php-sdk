@@ -30,7 +30,6 @@
 namespace SalesForce\MarketingCloud\Test\Model;
 
 use PHPUnit\Framework\TestCase;
-use SalesForce\MarketingCloud\Test\Model\Addon\AssetAddon;
 
 /**
  * AssetTest Class Doc Comment
@@ -43,8 +42,6 @@ use SalesForce\MarketingCloud\Test\Model\Addon\AssetAddon;
  */
 class AssetTest extends TestCase
 {
-    use AssetAddon;
-
     /**
      * Test "Asset"
      */
