@@ -29,6 +29,7 @@
 namespace SalesForce\MarketingCloud\Test\Api;
 
 use GuzzleHttp\Client;
+use SalesForce\MarketingCloud\ApiException;
 use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\TestHelper\Api\BaseApiTest;
 use SalesForce\MarketingCloud\Configuration;
@@ -159,7 +160,12 @@ class TransactionalMessagingApiTest extends BaseApiTest
         );
 
         $this->createResourceOnEndpoint();
-        $this->executeOperation("DELETE", "deleteQueuedMessagesForSmsDefinition");
+
+        // The actual test
+        $client = $this->createClient();
+        $response = $client->deleteQueuedMessagesForSmsDefinition($this->getResourceId());
+
+        $this->assertNotNull($response->getRequestId());
     }
     
     /**
@@ -229,22 +235,21 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getEmailSendStatusForRecipient");
     }
-    
+
     /**
      * Test case for getEmailsNotSentToRecipients
      *
      * getEmailsNotSentToRecipients.
      *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException
      */
     public function testGetEmailsNotSentToRecipients()
     {
-        $this->setModelClass(
-            __FUNCTION__,
-            "\SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse"
-        );
+        $response = $this->createClient()->getEmailsNotSentToRecipients("notSent");
 
-        $this->createResourceOnEndpoint();
-        $this->executeOperation("GET", "getEmailsNotSentToRecipients");
+        $this->assertNotNull($response->getRequestId());
+        $this->assertNotNull($response->getCount());
     }
     
     /**
@@ -289,13 +294,10 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testGetSMSsNotSentToRecipients()
     {
-        $this->setModelClass(
-            __FUNCTION__,
-            "\SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse"
-        );
+        $response = $this->createClient()->getSMSsNotSentToRecipients("notSent");
 
-        $this->createResourceOnEndpoint();
-        $this->executeOperation("GET", "getSMSsNotSentToRecipients");
+        $this->assertNotNull($response->getRequestId());
+        $this->assertNotNull($response->getCount());
     }
     
     /**

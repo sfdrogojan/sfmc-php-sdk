@@ -2,16 +2,15 @@
 
 namespace SalesForce\MarketingCloud\TestHelper\Model\Provisioner;
 
-use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
 use SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest;
 use SalesForce\MarketingCloud\Model\ModelInterface;
 
 /**
- * Class QueuedMessagesForSendDefinitionResponse
+ * Class QueuedMessagesForEmailDefinitionResponse
  *
  * @package SalesForce\MarketingCloud\TestHelper\Model\Provisioner
  */
-class QueuedMessagesForSendDefinitionResponse extends EmailDefinitionRequest
+class QueuedMessagesForEmailDefinitionResponse extends EmailDefinitionRequest
 {
     /**
      * Executes all the necessary provisioning

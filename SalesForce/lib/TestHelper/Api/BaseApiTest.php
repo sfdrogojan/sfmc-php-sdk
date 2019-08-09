@@ -60,6 +60,11 @@ abstract class BaseApiTest extends TestCase
     private $httpMethod;
 
     /**
+     * @var string
+     */
+    private $apiMethod;
+
+    /**
      * @inheritDoc
      */
     public static function setUpBeforeClass(): void
@@ -107,10 +112,11 @@ abstract class BaseApiTest extends TestCase
      */
     protected function setModelClass(string $invokerMethod, ?string $modelClass): void
     {
+        $this->apiMethod = lcfirst(ltrim($invokerMethod, "test"));
         $this->originalModelClass = $modelClass;
 
         if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass(lcfirst(ltrim($invokerMethod, "test")));
+            $modelClass = $this->guessModelClass($this->apiMethod);
         }
 
         $this->modelClass = $modelClass;
@@ -191,11 +197,11 @@ abstract class BaseApiTest extends TestCase
         $client = $this->createClient();
 
         // Creating the provisioner
-        $provisioner = ProvisionerResolver::resolve($this->modelClass);
+        $provisioner = ProvisionerResolver::resolve($this->modelClass, $this->apiMethod);
         $this->provisioner = new $provisioner($client);
 
         // Store this for later use
-        $this->modelProvider = ModelProviderResolver::resolve($this->modelClass);
+        $this->modelProvider = ModelProviderResolver::resolve($this->modelClass, $this->apiMethod);
 
         // Setup
         $clientMethod = $this->modelProvider::getApiCreateMethod();
