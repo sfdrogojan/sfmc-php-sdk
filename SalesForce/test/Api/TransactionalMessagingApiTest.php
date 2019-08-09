@@ -30,7 +30,9 @@ namespace SalesForce\MarketingCloud\Test\Api;
 
 use GuzzleHttp\Client;
 use SalesForce\MarketingCloud\Model\Recipient;
+use SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest;
 use SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest;
+use SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest;
 use SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest;
 use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\TestHelper\Api\BaseApiTest;
@@ -449,13 +451,31 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testSendEmailToMultipleRecipients()
     {
-        $this->setModelClass(
-            __FUNCTION__,
-            "\SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse"
-        );
+        $client = $this->createClient();
 
-        $this->createResourceOnEndpoint();
-        $this->executeOperation("POST", "sendEmailToMultipleRecipients");
+        // Create the email definition
+        $emailDefinitionProvisioner = new EmailDefinition($client);
+        $emailDefinition = $emailDefinitionProvisioner->provision(EmailDefinitionProvider::getTestModel());
+        $emailDefinition = $client->createEmailDefinition($emailDefinition->__toString());
+
+        // Construct the email request
+        $messageKey = md5(rand(0, 9999));
+        $recipient = new Recipient([
+            "contactKey" => "johnDoe@gmail.com"
+        ]);
+
+        $messageRequestBody = new SendEmailToMultipleRecipientsRequest([
+            "definitionKey" => $emailDefinition->getDefinitionKey(),
+            "recipients" => [
+                new Recipient(["contactKey" => "johnDoe@gmail.com"]),
+                new Recipient(["contactKey" => "johnDoe2@gmail.com"]),
+            ]
+        ]);
+
+        // SUT
+        $result = $client->sendEmailToMultipleRecipients($messageRequestBody);
+
+        $this->assertNotNull($result->getRequestId());
     }
 
     /**
@@ -466,13 +486,28 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testSendEmailToSingleRecipient()
     {
-        $this->setModelClass(
-            __FUNCTION__,
-            "\SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse"
-        );
+        $client = $this->createClient();
 
-        $this->createResourceOnEndpoint();
-        $this->executeOperation("POST", "sendEmailToSingleRecipient");
+        // Create the email definition
+        $emailDefinitionProvisioner = new EmailDefinition($client);
+        $emailDefinition = $emailDefinitionProvisioner->provision(EmailDefinitionProvider::getTestModel());
+        $emailDefinition = $client->createEmailDefinition($emailDefinition->__toString());
+
+        // Construct the email request
+        $messageKey = md5(rand(0, 9999));
+        $recipient = new Recipient([
+            "contactKey" => "johnDoe@gmail.com"
+        ]);
+
+        $messageRequestBody = new SendEmailToSingleRecipientRequest([
+            "definitionKey" => $emailDefinition->getDefinitionKey(),
+            "recipient" => $recipient
+        ]);
+
+        // SUT
+        $result = $client->sendEmailToSingleRecipient($messageKey, $messageRequestBody);
+
+        $this->assertNotNull($result->getRequestId());
     }
 
     /**
@@ -483,13 +518,25 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testSendSmsToMultipleRecipients()
     {
-        $this->setModelClass(
-            __FUNCTION__,
-            "\SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse"
-        );
+        $client = $this->createClient();
 
-        $this->createResourceOnEndpoint();
-        $this->executeOperation("POST", "sendSmsToMultipleRecipients");
+        // Create the email definition
+        $provider = new SmsDefinition($client);
+        $definition = $provider->provision(SmsDefinitionProvider::getTestModel());
+        $definition = $client->createSmsDefinition($definition->__toString());
+
+        $body = new SendSmsToMultipleRecipientsRequest([
+            "definitionKey" => $definition->getDefinitionKey(),
+            "recipients" => [
+                new Recipient(["contactKey" => "johnDoe@gmail.com"]),
+                new Recipient(["contactKey" => "johnDoe2@gmail.com"]),
+            ]
+        ]);
+
+        // SUT
+        $result = $client->sendSmsToMultipleRecipients($body);
+
+        $this->assertNotNull($result->getRequestId());
     }
 
     /**
@@ -500,12 +547,27 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testSendSmsToSingleRecipient()
     {
-        $this->setModelClass(
-            __FUNCTION__,
-            "\SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse"
-        );
+        $client = $this->createClient();
 
-        $this->createResourceOnEndpoint();
-        $this->executeOperation("POST", "sendSmsToSingleRecipient");
+        // Create the email definition
+        $provider = new SmsDefinition($client);
+        $definition = $provider->provision(SmsDefinitionProvider::getTestModel());
+        $definition = $client->createSmsDefinition($definition->__toString());
+
+        // Construct the email request
+        $messageKey = md5(rand(0, 9999));
+        $recipient = new Recipient([
+            "contactKey" => "johnDoe@gmail.com"
+        ]);
+
+        $body = new SendSmsToSingleRecipientRequest([
+            "definitionKey" => $definition->getDefinitionKey(),
+            "recipient" => $recipient
+        ]);
+
+        // SUT
+        $result = $client->sendSmsToSingleRecipient($messageKey, $body);
+
+        $this->assertNotNull($result->getRequestId());
     }
 }
