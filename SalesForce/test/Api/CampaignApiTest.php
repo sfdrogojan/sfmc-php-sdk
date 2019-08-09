@@ -29,9 +29,8 @@
 namespace SalesForce\MarketingCloud\Test\Api;
 
 use GuzzleHttp\Client;
-use SalesForce\MarketingCloud\ApiException;
-use SalesForce\MarketingCloud\TestHelper\Api\BaseApiTest;
 use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
+use SalesForce\MarketingCloud\TestHelper\Api\BaseApiTest;
 use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\Api\AbstractApi;
 use SalesForce\MarketingCloud\Api\CampaignApi;
@@ -72,7 +71,7 @@ class CampaignApiTest extends BaseApiTest
         return $this->client;
     }
 
-
+    
     /**
      * Test case for createCampaign
      *
@@ -89,7 +88,7 @@ class CampaignApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("POST", "createCampaign");
     }
-
+    
     /**
      * Test case for deleteCampaignById
      *
@@ -98,10 +97,6 @@ class CampaignApiTest extends BaseApiTest
      */
     public function testDeleteCampaignById()
     {
-        $this->expectException(ApiException::class);
-        $this->expectExceptionCode(400); // This API is royalty...it returns 400 when others return 404
-
-        $this->setHttpMethod("DELETE");
         $this->setModelClass(
             __FUNCTION__,
             ""
@@ -116,7 +111,7 @@ class CampaignApiTest extends BaseApiTest
         $client->deleteCampaignById($resourceId);
         $client->getCampaignById($resourceId);
     }
-
+    
     /**
      * Test case for getCampaignById
      *
