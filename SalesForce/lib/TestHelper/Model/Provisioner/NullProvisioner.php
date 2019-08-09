@@ -9,7 +9,7 @@ use SalesForce\MarketingCloud\Model\ModelInterface;
  *
  * @package SalesForce\MarketingCloud\TestHelper\Model\Provisioner
  */
-class NullProvisioner extends AbstractApiProvisioner
+class NullProvisioner extends AbstractModelProvisioner
 {
     /**
      * NullProvisioner constructor.

@@ -6,11 +6,11 @@ use SalesForce\MarketingCloud\Api\AbstractApi;
 use SalesForce\MarketingCloud\Model\ModelInterface;
 
 /**
- * Class AbstractApiProvisioner
+ * Class AbstractModelProvisioner
  *
  * @package SalesForce\MarketingCloud\TestHelper\Model\Provisioner
  */
-abstract class AbstractApiProvisioner
+abstract class AbstractModelProvisioner
 {
     /**
      * @var AbstractApi

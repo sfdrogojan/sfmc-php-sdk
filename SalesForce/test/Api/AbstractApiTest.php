@@ -7,7 +7,7 @@ use SalesForce\MarketingCloud\Api\AbstractApi;
 use SalesForce\MarketingCloud\ApiException;
 use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\Model\ModelInterface;
-use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\AbstractApiProvisioner;
+use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\AbstractModelProvisioner;
 use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\ProvisionerResolver;
 use SalesForce\MarketingCloud\TestHelper\Model\Provider\AbstractModelProvider;
 use SalesForce\MarketingCloud\TestHelper\Model\Provider\ModelProviderResolver;
@@ -30,7 +30,7 @@ abstract class AbstractApiTest extends TestCase
     protected $client;
 
     /**
-     * @var AbstractApiProvisioner
+     * @var AbstractModelProvisioner
      */
     private $provisioner;
 

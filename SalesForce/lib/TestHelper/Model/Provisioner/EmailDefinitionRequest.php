@@ -19,7 +19,7 @@ use SalesForce\MarketingCloud\TestHelper\Model\Provider\AssetProvider;
  *
  * @package SalesForce\MarketingCloud\TestHelper\Model\Provisioner
  */
-class EmailDefinitionRequest extends AbstractApiProvisioner
+class EmailDefinitionRequest extends AbstractModelProvisioner
 {
     /**
      * @var Asset

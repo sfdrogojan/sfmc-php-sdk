@@ -2,35 +2,26 @@
 
 namespace SalesForce\MarketingCloud\TestHelper\Model\Provisioner;
 
-use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
+use SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest;
 use SalesForce\MarketingCloud\Model\ModelInterface;
 
 /**
- * Class SmsDefinitionRequest
+ * Class DefinitionSendStatusForRecipientResponse
  *
  * @package SalesForce\MarketingCloud\TestHelper\Model\Provisioner
  */
-class SmsDefinitionRequest extends AbstractModelProvisioner
+class DefinitionSendStatusForRecipientResponse extends AbstractModelProvisioner
 {
-    /**
-     * SmsDefinitionRequest constructor.
-     * 
-     * @param TransactionalMessagingApi $client
-     */
-    public function __construct(TransactionalMessagingApi $client)
-    {
-        $this->client = $client;
-    }
-
     /**
      * Executes all the necessary provisioning
      *
-     * @param ModelInterface $model
+     * @param ModelInterface|CreateEmailDefinitionRequest $model
      * @return ModelInterface
      */
     public function provision(ModelInterface $model): ModelInterface
     {
-        return $model;
+        // Create an EmailDefinition on the API
+        // Call SendEmailToSingleRecipientRequest::setDefinitionKey(CreateEmailDefinitionRequest::getDefinitionKey())
     }
 
     /**
@@ -41,6 +32,6 @@ class SmsDefinitionRequest extends AbstractModelProvisioner
      */
     public function deplete(ModelInterface $model): ModelInterface
     {
-        return $model;
+        // TODO: Implement deplete() method.
     }
 }
