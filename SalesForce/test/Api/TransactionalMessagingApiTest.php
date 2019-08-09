@@ -79,15 +79,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testCreateEmailDefinition()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("createEmailDefinition");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("POST");
-        $this->$actionMethod("createEmailDefinition");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("POST", "createEmailDefinition");
     }
     
     /**
@@ -98,15 +96,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testCreateSmsDefinition()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("createSmsDefinition");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("POST");
-        $this->$actionMethod("createSmsDefinition");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("POST", "createSmsDefinition");
     }
     
     /**
@@ -117,15 +113,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testDeleteEmailDefinition()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("deleteEmailDefinition");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("DELETE");
-        $this->$actionMethod("deleteEmailDefinition");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("DELETE", "deleteEmailDefinition");
     }
     
     /**
@@ -136,15 +130,18 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testDeleteQueuedMessagesForEmailDefinition()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("deleteQueuedMessagesForEmailDefinition");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
+        $this->createResourceOnEndpoint();
 
-        $actionMethod = $this->selectActionMethod("DELETE");
-        $this->$actionMethod("deleteQueuedMessagesForEmailDefinition");
+        // The actual test
+        $client = $this->createClient();
+        $response = $client->deleteQueuedMessagesForEmailDefinition($this->getResourceId());
+
+        $this->assertNotNull($response->getRequestId());
     }
     
     /**
@@ -155,15 +152,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testDeleteQueuedMessagesForSmsDefinition()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("deleteQueuedMessagesForSmsDefinition");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("DELETE");
-        $this->$actionMethod("deleteQueuedMessagesForSmsDefinition");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("DELETE", "deleteQueuedMessagesForSmsDefinition");
     }
     
     /**
@@ -174,15 +169,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testDeleteSmsDefinition()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("deleteSmsDefinition");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("DELETE");
-        $this->$actionMethod("deleteSmsDefinition");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("DELETE", "deleteSmsDefinition");
     }
     
     /**
@@ -193,15 +186,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testGetEmailDefinition()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getEmailDefinition");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getEmailDefinition");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("GET", "getEmailDefinition");
     }
     
     /**
@@ -212,15 +203,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testGetEmailDefinitions()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\GetEmailDefinitionsResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getEmailDefinitions");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\GetEmailDefinitionsResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getEmailDefinitions");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("GET", "getEmailDefinitions");
     }
     
     /**
@@ -231,15 +220,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testGetEmailSendStatusForRecipient()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getEmailSendStatusForRecipient");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getEmailSendStatusForRecipient");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("GET", "getEmailSendStatusForRecipient");
     }
     
     /**
@@ -250,15 +237,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testGetEmailsNotSentToRecipients()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getEmailsNotSentToRecipients");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getEmailsNotSentToRecipients");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("GET", "getEmailsNotSentToRecipients");
     }
     
     /**
@@ -269,15 +254,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testGetQueueMetricsForEmailDefinition()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getQueueMetricsForEmailDefinition");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getQueueMetricsForEmailDefinition");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("GET", "getQueueMetricsForEmailDefinition");
     }
     
     /**
@@ -288,15 +271,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testGetQueueMetricsForSmsDefinition()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getQueueMetricsForSmsDefinition");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getQueueMetricsForSmsDefinition");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("GET", "getQueueMetricsForSmsDefinition");
     }
     
     /**
@@ -307,15 +288,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testGetSMSsNotSentToRecipients()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getSMSsNotSentToRecipients");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getSMSsNotSentToRecipients");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("GET", "getSMSsNotSentToRecipients");
     }
     
     /**
@@ -326,15 +305,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testGetSmsDefinition()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getSmsDefinition");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getSmsDefinition");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("GET", "getSmsDefinition");
     }
     
     /**
@@ -345,15 +322,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testGetSmsDefinitions()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\GetSmsDefinitionsResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getSmsDefinitions");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\GetSmsDefinitionsResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getSmsDefinitions");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("GET", "getSmsDefinitions");
     }
     
     /**
@@ -364,15 +339,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testGetSmsSendStatusForRecipient()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getSmsSendStatusForRecipient");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getSmsSendStatusForRecipient");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("GET", "getSmsSendStatusForRecipient");
     }
     
     /**
@@ -383,15 +356,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testPartiallyUpdateEmailDefinition()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("partiallyUpdateEmailDefinition");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("PATCH");
-        $this->$actionMethod("partiallyUpdateEmailDefinition");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("PATCH", "partiallyUpdateEmailDefinition");
     }
     
     /**
@@ -402,15 +373,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testPartiallyUpdateSmsDefinition()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("partiallyUpdateSmsDefinition");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("PATCH");
-        $this->$actionMethod("partiallyUpdateSmsDefinition");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("PATCH", "partiallyUpdateSmsDefinition");
     }
     
     /**
@@ -421,15 +390,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testSendEmailToMultipleRecipients()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("sendEmailToMultipleRecipients");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("POST");
-        $this->$actionMethod("sendEmailToMultipleRecipients");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("POST", "sendEmailToMultipleRecipients");
     }
     
     /**
@@ -440,15 +407,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testSendEmailToSingleRecipient()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("sendEmailToSingleRecipient");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("POST");
-        $this->$actionMethod("sendEmailToSingleRecipient");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("POST", "sendEmailToSingleRecipient");
     }
     
     /**
@@ -459,15 +424,13 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testSendSmsToMultipleRecipients()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("sendSmsToMultipleRecipients");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("POST");
-        $this->$actionMethod("sendSmsToMultipleRecipients");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("POST", "sendSmsToMultipleRecipients");
     }
     
     /**
@@ -478,14 +441,12 @@ class TransactionalMessagingApiTest extends AbstractApiTest
      */
     public function testSendSmsToSingleRecipient()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("sendSmsToSingleRecipient");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("POST");
-        $this->$actionMethod("sendSmsToSingleRecipient");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("POST", "sendSmsToSingleRecipient");
     }
 }

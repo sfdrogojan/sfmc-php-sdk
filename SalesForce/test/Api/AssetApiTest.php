@@ -79,15 +79,13 @@ class AssetApiTest extends AbstractApiTest
      */
     public function testCreateAsset()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\Asset";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("createAsset");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\Asset"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("POST");
-        $this->$actionMethod("createAsset");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("POST", "createAsset");
     }
     
     /**
@@ -98,15 +96,13 @@ class AssetApiTest extends AbstractApiTest
      */
     public function testDeleteAssetById()
     {
-        $modelClass = "";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("deleteAssetById");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            ""
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("DELETE");
-        $this->$actionMethod("deleteAssetById");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("DELETE", "deleteAssetById");
     }
     
     /**
@@ -117,15 +113,13 @@ class AssetApiTest extends AbstractApiTest
      */
     public function testGetAssetById()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\Asset";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getAssetById");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\Asset"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getAssetById");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("GET", "getAssetById");
     }
     
     /**
@@ -136,14 +130,12 @@ class AssetApiTest extends AbstractApiTest
      */
     public function testPartiallyUpdateAssetById()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\Asset";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("partiallyUpdateAssetById");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\Asset"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("PATCH");
-        $this->$actionMethod("partiallyUpdateAssetById");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("PATCH", "partiallyUpdateAssetById");
     }
 }

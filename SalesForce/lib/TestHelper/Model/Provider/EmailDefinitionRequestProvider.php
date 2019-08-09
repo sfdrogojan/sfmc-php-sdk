@@ -41,7 +41,6 @@ class EmailDefinitionRequestProvider extends AbstractModelProvider
     public static function updateTestModel(ModelInterface $object): ModelInterface
     {
         $object->setName("Some random content");
-        $object->setRequestId("");
 
         return $object;
     }

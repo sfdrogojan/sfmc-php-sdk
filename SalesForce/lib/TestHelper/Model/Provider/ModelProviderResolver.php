@@ -2,9 +2,10 @@
 
 namespace SalesForce\MarketingCloud\TestHelper\Model\Provider;
 
-use SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest;
+use SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse;
 use SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse;
 use SalesForce\MarketingCloud\Model\GetEmailDefinitionsResponse;
+use SalesForce\MarketingCloud\Model\GetSmsDefinitionsResponse;
 
 /**
  * Class ModelProviderResolver
@@ -19,8 +20,13 @@ class ModelProviderResolver
      * @var array
      */
     private static $aliases = [
-        DeleteSendDefinitionResponse::class => CreateEmailDefinitionRequest::class,
-        GetEmailDefinitionsResponse::class => CreateEmailDefinitionRequest::class
+        // Email definition
+        GetEmailDefinitionsResponse::class => EmailDefinitionRequestProvider::class,
+        DeleteQueuedMessagesForSendDefinitionResponse::class => EmailDefinitionRequestProvider::class,
+
+        // SMS definition
+        GetSmsDefinitionsResponse::class => SmsDefinitionRequestProvider::class,
+        DeleteSendDefinitionResponse::class => SmsDefinitionRequestProvider::class,
     ];
 
     /**
@@ -40,17 +46,21 @@ class ModelProviderResolver
     {
         $modelClass = ltrim($modelClass, "\\"); // Fix naming
 
-        // Check for aliases
+        // Check for aliases and return directly...no need to put in cache and do the extra processing
         if (isset(static::$aliases[$modelClass])) {
-            $modelClass = static::$aliases[$modelClass];
+            return static::$aliases[$modelClass];
         }
 
         // Resolve the model class
         if (!isset(static::$cache[$modelClass])) {
-            $className = explode('\\', $modelClass);
-            $className = $className[count($className) - 1];
-            $className = str_replace(["Create", "Send", "Update", "Delete"], "", $className);
-            $className .= "Provider";
+            $matches = [];
+            $className = "";
+
+            if (preg_match('/(.*)\\\(Create|Send|Update|Delete)(.*)/', $modelClass, $matches)) {
+                $className = $matches[3] . "Provider";
+            } else if(preg_match('/(.*)\\\(.*)/', $modelClass, $matches)) {
+                $className = $matches[2] . "Provider";
+            }
 
             if (class_exists(__NAMESPACE__ . '\\' . $className)) {
                 static::$cache[$modelClass] = __NAMESPACE__ . '\\' . $className;

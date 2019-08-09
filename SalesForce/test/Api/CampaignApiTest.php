@@ -29,6 +29,7 @@
 namespace SalesForce\MarketingCloud\Test\Api;
 
 use GuzzleHttp\Client;
+use SalesForce\MarketingCloud\ApiException;
 use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\Api\AbstractApi;
@@ -70,7 +71,7 @@ class CampaignApiTest extends AbstractApiTest
         return $this->client;
     }
 
-    
+
     /**
      * Test case for createCampaign
      *
@@ -79,17 +80,15 @@ class CampaignApiTest extends AbstractApiTest
      */
     public function testCreateCampaign()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\Campaign";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("createCampaign");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\Campaign"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("POST");
-        $this->$actionMethod("createCampaign");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("POST", "createCampaign");
     }
-    
+
     /**
      * Test case for deleteCampaignById
      *
@@ -98,17 +97,25 @@ class CampaignApiTest extends AbstractApiTest
      */
     public function testDeleteCampaignById()
     {
-        $modelClass = "";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("deleteCampaignById");
-        }
+        $this->expectException(ApiException::class);
+        $this->expectExceptionCode(400); // This API is royalty...it returns 400 when others return 404
 
-        $this->createResourceOnEndpoint($modelClass);
+        $this->setHttpMethod("DELETE");
+        $this->setModelClass(
+            __FUNCTION__,
+            ""
+        );
 
-        $actionMethod = $this->selectActionMethod("DELETE");
-        $this->$actionMethod("deleteCampaignById");
+        $this->createResourceOnEndpoint();
+
+        // The actual test
+        $resourceId = $this->getResourceId();
+        $client = $this->createClient();
+
+        $client->deleteCampaignById($resourceId);
+        $client->getCampaignById($resourceId);
     }
-    
+
     /**
      * Test case for getCampaignById
      *
@@ -117,14 +124,12 @@ class CampaignApiTest extends AbstractApiTest
      */
     public function testGetCampaignById()
     {
-        $modelClass = "\SalesForce\MarketingCloud\Model\Campaign";
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass("getCampaignById");
-        }
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\Campaign"
+        );
 
-        $this->createResourceOnEndpoint($modelClass);
-
-        $actionMethod = $this->selectActionMethod("GET");
-        $this->$actionMethod("getCampaignById");
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("GET", "getCampaignById");
     }
 }

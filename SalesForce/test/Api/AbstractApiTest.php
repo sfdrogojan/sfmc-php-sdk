@@ -50,6 +50,11 @@ abstract class AbstractApiTest extends TestCase
     private $originalModelClass;
 
     /**
+     * @var ModelInterface|string
+     */
+    private $modelClass;
+
+    /**
      * @var string
      */
     private $httpMethod;
@@ -95,31 +100,55 @@ abstract class AbstractApiTest extends TestCase
     protected abstract function createClient(): AbstractApi;
 
     /**
+     * Sets the class of the model in the SUT
+     *
+     * @param string $invokerMethod
+     * @param string|null $modelClass
+     */
+    protected function setModelClass(string $invokerMethod, ?string $modelClass): void
+    {
+        $this->originalModelClass = $modelClass;
+
+        if (empty($modelClass)) {
+            $modelClass = $this->guessModelClass(lcfirst(ltrim($invokerMethod, "test")));
+        }
+
+        $this->modelClass = $modelClass;
+    }
+
+    /**
+     * Sets the HTTP method of the test
+     *
+     * @param string $httpMethod
+     */
+    public function setHttpMethod(string $httpMethod): void
+    {
+        $this->httpMethod = $httpMethod;
+    }
+
+    /**
      * Selects the appropriate action method
      *
      * @param string $httpMethod
-     * @return string
+     * @param string $operation
+     * @return void
      */
-    protected function selectActionMethod(string $httpMethod): string
+    protected function executeOperation(string $httpMethod, string $operation): void
     {
+        $methodMap = [
+            "GET" => "doGetAction",
+            "POST" => "doCreateAction",
+            "PATCH" => "doPatchAction",
+            "DELETE" => "doDeleteAction",
+        ];
+
+        if (!isset($methodMap[$httpMethod])) {
+            throw new \InvalidArgumentException("The {$httpMethod} action is not supported");
+        }
+
         $this->httpMethod = $httpMethod;
 
-        switch ($httpMethod) {
-            case "GET":
-                return "doGetAction";
-
-            case "POST":
-                return "doCreateAction";
-
-            case "PATCH":
-                return "doPatchAction";
-
-            case "DELETE":
-                return "doDeleteAction";
-
-            default:
-                throw new \InvalidArgumentException("The {$httpMethod} action is not supported");
-        }
+        call_user_func([$this, $methodMap[$httpMethod]], $operation);
     }
 
     /**
@@ -155,20 +184,18 @@ abstract class AbstractApiTest extends TestCase
     /**
      * Creates the resource on the API
      *
-     * @param string|ModelInterface $modelClass
      * @return void
      */
-    protected function createResourceOnEndpoint(string $modelClass): void
+    protected function createResourceOnEndpoint(): void
     {
         $client = $this->createClient();
 
         // Creating the provisioner
-        $provisioner = ProvisionerResolver::resolve($modelClass);
+        $provisioner = ProvisionerResolver::resolve($this->modelClass);
         $this->provisioner = new $provisioner($client);
 
         // Store this for later use
-        $this->originalModelClass = $modelClass;
-        $this->modelProvider = ModelProviderResolver::resolve($modelClass);
+        $this->modelProvider = ModelProviderResolver::resolve($this->modelClass);
 
         // Setup
         $clientMethod = $this->modelProvider::getApiCreateMethod();

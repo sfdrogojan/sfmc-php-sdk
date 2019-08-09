@@ -2,8 +2,6 @@
 
 namespace SalesForce\MarketingCloud\TestHelper\Model\Provisioner;
 
-use SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest;
-use SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest;
 use SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse;
 use SalesForce\MarketingCloud\Model\GetEmailDefinitionsResponse;
 
@@ -20,8 +18,11 @@ class ProvisionerResolver
      * @var array
      */
     private static $aliases = [
-        DeleteSendDefinitionResponse::class => CreateEmailDefinitionRequest::class,
-        GetEmailDefinitionsResponse::class => CreateEmailDefinitionRequest::class
+        // Email definition
+        GetEmailDefinitionsResponse::class => EmailDefinitionRequest::class,
+
+        // SMS definition
+        DeleteSendDefinitionResponse::class => SmsDefinitionRequest::class,
     ];
 
     /**
@@ -41,16 +42,19 @@ class ProvisionerResolver
     {
         $modelClass = ltrim($modelClass, "\\"); // Fix naming
 
-        // Check for aliases
+        // Check for aliases and return directly...no need to put in cache and do the extra processing
         if (isset(static::$aliases[$modelClass])) {
-            $modelClass = static::$aliases[$modelClass];
+            return static::$aliases[$modelClass];
         }
 
         // Resolve the model class
         if (!isset(static::$cache[$modelClass])) {
-            $className = explode('\\', $modelClass);
-            $className = $className[count($className) - 1];
-            $className = str_replace(["Create", "Send", "Update", "Delete"], "", $className);
+            $matches = [];
+            $className = "";
+
+            if (preg_match('/(.*)\\\(Create|Send|Update|Delete)(.*)/', $modelClass, $matches)) {
+                $className = $matches[3];
+            }
 
             if (class_exists(__NAMESPACE__ . '\\' . $className)) {
                 static::$cache[$modelClass] = __NAMESPACE__ . '\\' . $className;
