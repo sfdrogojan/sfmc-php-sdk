@@ -199,7 +199,7 @@ abstract class AbstractApiTest extends TestCase
 
         // Setup
         $clientMethod = $this->modelProvider::getApiCreateMethod();
-        $model = $this->provisioner->provision($this->modelProvider::createTestModel());
+        $model = $this->provisioner->provision($this->modelProvider::getTestModel());
 
         /** @var ModelInterface $resource */
         $this->resource = call_user_func([$client, $clientMethod], $model->__toString());
@@ -242,10 +242,10 @@ abstract class AbstractApiTest extends TestCase
         $updatedResource = call_user_func(
             [$client, $clientMethod],
             $this->getResourceId(),
-            $this->modelProvider::updateTestModel($this->resource)->__toString()
+            $this->modelProvider::getPatchedModel($this->resource)->__toString()
         );
 
-        $this->assertEquals($this->resource->__toString(), $updatedResource->__toString());
+        $this->assertNotEquals($this->resource->__toString(), $updatedResource->__toString());
     }
 
     /**

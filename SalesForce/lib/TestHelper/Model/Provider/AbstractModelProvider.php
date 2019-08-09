@@ -16,7 +16,7 @@ abstract class AbstractModelProvider
      *
      * @return ModelInterface|null
      */
-    public static abstract function createTestModel(): ?ModelInterface;
+    public static abstract function getTestModel(): ?ModelInterface;
 
     /**
      * Updates some field of the test object
@@ -24,7 +24,7 @@ abstract class AbstractModelProvider
      * @param ModelInterface $object
      * @return ModelInterface|null
      */
-    public static abstract function updateTestModel(ModelInterface $object): ?ModelInterface;
+    public static abstract function getPatchedModel(ModelInterface $object): ?ModelInterface;
 
     /**
      * Returns the method that can be used call the API and create a resource based on the test object

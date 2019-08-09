@@ -56,7 +56,7 @@ class EmailDefinitionRequest extends AbstractApiProvisioner
         );
 
         /** @var Asset $asset */
-        $asset = AssetProvider::createTestModel();
+        $asset = AssetProvider::getTestModel();
         $asset->setAssetType(new AssetType(["id" => 208, "name" => "htmlemail", "displayName" => "htmlemail"]));
 
         return $client->createAsset($asset->__toString());

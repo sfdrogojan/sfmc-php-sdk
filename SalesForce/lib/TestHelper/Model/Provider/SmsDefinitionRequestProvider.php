@@ -7,6 +7,7 @@ use SalesForce\MarketingCloud\Model\CreateSmsDefinitionContent;
 use SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest;
 use SalesForce\MarketingCloud\Model\CreateSmsDefinitionSubscriptions;
 use SalesForce\MarketingCloud\Model\ModelInterface;
+use SalesForce\MarketingCloud\Model\UpdateSmsDefinitionRequest;
 
 /**
  * Class SmsDefinitionRequestProvider
@@ -20,7 +21,7 @@ class SmsDefinitionRequestProvider extends AbstractModelProvider
      *
      * @return ModelInterface|null
      */
-    public static function createTestModel(): ?ModelInterface
+    public static function getTestModel(): ?ModelInterface
     {
         $content = new CreateSmsDefinitionContent(["message" => "Content message"]);
         $subscriptions = new CreateSmsDefinitionSubscriptions([
@@ -31,8 +32,8 @@ class SmsDefinitionRequestProvider extends AbstractModelProvider
 
 
         $object = new CreateSmsDefinitionRequest([
-            "definitionKey" => (string)rand(0, 1000),
-            "definitionName" => (string)rand(0, 1000),
+            "definitionKey" => md5((string)rand(0, 9999)),
+            "definitionName" =>  md5((string)rand(0, 9999)),
             "content" => $content,
             "subscriptions" => $subscriptions,
             "name" => md5(rand(0, 9999))
@@ -47,11 +48,12 @@ class SmsDefinitionRequestProvider extends AbstractModelProvider
      * @param ModelInterface|CreateSmsDefinitionRequest $object
      * @return ModelInterface
      */
-    public static function updateTestModel(ModelInterface $object): ModelInterface
+    public static function getPatchedModel(ModelInterface $object): ModelInterface
     {
-        $object->setContent(new CreateSmsDefinitionContent(["message" => "New Content message"]));
-
-        return $object;
+        return new UpdateSmsDefinitionRequest([
+            "name" => $object->getName(),
+            "content" => new CreateSmsDefinitionContent(["message" => "New Content message"])
+        ]);
     }
 
     /**

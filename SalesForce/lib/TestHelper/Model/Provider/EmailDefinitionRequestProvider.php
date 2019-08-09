@@ -5,6 +5,7 @@ namespace SalesForce\MarketingCloud\TestHelper\Model\Provider;
 use SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest;
 use SalesForce\MarketingCloud\Model\CreateEmailDefinitionSubscriptions;
 use SalesForce\MarketingCloud\Model\ModelInterface;
+use SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest;
 
 /**
  * Class EmailDefinitionRequestProvider
@@ -18,14 +19,15 @@ class EmailDefinitionRequestProvider extends AbstractModelProvider
      *
      * @return ModelInterface|null
      */
-    public static function createTestModel(): ?ModelInterface
+    public static function getTestModel(): ?ModelInterface
     {
-        $uniqueKey = (string)rand(0, 1000);
-        $name = "Name {$uniqueKey}"; // Asset names within a category and asset type must be unique
+        $uniqueKey = (string)rand(0, 9999);
+        $name = md5("Name {$uniqueKey}"); // Asset names within a category and asset type must be unique
 
         $object = new CreateEmailDefinitionRequest([
             "name" => $name,
-            "definitionKey" => $uniqueKey,
+            "description" => "Random description",
+            "definitionKey" => md5($uniqueKey),
             "subscriptions" => new CreateEmailDefinitionSubscriptions(["list" => "All Subscribers"]),
         ]);
 
@@ -38,11 +40,12 @@ class EmailDefinitionRequestProvider extends AbstractModelProvider
      * @param ModelInterface|CreateEmailDefinitionRequest $object
      * @return ModelInterface
      */
-    public static function updateTestModel(ModelInterface $object): ModelInterface
+    public static function getPatchedModel(ModelInterface $object): ModelInterface
     {
-        $object->setName("Some random content");
-
-        return $object;
+        return new UpdateEmailDefinitionRequest([
+            "name" => $object->getName(),
+            "description" => "Updated description"
+        ]);
     }
 
     /**

@@ -18,7 +18,7 @@ class AssetProvider extends AbstractModelProvider
      *
      * @return ModelInterface|null
      */
-    public static function createTestModel(): ?ModelInterface
+    public static function getTestModel(): ?ModelInterface
     {
         $customerKey = (string)rand(0, 1000);
         $name = "AssetName {$customerKey}"; // Asset names within a category and asset type must be unique
@@ -48,11 +48,12 @@ class AssetProvider extends AbstractModelProvider
      * @param ModelInterface|Asset $object
      * @return ModelInterface
      */
-    public static function updateTestModel(ModelInterface $object): ModelInterface
+    public static function getPatchedModel(ModelInterface $object): ModelInterface
     {
-        $object->setContent("Some random content");
+        $patched = clone $object;
+        $patched->setContent("Some random content");
 
-        return $object;
+        return $patched;
     }
 
     /**

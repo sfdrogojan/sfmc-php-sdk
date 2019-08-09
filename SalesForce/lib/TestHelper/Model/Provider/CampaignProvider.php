@@ -17,7 +17,7 @@ class CampaignProvider extends AbstractModelProvider
      *
      * @return ModelInterface|null
      */
-    public static function createTestModel(): ?ModelInterface
+    public static function getTestModel(): ?ModelInterface
     {
         $object = new Campaign([
             "name" => "Random name",
@@ -36,11 +36,12 @@ class CampaignProvider extends AbstractModelProvider
      * @param ModelInterface|Campaign $object
      * @return ModelInterface
      */
-    public static function updateTestModel(ModelInterface $object): ModelInterface
+    public static function getPatchedModel(ModelInterface $object): ModelInterface
     {
-        $object->setName("Some random name");
+        $patched = clone $object;
+        $patched->setName("Some random name");
 
-        return $object;
+        return $patched;
     }
 
     /**
