@@ -29,6 +29,7 @@
 namespace SalesForce\MarketingCloud\Test\Api;
 
 use GuzzleHttp\Client;
+use SalesForce\MarketingCloud\TestHelper\Api\BaseApiTest;
 use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\Api\AbstractApi;
@@ -42,7 +43,7 @@ use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class TransactionalMessagingApiTest extends AbstractApiTest
+class TransactionalMessagingApiTest extends BaseApiTest
 {
     /**
      * @var string

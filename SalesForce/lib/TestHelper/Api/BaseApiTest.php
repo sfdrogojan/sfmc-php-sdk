@@ -1,6 +1,6 @@
 <?php
 
-namespace SalesForce\MarketingCloud\Test\Api;
+namespace SalesForce\MarketingCloud\TestHelper\Api;
 
 use PHPUnit\Framework\TestCase;
 use SalesForce\MarketingCloud\Api\AbstractApi;
@@ -13,11 +13,11 @@ use SalesForce\MarketingCloud\TestHelper\Model\Provider\AbstractModelProvider;
 use SalesForce\MarketingCloud\TestHelper\Model\Provider\ModelProviderResolver;
 
 /**
- * Abstract class AbstractApiTest
+ * Base class for the unit tests
  *
- * @package SalesForce\MarketingCloud\Test\Api
+ * @package SalesForce\MarketingCloud\TestHelper\Api
  */
-abstract class AbstractApiTest extends TestCase
+abstract class BaseApiTest extends TestCase
 {
     /**
      * @var string
