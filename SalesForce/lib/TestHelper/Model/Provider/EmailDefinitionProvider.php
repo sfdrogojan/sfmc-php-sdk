@@ -8,11 +8,11 @@ use SalesForce\MarketingCloud\Model\ModelInterface;
 use SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest;
 
 /**
- * Class EmailDefinitionRequestProvider
+ * Class EmailDefinitionProvider
  *
  * @package TestHelper\Model\Provider
  */
-class EmailDefinitionRequestProvider extends AbstractModelProvider
+class EmailDefinitionProvider extends AbstractModelProvider
 {
     /**
      * Creates a test object

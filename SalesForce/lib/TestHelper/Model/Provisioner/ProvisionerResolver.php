@@ -25,19 +25,19 @@ class ProvisionerResolver
     private static $aliases = [
         "email" => [
             // Email definition
-            CreateEmailDefinitionRequest::class => EmailDefinitionRequest::class,
-            GetEmailDefinitionsResponse::class => EmailDefinitionRequest::class,
-            GetQueueMetricsForSendDefinitionResponse::class => EmailDefinitionRequest::class,
-            DeleteSendDefinitionResponse::class => EmailDefinitionRequest::class,
-            DeleteQueuedMessagesForSendDefinitionResponse::class => QueuedMessagesForEmailDefinitionResponse::class,
+            CreateEmailDefinitionRequest::class => EmailDefinition::class,
+            GetEmailDefinitionsResponse::class => EmailDefinition::class,
+            GetQueueMetricsForSendDefinitionResponse::class => EmailDefinition::class,
+            DeleteSendDefinitionResponse::class => EmailDefinition::class,
+            DeleteQueuedMessagesForSendDefinitionResponse::class => QueuedMessagesForEmailDefinition::class,
         ],
         "sms" => [
             // SMS definition
-            CreateSmsDefinitionRequest::class => SmsDefinitionRequest::class,
-            GetSmsDefinitionsResponse::class => SmsDefinitionRequest::class,
-            GetQueueMetricsForSendDefinitionResponse::class => SmsDefinitionRequest::class,
-            DeleteSendDefinitionResponse::class => SmsDefinitionRequest::class,
-            DeleteQueuedMessagesForSendDefinitionResponse::class => QueuedMessagesForSmsDefinitionResponse::class,
+            CreateSmsDefinitionRequest::class => SmsDefinition::class,
+            GetSmsDefinitionsResponse::class => SmsDefinition::class,
+            GetQueueMetricsForSendDefinitionResponse::class => SmsDefinition::class,
+            DeleteSendDefinitionResponse::class => SmsDefinition::class,
+            DeleteQueuedMessagesForSendDefinitionResponse::class => QueuedMessagesForSmsDefinition::class,
         ],
         "other" => []
     ];

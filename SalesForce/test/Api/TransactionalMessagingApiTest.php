@@ -29,12 +29,18 @@
 namespace SalesForce\MarketingCloud\Test\Api;
 
 use GuzzleHttp\Client;
-use SalesForce\MarketingCloud\ApiException;
+use SalesForce\MarketingCloud\Model\Recipient;
+use SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest;
+use SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest;
 use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\TestHelper\Api\BaseApiTest;
 use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\Api\AbstractApi;
 use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
+use SalesForce\MarketingCloud\TestHelper\Model\Provider\EmailDefinitionProvider;
+use SalesForce\MarketingCloud\TestHelper\Model\Provider\SmsDefinitionProvider;
+use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\EmailDefinition;
+use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\SmsDefinition;
 
 /**
  * TransactionalMessagingApiTest Class Doc Comment
@@ -72,7 +78,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         return $this->client;
     }
 
-    
+
     /**
      * Test case for createEmailDefinition
      *
@@ -89,7 +95,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("POST", "createEmailDefinition");
     }
-    
+
     /**
      * Test case for createSmsDefinition
      *
@@ -106,7 +112,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("POST", "createSmsDefinition");
     }
-    
+
     /**
      * Test case for deleteEmailDefinition
      *
@@ -123,7 +129,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("DELETE", "deleteEmailDefinition");
     }
-    
+
     /**
      * Test case for deleteQueuedMessagesForEmailDefinition
      *
@@ -145,7 +151,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
 
         $this->assertNotNull($response->getRequestId());
     }
-    
+
     /**
      * Test case for deleteQueuedMessagesForSmsDefinition
      *
@@ -167,7 +173,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
 
         $this->assertNotNull($response->getRequestId());
     }
-    
+
     /**
      * Test case for deleteSmsDefinition
      *
@@ -184,7 +190,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("DELETE", "deleteSmsDefinition");
     }
-    
+
     /**
      * Test case for getEmailDefinition
      *
@@ -201,7 +207,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getEmailDefinition");
     }
-    
+
     /**
      * Test case for getEmailDefinitions
      *
@@ -218,7 +224,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getEmailDefinitions");
     }
-    
+
     /**
      * Test case for getEmailSendStatusForRecipient
      *
@@ -227,13 +233,38 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testGetEmailSendStatusForRecipient()
     {
-        $this->setModelClass(
-            __FUNCTION__,
-            "\SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse"
-        );
+        $eventCategories = [
+            "TransactionalSendEvents.EmailSent",
+            "TransactionalSendEvents.EmailQueued",
+            "TransactionalSendEvents.EmailNotSent"
+        ];
 
-        $this->createResourceOnEndpoint();
-        $this->executeOperation("GET", "getEmailSendStatusForRecipient");
+        $client = $this->createClient();
+
+        // Create the email definition
+        $emailDefinitionProvisioner = new EmailDefinition($client);
+        $emailDefinition = $emailDefinitionProvisioner->provision(EmailDefinitionProvider::getTestModel());
+        $emailDefinition = $client->createEmailDefinition($emailDefinition->__toString());
+
+        // Construct the email request
+        $messageKey = md5(rand(0, 9999));
+        $recipient = new Recipient([
+            "contactKey" => "johnDoe@gmail.com"
+        ]);
+
+        $messageRequestBody = new SendEmailToSingleRecipientRequest([
+            "definitionKey" => $emailDefinition->getDefinitionKey(),
+            "recipient" => $recipient
+        ]);
+
+        // SUT
+        $client->sendEmailToSingleRecipient($messageKey, $messageRequestBody);
+
+        // Effect check
+        $result = $client->getEmailSendStatusForRecipient($messageKey);
+
+        $this->assertNotNull($result->getRequestId());
+        $this->assertContains($result->getEventCategoryType(), $eventCategories);
     }
 
     /**
@@ -251,7 +282,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->assertNotNull($response->getRequestId());
         $this->assertNotNull($response->getCount());
     }
-    
+
     /**
      * Test case for getQueueMetricsForEmailDefinition
      *
@@ -268,7 +299,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getQueueMetricsForEmailDefinition");
     }
-    
+
     /**
      * Test case for getQueueMetricsForSmsDefinition
      *
@@ -285,7 +316,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getQueueMetricsForSmsDefinition");
     }
-    
+
     /**
      * Test case for getSMSsNotSentToRecipients
      *
@@ -299,7 +330,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->assertNotNull($response->getRequestId());
         $this->assertNotNull($response->getCount());
     }
-    
+
     /**
      * Test case for getSmsDefinition
      *
@@ -316,7 +347,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getSmsDefinition");
     }
-    
+
     /**
      * Test case for getSmsDefinitions
      *
@@ -333,7 +364,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getSmsDefinitions");
     }
-    
+
     /**
      * Test case for getSmsSendStatusForRecipient
      *
@@ -342,15 +373,40 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testGetSmsSendStatusForRecipient()
     {
-        $this->setModelClass(
-            __FUNCTION__,
-            "\SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse"
-        );
+        $eventCategories = [
+            "TransactionalSendEvents.SMSSent",
+            "TransactionalSendEvents.SMSQueued",
+            "TransactionalSendEvents.SMSNotSent"
+        ];
 
-        $this->createResourceOnEndpoint();
-        $this->executeOperation("GET", "getSmsSendStatusForRecipient");
+        $client = $this->createClient();
+
+        // Create the email definition
+        $provider = new SmsDefinition($client);
+        $definition = $provider->provision(SmsDefinitionProvider::getTestModel());
+        $definition = $client->createSmsDefinition($definition->__toString());
+
+        // Construct the email request
+        $messageKey = md5(rand(0, 9999));
+        $recipient = new Recipient([
+            "contactKey" => "johnDoe@gmail.com"
+        ]);
+
+        $body = new SendSmsToSingleRecipientRequest([
+            "definitionKey" => $definition->getDefinitionKey(),
+            "recipient" => $recipient
+        ]);
+
+        // SUT
+        $client->sendSmsToSingleRecipient($messageKey, $body);
+
+        // Effect check
+        $result = $client->getSmsSendStatusForRecipient($messageKey);
+
+        $this->assertNotNull($result->getRequestId());
+        $this->assertContains($result->getEventCategoryType(), $eventCategories);
     }
-    
+
     /**
      * Test case for partiallyUpdateEmailDefinition
      *
@@ -367,7 +423,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("PATCH", "partiallyUpdateEmailDefinition");
     }
-    
+
     /**
      * Test case for partiallyUpdateSmsDefinition
      *
@@ -384,7 +440,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("PATCH", "partiallyUpdateSmsDefinition");
     }
-    
+
     /**
      * Test case for sendEmailToMultipleRecipients
      *
@@ -401,7 +457,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("POST", "sendEmailToMultipleRecipients");
     }
-    
+
     /**
      * Test case for sendEmailToSingleRecipient
      *
@@ -418,7 +474,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("POST", "sendEmailToSingleRecipient");
     }
-    
+
     /**
      * Test case for sendSmsToMultipleRecipients
      *
@@ -435,7 +491,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("POST", "sendSmsToMultipleRecipients");
     }
-    
+
     /**
      * Test case for sendSmsToSingleRecipient
      *

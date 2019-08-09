@@ -15,11 +15,11 @@ use SalesForce\MarketingCloud\Model\ModelInterface;
 use SalesForce\MarketingCloud\TestHelper\Model\Provider\AssetProvider;
 
 /**
- * Class EmailDefinitionRequest
+ * Class EmailDefinition
  *
  * @package SalesForce\MarketingCloud\TestHelper\Model\Provisioner
  */
-class EmailDefinitionRequest extends AbstractModelProvisioner
+class EmailDefinition extends AbstractModelProvisioner
 {
     /**
      * @var Asset
@@ -27,7 +27,7 @@ class EmailDefinitionRequest extends AbstractModelProvisioner
     private $asset;
 
     /**
-     * EmailDefinitionRequest constructor.
+     * EmailDefinition constructor.
      *
      * @param TransactionalMessagingApi $client
      */
@@ -65,7 +65,7 @@ class EmailDefinitionRequest extends AbstractModelProvisioner
     /**
      * Executes all the necessary provisioning
      *
-     * @param ModelInterface|EmailDefinitionRequest $model
+     * @param ModelInterface|EmailDefinition $model
      * @return ModelInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException

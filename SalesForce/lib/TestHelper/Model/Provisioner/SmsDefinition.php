@@ -6,14 +6,14 @@ use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
 use SalesForce\MarketingCloud\Model\ModelInterface;
 
 /**
- * Class SmsDefinitionRequest
+ * Class SmsDefinition
  *
  * @package SalesForce\MarketingCloud\TestHelper\Model\Provisioner
  */
-class SmsDefinitionRequest extends AbstractModelProvisioner
+class SmsDefinition extends AbstractModelProvisioner
 {
     /**
-     * SmsDefinitionRequest constructor.
+     * SmsDefinition constructor.
      * 
      * @param TransactionalMessagingApi $client
      */

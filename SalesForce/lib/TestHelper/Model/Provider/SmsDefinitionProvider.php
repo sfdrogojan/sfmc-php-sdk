@@ -10,11 +10,11 @@ use SalesForce\MarketingCloud\Model\ModelInterface;
 use SalesForce\MarketingCloud\Model\UpdateSmsDefinitionRequest;
 
 /**
- * Class SmsDefinitionRequestProvider
+ * Class SmsDefinitionProvider
  *
  * @package TestHelper\Model\Provider
  */
-class SmsDefinitionRequestProvider extends AbstractModelProvider
+class SmsDefinitionProvider extends AbstractModelProvider
 {
     /**
      * Creates a test object

@@ -25,19 +25,19 @@ class ModelProviderResolver
     private static $aliases = [
         "email" => [
             // Email definition
-            CreateEmailDefinitionRequest::class => EmailDefinitionRequestProvider::class,
-            GetEmailDefinitionsResponse::class => EmailDefinitionRequestProvider::class,
-            GetQueueMetricsForSendDefinitionResponse::class => EmailDefinitionRequestProvider::class,
-            DeleteSendDefinitionResponse::class => EmailDefinitionRequestProvider::class,
-            DeleteQueuedMessagesForSendDefinitionResponse::class => EmailDefinitionRequestProvider::class,
+            CreateEmailDefinitionRequest::class => EmailDefinitionProvider::class,
+            GetEmailDefinitionsResponse::class => EmailDefinitionProvider::class,
+            GetQueueMetricsForSendDefinitionResponse::class => EmailDefinitionProvider::class,
+            DeleteSendDefinitionResponse::class => EmailDefinitionProvider::class,
+            DeleteQueuedMessagesForSendDefinitionResponse::class => EmailDefinitionProvider::class,
         ],
         "sms" => [
             // SMS definition
-            CreateSmsDefinitionRequest::class => SmsDefinitionRequestProvider::class,
-            GetSmsDefinitionsResponse::class => SmsDefinitionRequestProvider::class,
-            GetQueueMetricsForSendDefinitionResponse::class => SmsDefinitionRequestProvider::class,
-            DeleteSendDefinitionResponse::class => SmsDefinitionRequestProvider::class,
-            DeleteQueuedMessagesForSendDefinitionResponse::class => SmsDefinitionRequestProvider::class,
+            CreateSmsDefinitionRequest::class => SmsDefinitionProvider::class,
+            GetSmsDefinitionsResponse::class => SmsDefinitionProvider::class,
+            GetQueueMetricsForSendDefinitionResponse::class => SmsDefinitionProvider::class,
+            DeleteSendDefinitionResponse::class => SmsDefinitionProvider::class,
+            DeleteQueuedMessagesForSendDefinitionResponse::class => SmsDefinitionProvider::class,
         ],
         "other" => []
     ];
