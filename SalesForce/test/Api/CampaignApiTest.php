@@ -29,6 +29,7 @@
 namespace SalesForce\MarketingCloud\Test\Api;
 
 use GuzzleHttp\Client;
+use SalesForce\MarketingCloud\ApiException;
 use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\TestHelper\Api\BaseApiTest;
 use SalesForce\MarketingCloud\Configuration;
@@ -97,6 +98,10 @@ class CampaignApiTest extends BaseApiTest
      */
     public function testDeleteCampaignById()
     {
+        $this->expectException(ApiException::class);
+        $this->getExpectedExceptionCode(400);
+
+        $this->setHttpMethod("DELETE");
         $this->setModelClass(
             __FUNCTION__,
             ""
