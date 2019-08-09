@@ -20,8 +20,8 @@ class AssetProvider extends AbstractModelProvider
      */
     public static function getTestModel(): ?ModelInterface
     {
-        $customerKey = (string)rand(0, 1000);
-        $name = "AssetName {$customerKey}"; // Asset names within a category and asset type must be unique
+        $customerKey = md5((string)rand(0, 9999));
+        $name = md5("AssetName {$customerKey}"); // Asset names within a category and asset type must be unique
 
         $object = new Asset([
             "name" => $name,
