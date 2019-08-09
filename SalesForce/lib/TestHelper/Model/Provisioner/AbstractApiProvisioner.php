@@ -1,6 +1,6 @@
 <?php
 
-namespace SalesForce\MarketingCloud\TestHelper\Api\Provisioner;
+namespace SalesForce\MarketingCloud\TestHelper\Model\Provisioner;
 
 use SalesForce\MarketingCloud\Api\AbstractApi;
 use SalesForce\MarketingCloud\Model\ModelInterface;
@@ -8,7 +8,7 @@ use SalesForce\MarketingCloud\Model\ModelInterface;
 /**
  * Class AbstractApiProvisioner
  *
- * @package SalesForce\MarketingCloud\TestHelper\Api\Provisioner
+ * @package SalesForce\MarketingCloud\TestHelper\Model\Provisioner
  */
 abstract class AbstractApiProvisioner
 {

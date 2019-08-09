@@ -4,6 +4,7 @@ namespace SalesForce\MarketingCloud\TestHelper\Model\Provider;
 
 use SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest;
 use SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse;
+use SalesForce\MarketingCloud\Model\GetEmailDefinitionsResponse;
 
 /**
  * Class ModelProviderResolver
@@ -18,7 +19,8 @@ class ModelProviderResolver
      * @var array
      */
     private static $aliases = [
-        DeleteSendDefinitionResponse::class => CreateEmailDefinitionRequest::class
+        DeleteSendDefinitionResponse::class => CreateEmailDefinitionRequest::class,
+        GetEmailDefinitionsResponse::class => CreateEmailDefinitionRequest::class
     ];
 
     /**

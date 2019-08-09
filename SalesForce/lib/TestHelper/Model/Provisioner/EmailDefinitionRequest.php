@@ -1,6 +1,6 @@
 <?php
 
-namespace SalesForce\MarketingCloud\TestHelper\Api\Provisioner;
+namespace SalesForce\MarketingCloud\TestHelper\Model\Provisioner;
 
 use GuzzleHttp\Client;
 use SalesForce\MarketingCloud\Api\AssetApi;
@@ -17,7 +17,7 @@ use SalesForce\MarketingCloud\TestHelper\Model\Provider\AssetProvider;
 /**
  * Class EmailDefinitionRequest
  *
- * @package SalesForce\MarketingCloud\TestHelper\Api\Provisioner
+ * @package SalesForce\MarketingCloud\TestHelper\Model\Provisioner
  */
 class EmailDefinitionRequest extends AbstractApiProvisioner
 {

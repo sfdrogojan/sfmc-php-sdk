@@ -1,13 +1,13 @@
 <?php
 
-namespace SalesForce\MarketingCloud\TestHelper\Api\Provisioner;
+namespace SalesForce\MarketingCloud\TestHelper\Model\Provisioner;
 
 use SalesForce\MarketingCloud\Model\ModelInterface;
 
 /**
  * Class NullProvisioner
  *
- * @package SalesForce\MarketingCloud\TestHelper\Api\Provisioner
+ * @package SalesForce\MarketingCloud\TestHelper\Model\Provisioner
  */
 class NullProvisioner extends AbstractApiProvisioner
 {

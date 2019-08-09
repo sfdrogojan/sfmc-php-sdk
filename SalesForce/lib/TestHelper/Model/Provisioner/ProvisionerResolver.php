@@ -1,15 +1,16 @@
 <?php
 
-namespace SalesForce\MarketingCloud\TestHelper\Api\Provisioner;
+namespace SalesForce\MarketingCloud\TestHelper\Model\Provisioner;
 
 use SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest;
 use SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest;
 use SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse;
+use SalesForce\MarketingCloud\Model\GetEmailDefinitionsResponse;
 
 /**
  * Class ProvisionerResolver
  *
- * @package SalesForce\MarketingCloud\TestHelper\Api\Provisioner
+ * @package SalesForce\MarketingCloud\TestHelper\Model\Provisioner
  */
 class ProvisionerResolver
 {
@@ -19,7 +20,8 @@ class ProvisionerResolver
      * @var array
      */
     private static $aliases = [
-        DeleteSendDefinitionResponse::class => CreateEmailDefinitionRequest::class
+        DeleteSendDefinitionResponse::class => CreateEmailDefinitionRequest::class,
+        GetEmailDefinitionsResponse::class => CreateEmailDefinitionRequest::class
     ];
 
     /**
