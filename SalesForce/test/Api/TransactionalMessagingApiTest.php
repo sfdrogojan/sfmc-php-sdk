@@ -28,17 +28,12 @@
 
 namespace SalesForce\MarketingCloud\Test\Api;
 
-use GuzzleHttp\Client;
 use SalesForce\MarketingCloud\Model\Recipient;
 use SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest;
 use SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest;
 use SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest;
 use SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest;
-use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\TestHelper\Api\BaseApiTest;
-use SalesForce\MarketingCloud\Configuration;
-use SalesForce\MarketingCloud\Api\AbstractApi;
-use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
 use SalesForce\MarketingCloud\TestHelper\Model\Provider\EmailDefinitionProvider;
 use SalesForce\MarketingCloud\TestHelper\Model\Provider\SmsDefinitionProvider;
 use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\EmailDefinition;
@@ -55,37 +50,23 @@ use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\SmsDefinition;
 class TransactionalMessagingApiTest extends BaseApiTest
 {
     /**
+     * The client class to use in order to build the client object
+     *
+     * @var string
+     */
+    protected $clientClass = \SalesForce\MarketingCloud\Api\TransactionalMessagingApi::class;
+
+    /**
      * @var string
      */
     protected static $modelNamespace = "\SalesForce\MarketingCloud\Model";
 
-    /**
-     * Creates the client required to do the API calls
-     *
-     * @return TransactionalMessagingApi|AbstractApi
-     */
-    protected function createClient(): AbstractApi
-    {
-        if (null === $this->client) {
-            $config = new Configuration();
-            $config->setHost(getenv("API_URL"));
-
-            $this->client = new TransactionalMessagingApi(
-                [AuthServiceTestFactory::class, 'factory'],
-                new Client(['verify' => false]),
-                $config
-            );
-        }
-
-        return $this->client;
-    }
-
-
+    
     /**
      * Test case for createEmailDefinition
      *
      * createEmailDefinition.
-     *
+     * @throws \Exception
      */
     public function testCreateEmailDefinition()
     {
@@ -97,12 +78,12 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("POST", "createEmailDefinition");
     }
-
+    
     /**
      * Test case for createSmsDefinition
      *
      * createSmsDefinition.
-     *
+     * @throws \Exception
      */
     public function testCreateSmsDefinition()
     {
@@ -114,12 +95,12 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("POST", "createSmsDefinition");
     }
-
+    
     /**
      * Test case for deleteEmailDefinition
      *
      * deleteEmailDefinition.
-     *
+     * @throws \Exception
      */
     public function testDeleteEmailDefinition()
     {
@@ -136,7 +117,8 @@ class TransactionalMessagingApiTest extends BaseApiTest
      * Test case for deleteQueuedMessagesForEmailDefinition
      *
      * deleteQueuedMessagesForEmailDefinition.
-     *
+     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testDeleteQueuedMessagesForEmailDefinition()
     {
@@ -148,7 +130,8 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
 
         // The actual test
-        $client = $this->createClient();
+        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
+        $client = $this->getClient();
         $response = $client->deleteQueuedMessagesForEmailDefinition($this->getResourceId());
 
         $this->assertNotNull($response->getRequestId());
@@ -158,7 +141,8 @@ class TransactionalMessagingApiTest extends BaseApiTest
      * Test case for deleteQueuedMessagesForSmsDefinition
      *
      * deleteQueuedMessagesForSmsDefinition.
-     *
+     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testDeleteQueuedMessagesForSmsDefinition()
     {
@@ -170,17 +154,18 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
 
         // The actual test
-        $client = $this->createClient();
+        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
+        $client = $this->getClient();
         $response = $client->deleteQueuedMessagesForSmsDefinition($this->getResourceId());
 
         $this->assertNotNull($response->getRequestId());
     }
-
+    
     /**
      * Test case for deleteSmsDefinition
      *
      * deleteSmsDefinition.
-     *
+     * @throws \Exception
      */
     public function testDeleteSmsDefinition()
     {
@@ -192,12 +177,12 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("DELETE", "deleteSmsDefinition");
     }
-
+    
     /**
      * Test case for getEmailDefinition
      *
      * getEmailDefinition.
-     *
+     * @throws \Exception
      */
     public function testGetEmailDefinition()
     {
@@ -209,12 +194,12 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getEmailDefinition");
     }
-
+    
     /**
      * Test case for getEmailDefinitions
      *
      * getEmailDefinitions.
-     *
+     * @throws \Exception
      */
     public function testGetEmailDefinitions()
     {
@@ -231,7 +216,8 @@ class TransactionalMessagingApiTest extends BaseApiTest
      * Test case for getEmailSendStatusForRecipient
      *
      * getEmailSendStatusForRecipient.
-     *
+     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testGetEmailSendStatusForRecipient()
     {
@@ -241,11 +227,14 @@ class TransactionalMessagingApiTest extends BaseApiTest
             "TransactionalSendEvents.EmailNotSent"
         ];
 
-        $client = $this->createClient();
+        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
+        $client = $this->getClient();
 
         // Create the email definition
-        $emailDefinitionProvisioner = new EmailDefinition($client);
-        $emailDefinition = $emailDefinitionProvisioner->provision(EmailDefinitionProvider::getTestModel());
+        $provisioner = new EmailDefinition();
+        $provisioner->setContainer(static::$container);
+
+        $emailDefinition = $provisioner->provision(EmailDefinitionProvider::getTestModel());
         $emailDefinition = $client->createEmailDefinition($emailDefinition->__toString());
 
         // Construct the email request
@@ -276,20 +265,23 @@ class TransactionalMessagingApiTest extends BaseApiTest
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException
+     * @throws \Exception
      */
     public function testGetEmailsNotSentToRecipients()
     {
-        $response = $this->createClient()->getEmailsNotSentToRecipients("notSent");
+        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
+        $client = $this->getClient();
+        $response = $client->getEmailsNotSentToRecipients("notSent");
 
         $this->assertNotNull($response->getRequestId());
         $this->assertNotNull($response->getCount());
     }
-
+    
     /**
      * Test case for getQueueMetricsForEmailDefinition
      *
      * getQueueMetricsForEmailDefinition.
-     *
+     * @throws \Exception
      */
     public function testGetQueueMetricsForEmailDefinition()
     {
@@ -301,12 +293,12 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getQueueMetricsForEmailDefinition");
     }
-
+    
     /**
      * Test case for getQueueMetricsForSmsDefinition
      *
      * getQueueMetricsForSmsDefinition.
-     *
+     * @throws \Exception
      */
     public function testGetQueueMetricsForSmsDefinition()
     {
@@ -323,11 +315,14 @@ class TransactionalMessagingApiTest extends BaseApiTest
      * Test case for getSMSsNotSentToRecipients
      *
      * getSMSsNotSentToRecipients.
-     *
+     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testGetSMSsNotSentToRecipients()
     {
-        $response = $this->createClient()->getSMSsNotSentToRecipients("notSent");
+        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
+        $client = $this->getClient();
+        $response = $client->getSMSsNotSentToRecipients("notSent");
 
         $this->assertNotNull($response->getRequestId());
         $this->assertNotNull($response->getCount());
@@ -337,7 +332,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
      * Test case for getSmsDefinition
      *
      * getSmsDefinition.
-     *
+     * @throws \Exception
      */
     public function testGetSmsDefinition()
     {
@@ -349,12 +344,12 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getSmsDefinition");
     }
-
+    
     /**
      * Test case for getSmsDefinitions
      *
      * getSmsDefinitions.
-     *
+     * @throws \Exception
      */
     public function testGetSmsDefinitions()
     {
@@ -371,7 +366,8 @@ class TransactionalMessagingApiTest extends BaseApiTest
      * Test case for getSmsSendStatusForRecipient
      *
      * getSmsSendStatusForRecipient.
-     *
+     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testGetSmsSendStatusForRecipient()
     {
@@ -381,11 +377,14 @@ class TransactionalMessagingApiTest extends BaseApiTest
             "TransactionalSendEvents.SMSNotSent"
         ];
 
-        $client = $this->createClient();
+        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
+        $client = $this->getClient();
 
         // Create the email definition
-        $provider = new SmsDefinition($client);
-        $definition = $provider->provision(SmsDefinitionProvider::getTestModel());
+        $provisioner = new SmsDefinition();
+        $provisioner->setContainer(static::$container);
+
+        $definition = $provisioner->provision(SmsDefinitionProvider::getTestModel());
         $definition = $client->createSmsDefinition($definition->__toString());
 
         // Construct the email request
@@ -408,12 +407,12 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->assertNotNull($result->getRequestId());
         $this->assertContains($result->getEventCategoryType(), $eventCategories);
     }
-
+    
     /**
      * Test case for partiallyUpdateEmailDefinition
      *
      * partiallyUpdateEmailDefinition.
-     *
+     * @throws \Exception
      */
     public function testPartiallyUpdateEmailDefinition()
     {
@@ -425,12 +424,12 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("PATCH", "partiallyUpdateEmailDefinition");
     }
-
+    
     /**
      * Test case for partiallyUpdateSmsDefinition
      *
      * partiallyUpdateSmsDefinition.
-     *
+     * @throws \Exception
      */
     public function testPartiallyUpdateSmsDefinition()
     {
@@ -447,22 +446,20 @@ class TransactionalMessagingApiTest extends BaseApiTest
      * Test case for sendEmailToMultipleRecipients
      *
      * sendEmailToMultipleRecipients.
-     *
+     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testSendEmailToMultipleRecipients()
     {
-        $client = $this->createClient();
+        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
+        $client = $this->getClient();
 
         // Create the email definition
-        $emailDefinitionProvisioner = new EmailDefinition($client);
-        $emailDefinition = $emailDefinitionProvisioner->provision(EmailDefinitionProvider::getTestModel());
-        $emailDefinition = $client->createEmailDefinition($emailDefinition->__toString());
+        $provisioner = new EmailDefinition();
+        $provisioner->setContainer(static::$container);
 
-        // Construct the email request
-        $messageKey = md5(rand(0, 9999));
-        $recipient = new Recipient([
-            "contactKey" => "johnDoe@gmail.com"
-        ]);
+        $emailDefinition = $provisioner->provision(EmailDefinitionProvider::getTestModel());
+        $emailDefinition = $client->createEmailDefinition($emailDefinition->__toString());
 
         $messageRequestBody = new SendEmailToMultipleRecipientsRequest([
             "definitionKey" => $emailDefinition->getDefinitionKey(),
@@ -482,15 +479,19 @@ class TransactionalMessagingApiTest extends BaseApiTest
      * Test case for sendEmailToSingleRecipient
      *
      * sendEmailToSingleRecipient.
-     *
+     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testSendEmailToSingleRecipient()
     {
-        $client = $this->createClient();
+        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
+        $client = $this->getClient();
 
         // Create the email definition
-        $emailDefinitionProvisioner = new EmailDefinition($client);
-        $emailDefinition = $emailDefinitionProvisioner->provision(EmailDefinitionProvider::getTestModel());
+        $provisioner = new EmailDefinition();
+        $provisioner->setContainer(static::$container);
+
+        $emailDefinition = $provisioner->provision(EmailDefinitionProvider::getTestModel());
         $emailDefinition = $client->createEmailDefinition($emailDefinition->__toString());
 
         // Construct the email request
@@ -514,15 +515,19 @@ class TransactionalMessagingApiTest extends BaseApiTest
      * Test case for sendSmsToMultipleRecipients
      *
      * sendSmsToMultipleRecipients.
-     *
+     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testSendSmsToMultipleRecipients()
     {
-        $client = $this->createClient();
+        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
+        $client = $this->getClient();
 
         // Create the email definition
-        $provider = new SmsDefinition($client);
-        $definition = $provider->provision(SmsDefinitionProvider::getTestModel());
+        $provisioner = new SmsDefinition();
+        $provisioner->setContainer(static::$container);
+
+        $definition = $provisioner->provision(SmsDefinitionProvider::getTestModel());
         $definition = $client->createSmsDefinition($definition->__toString());
 
         $body = new SendSmsToMultipleRecipientsRequest([
@@ -543,15 +548,19 @@ class TransactionalMessagingApiTest extends BaseApiTest
      * Test case for sendSmsToSingleRecipient
      *
      * sendSmsToSingleRecipient.
-     *
+     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testSendSmsToSingleRecipient()
     {
-        $client = $this->createClient();
+        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
+        $client = $this->getClient();
 
         // Create the email definition
-        $provider = new SmsDefinition($client);
-        $definition = $provider->provision(SmsDefinitionProvider::getTestModel());
+        $provisioner = new SmsDefinition();
+        $provisioner->setContainer(static::$container);
+
+        $definition = $provisioner->provision(SmsDefinitionProvider::getTestModel());
         $definition = $client->createSmsDefinition($definition->__toString());
 
         // Construct the email request

@@ -13,16 +13,6 @@ use SalesForce\MarketingCloud\Model\ModelInterface;
 class SmsDefinition extends AbstractModelProvisioner
 {
     /**
-     * SmsDefinition constructor.
-     * 
-     * @param TransactionalMessagingApi $client
-     */
-    public function __construct(TransactionalMessagingApi $client)
-    {
-        $this->client = $client;
-    }
-
-    /**
      * Executes all the necessary provisioning
      *
      * @param ModelInterface $model

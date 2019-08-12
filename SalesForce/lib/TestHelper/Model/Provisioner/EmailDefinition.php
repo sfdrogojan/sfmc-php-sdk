@@ -2,11 +2,8 @@
 
 namespace SalesForce\MarketingCloud\TestHelper\Model\Provisioner;
 
-use GuzzleHttp\Client;
 use SalesForce\MarketingCloud\Api\AssetApi;
 use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
-use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
-use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\Model\Asset;
 use SalesForce\MarketingCloud\Model\AssetType;
 use SalesForce\MarketingCloud\Model\CreateEmailDefinitionContent;
@@ -27,16 +24,6 @@ class EmailDefinition extends AbstractModelProvisioner
     private $asset;
 
     /**
-     * EmailDefinition constructor.
-     *
-     * @param TransactionalMessagingApi $client
-     */
-    public function __construct(TransactionalMessagingApi $client)
-    {
-        $this->client = $client;
-    }
-
-    /**
      * Creates a new asset on the API
      *
      * @return Asset
@@ -45,15 +32,8 @@ class EmailDefinition extends AbstractModelProvisioner
      */
     private function createAsset(): Asset
     {
-        // TODO: move to a factory of some sort
-        $config = new Configuration();
-        $config->setHost(getenv("API_URL"));
-
-        $client = new AssetApi(
-            [AuthServiceTestFactory::class, 'factory'],
-            new Client(['verify' => false]),
-            $config
-        );
+        /** @var AssetApi $client */
+        $client = $this->container->get(AssetApi::class);
 
         /** @var Asset $asset */
         $asset = AssetProvider::getTestModel();
@@ -65,7 +45,7 @@ class EmailDefinition extends AbstractModelProvisioner
     /**
      * Executes all the necessary provisioning
      *
-     * @param ModelInterface|EmailDefinition $model
+     * @param ModelInterface|CreateEmailDefinitionRequest $model
      * @return ModelInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException
@@ -88,11 +68,18 @@ class EmailDefinition extends AbstractModelProvisioner
     /**
      * Executes all the necessary provisioning
      *
-     * @param ModelInterface $model
+     * @param ModelInterface|CreateEmailDefinitionRequest $model
      * @return ModelInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \SalesForce\MarketingCloud\ApiException
      */
     public function deplete(ModelInterface $model): ModelInterface
     {
+        /** @var AssetApi $client */
+        $client = $this->container->get(AssetApi::class);
+
+        $client->deleteAssetById($this->asset->getId());
+
         return $model;
     }
 }

@@ -4,18 +4,30 @@ namespace SalesForce\MarketingCloud\TestHelper\Model\Provisioner;
 
 use SalesForce\MarketingCloud\Api\AbstractApi;
 use SalesForce\MarketingCloud\Model\ModelInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class AbstractModelProvisioner
  *
  * @package SalesForce\MarketingCloud\TestHelper\Model\Provisioner
  */
-abstract class AbstractModelProvisioner
+abstract class AbstractModelProvisioner implements ContainerAwareInterface
 {
     /**
-     * @var AbstractApi
+     * @var ContainerInterface
      */
-    protected $client;
+    protected $container;
+
+    /**
+     * Sets the DI container
+     *
+     * @param ContainerInterface|null $container
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
 
     /**
      * Executes all the necessary provisioning

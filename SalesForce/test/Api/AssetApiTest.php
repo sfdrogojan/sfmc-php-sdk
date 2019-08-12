@@ -28,12 +28,7 @@
 
 namespace SalesForce\MarketingCloud\Test\Api;
 
-use GuzzleHttp\Client;
-use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\TestHelper\Api\BaseApiTest;
-use SalesForce\MarketingCloud\Configuration;
-use SalesForce\MarketingCloud\Api\AbstractApi;
-use SalesForce\MarketingCloud\Api\AssetApi;
 
 /**
  * AssetApiTest Class Doc Comment
@@ -46,37 +41,23 @@ use SalesForce\MarketingCloud\Api\AssetApi;
 class AssetApiTest extends BaseApiTest
 {
     /**
+     * The client class to use in order to build the client object
+     *
+     * @var string
+     */
+    protected $clientClass = \SalesForce\MarketingCloud\Api\AssetApi::class;
+
+    /**
      * @var string
      */
     protected static $modelNamespace = "\SalesForce\MarketingCloud\Model";
-
-    /**
-     * Creates the client required to do the API calls
-     *
-     * @return AssetApi|AbstractApi
-     */
-    protected function createClient(): AbstractApi
-    {
-        if (null === $this->client) {
-            $config = new Configuration();
-            $config->setHost(getenv("API_URL"));
-
-            $this->client = new AssetApi(
-                [AuthServiceTestFactory::class, 'factory'],
-                new Client(['verify' => false]),
-                $config
-            );
-        }
-
-        return $this->client;
-    }
 
     
     /**
      * Test case for createAsset
      *
      * createAsset.
-     *
+     * @throws \Exception
      */
     public function testCreateAsset()
     {
@@ -93,7 +74,7 @@ class AssetApiTest extends BaseApiTest
      * Test case for deleteAssetById
      *
      * deleteAssetById.
-     *
+     * @throws \Exception
      */
     public function testDeleteAssetById()
     {
@@ -110,7 +91,7 @@ class AssetApiTest extends BaseApiTest
      * Test case for getAssetById
      *
      * getAssetById.
-     *
+     * @throws \Exception
      */
     public function testGetAssetById()
     {
@@ -127,7 +108,7 @@ class AssetApiTest extends BaseApiTest
      * Test case for partiallyUpdateAssetById
      *
      * partiallyUpdateAssetById.
-     *
+     * @throws \Exception
      */
     public function testPartiallyUpdateAssetById()
     {

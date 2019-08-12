@@ -12,16 +12,6 @@ use SalesForce\MarketingCloud\Model\ModelInterface;
 class NullProvisioner extends AbstractModelProvisioner
 {
     /**
-     * NullProvisioner constructor.
-     *
-     * @param mixed $client
-     */
-    public function __construct($client)
-    {
-        $this->client = $client;
-    }
-
-    /**
      * Executes all the necessary provisioning
      *
      * @param ModelInterface $model

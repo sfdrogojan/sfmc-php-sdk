@@ -28,13 +28,8 @@
 
 namespace SalesForce\MarketingCloud\Test\Api;
 
-use GuzzleHttp\Client;
 use SalesForce\MarketingCloud\ApiException;
-use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\TestHelper\Api\BaseApiTest;
-use SalesForce\MarketingCloud\Configuration;
-use SalesForce\MarketingCloud\Api\AbstractApi;
-use SalesForce\MarketingCloud\Api\CampaignApi;
 
 /**
  * CampaignApiTest Class Doc Comment
@@ -47,37 +42,23 @@ use SalesForce\MarketingCloud\Api\CampaignApi;
 class CampaignApiTest extends BaseApiTest
 {
     /**
+     * The client class to use in order to build the client object
+     *
+     * @var string
+     */
+    protected $clientClass = \SalesForce\MarketingCloud\Api\CampaignApi::class;
+
+    /**
      * @var string
      */
     protected static $modelNamespace = "\SalesForce\MarketingCloud\Model";
-
-    /**
-     * Creates the client required to do the API calls
-     *
-     * @return CampaignApi|AbstractApi
-     */
-    protected function createClient(): AbstractApi
-    {
-        if (null === $this->client) {
-            $config = new Configuration();
-            $config->setHost(getenv("API_URL"));
-
-            $this->client = new CampaignApi(
-                [AuthServiceTestFactory::class, 'factory'],
-                new Client(['verify' => false]),
-                $config
-            );
-        }
-
-        return $this->client;
-    }
 
     
     /**
      * Test case for createCampaign
      *
      * createCampaign.
-     *
+     * @throws \Exception
      */
     public function testCreateCampaign()
     {
@@ -89,17 +70,18 @@ class CampaignApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("POST", "createCampaign");
     }
-    
+
     /**
      * Test case for deleteCampaignById
      *
      * deleteCampaignById.
-     *
+     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testDeleteCampaignById()
     {
         $this->expectException(ApiException::class);
-        $this->getExpectedExceptionCode(400);
+        $this->expectExceptionCode(400);
 
         $this->setHttpMethod("DELETE");
         $this->setModelClass(
@@ -111,7 +93,9 @@ class CampaignApiTest extends BaseApiTest
 
         // The actual test
         $resourceId = $this->getResourceId();
-        $client = $this->createClient();
+
+        /** @var \SalesForce\MarketingCloud\Api\CampaignApi $client */
+        $client = $this->getClient();
 
         $client->deleteCampaignById($resourceId);
         $client->getCampaignById($resourceId);
@@ -121,7 +105,7 @@ class CampaignApiTest extends BaseApiTest
      * Test case for getCampaignById
      *
      * getCampaignById.
-     *
+     * @throws \Exception
      */
     public function testGetCampaignById()
     {

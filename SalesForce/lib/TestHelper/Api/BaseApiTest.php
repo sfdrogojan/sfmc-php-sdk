@@ -2,15 +2,24 @@
 
 namespace SalesForce\MarketingCloud\TestHelper\Api;
 
+use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 use SalesForce\MarketingCloud\Api\AbstractApi;
+use SalesForce\MarketingCloud\Api\AssetApi;
+use SalesForce\MarketingCloud\Api\CampaignApi;
+use SalesForce\MarketingCloud\Api\Configuration\ConfigFactory;
+use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
 use SalesForce\MarketingCloud\ApiException;
+use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\Model\ModelInterface;
 use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\AbstractModelProvisioner;
 use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\ProvisionerResolver;
 use SalesForce\MarketingCloud\TestHelper\Model\Provider\AbstractModelProvider;
 use SalesForce\MarketingCloud\TestHelper\Model\Provider\ModelProviderResolver;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Base class for the unit tests
@@ -20,14 +29,26 @@ use SalesForce\MarketingCloud\TestHelper\Model\Provider\ModelProviderResolver;
 abstract class BaseApiTest extends TestCase
 {
     /**
+     * @var ContainerBuilder
+     */
+    protected static $container;
+
+    /**
      * @var string
      */
-    protected static $modelNamespace = "";
+    protected static $modelNamespace;
+
+    /**
+     * The client class to use in order to build the client object
+     *
+     * @var string
+     */
+    protected $clientClass;
 
     /**
      * @var AbstractApi
      */
-    protected $client;
+    private $client;
 
     /**
      * @var AbstractModelProvisioner
@@ -71,6 +92,7 @@ abstract class BaseApiTest extends TestCase
     {
         parent::setUpBeforeClass();
 
+        // Configure the authentication service
         AuthServiceTestFactory::setConfig([
             'accountId' => getenv('ACCOUNT_ID'),
             'clientId' => getenv('CLIENT_ID'),
@@ -78,10 +100,46 @@ abstract class BaseApiTest extends TestCase
             'urlAuthorize' => getenv('URL_AUTHORIZE'),
             'urlAccessToken' => getenv('URL_ACCESS_TOKEN'),
         ]);
+
+        static::setupContainer();
+    }
+
+    /**
+     * Sets up the container
+     *
+     * @return void
+     */
+    private static function setupContainer(): void
+    {
+        $configRef = new Reference("config");
+        $clientRef = new Reference("client");
+
+        // Setup the dependency container
+        static::$container = new ContainerBuilder();
+
+        // Register the authentication service
+        static::$container->setParameter("auth.service", [AuthServiceTestFactory::class, 'factory']);
+
+        // Sets the client service
+        static::$container->set("client", new Client(['verify' => false]));
+
+        // Register the config object
+        static::$container->register("config", Configuration::class)
+            ->setFactory([ConfigFactory::class, "factory"]);
+
+        // Register the AssetApi service
+        foreach ([AssetApi::class, CampaignApi::class, TransactionalMessagingApi::class] as $apiClientClass) {
+            static::$container
+                ->register($apiClientClass, $apiClientClass)
+                ->addArgument("%auth.service%")
+                ->addArgument($clientRef)
+                ->addArgument($configRef);
+        }
     }
 
     /**
      * @inheritDoc
+     * @throws \Exception
      */
     public function tearDown(): void
     {
@@ -91,7 +149,7 @@ abstract class BaseApiTest extends TestCase
         }
 
         if ($this->httpMethod !== "DELETE") {
-            call_user_func([$this->createClient(), $this->modelProvider::getApiDeleteMethod()], $this->getResourceId());
+            call_user_func([$this->getClient(), $this->modelProvider::getApiDeleteMethod()], $this->getResourceId());
         }
 
         $this->provisioner->deplete($this->resource);
@@ -101,8 +159,16 @@ abstract class BaseApiTest extends TestCase
      * Creates the client required to do the API calls
      *
      * @return AbstractApi
+     * @throws \Exception
      */
-    protected abstract function createClient(): AbstractApi;
+    protected function getClient(): AbstractApi
+    {
+        if (null === $this->client) {
+            $this->client = static::$container->get($this->clientClass);
+        }
+
+        return $this->client;
+    }
 
     /**
      * Sets the class of the model in the SUT
@@ -184,21 +250,25 @@ abstract class BaseApiTest extends TestCase
         // Strip the suffix
         $clientMethod = rtrim($clientMethod, "ById");
 
-        return static::$modelNamespace . "\\" . ucfirst($clientMethod);
+        return strval(static::$modelNamespace) . "\\" . ucfirst($clientMethod);
     }
 
     /**
      * Creates the resource on the API
      *
      * @return void
+     * @throws \Exception
      */
     protected function createResourceOnEndpoint(): void
     {
-        $client = $this->createClient();
+        $client = $this->getClient();
 
         // Creating the provisioner
-        $provisioner = ProvisionerResolver::resolve($this->modelClass, $this->apiMethod);
-        $this->provisioner = new $provisioner($client);
+        $provisionerClass = ProvisionerResolver::resolve($this->modelClass, $this->apiMethod);
+        $this->provisioner = new $provisionerClass();
+        if ($this->provisioner instanceof ContainerAwareInterface) {
+            $this->provisioner->setContainer(static::$container);
+        }
 
         // Store this for later use
         $this->modelProvider = ModelProviderResolver::resolve($this->modelClass, $this->apiMethod);
@@ -218,6 +288,8 @@ abstract class BaseApiTest extends TestCase
      */
     protected function doCreateAction(string $clientMethod): void
     {
+        unset($clientMethod); // Avoids IDE errors
+
         $this->assertNotEmpty($this->getResourceId());
     }
 
@@ -225,10 +297,11 @@ abstract class BaseApiTest extends TestCase
      * Performs the retrieve action for the test
      *
      * @param string $clientMethod
+     * @throws \Exception
      */
     protected function doGetAction(string $clientMethod): void
     {
-        $client = $this->createClient();
+        $client = $this->getClient();
 
         /** @var ModelInterface $resource */
         $resource = call_user_func([$client, $clientMethod], $this->getResourceId());
@@ -240,10 +313,11 @@ abstract class BaseApiTest extends TestCase
      * Performs the PATCH action for the test
      *
      * @param string $clientMethod
+     * @throws \Exception
      */
     protected function doPatchAction(string $clientMethod): void
     {
-        $client = $this->createClient();
+        $client = $this->getClient();
 
         $updatedResource = call_user_func(
             [$client, $clientMethod],
@@ -258,13 +332,14 @@ abstract class BaseApiTest extends TestCase
      * Performs the delete action for the test
      *
      * @param string $clientMethod
+     * @throws \Exception
      */
     protected function doDeleteAction(string $clientMethod): void
     {
         $this->expectException(ApiException::class);
         $this->expectExceptionCode(404);
 
-        $client = $this->createClient();
+        $client = $this->getClient();
         $resourceId = $this->getResourceId();
 
         call_user_func([$client, $clientMethod], $this->getResourceId()); // DELETE
