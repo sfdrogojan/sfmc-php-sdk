@@ -589,37 +589,21 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testSendSmsToSingleRecipient()
     {
-        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
-        $client = $this->getClient();
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testSendSmsToSingleRecipient")) {
+            return $decorator->testSendSmsToSingleRecipient();
+        }
 
-        // Create the email definition
-        $provisioner = new SmsDefinition();
-        $provisioner->setContainer(static::$container);
-
-        $definition = $provisioner->provision(SmsDefinitionProvider::getTestModel());
-        $definition = $client->createSmsDefinition($definition);
-
-        // Construct the email request
-        $messageKey = md5(rand(0, 9999));
-        $recipient = new Recipient([
-            "contactKey" => "johnDoe@gmail.com"
-        ]);
-
-        $body = new SendSmsToSingleRecipientRequest([
-            "definitionKey" => $definition->getDefinitionKey(),
-            "recipient" => $recipient
-        ]);
+        // Setting the model to use
+        $this->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest"
+        );
 
         // SUT
-        $result = $client->sendSmsToSingleRecipient($messageKey, $body);
-
-        try {
-            $this->assertNotNull($result->getRequestId());
-        } catch (ExpectationFailedException $e) {
-            throw $e;
-        } finally {
-            $client->deleteSmsDefinition($definition->getDefinitionKey());
-            $provisioner->deplete($definition);
-        }
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("PATCH", "sendSmsToSingleRecipient");
     }
 }

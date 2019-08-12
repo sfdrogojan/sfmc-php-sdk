@@ -13,6 +13,7 @@ use SalesForce\MarketingCloud\ApiException;
 use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\Model\ModelInterface;
+use SalesForce\MarketingCloud\TestHelper\Decorator\NullDecorator;
 use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\AbstractModelProvisioner;
 use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\ProvisionerResolver;
 use SalesForce\MarketingCloud\TestHelper\Model\Provider\AbstractModelProvider;
@@ -34,11 +35,6 @@ abstract class BaseApiTest extends TestCase
     protected static $container;
 
     /**
-     * @var string
-     */
-    protected static $modelNamespace;
-
-    /**
      * The client class to use in order to build the client object
      *
      * @var string
@@ -51,19 +47,24 @@ abstract class BaseApiTest extends TestCase
     private $client;
 
     /**
+     * @var object
+     */
+    private $decorator;
+
+    /**
      * @var AbstractModelProvisioner
      */
     private $provisioner;
 
     /**
-     * @var ModelInterface
-     */
-    private $resource;
-
-    /**
      * @var AbstractModelProvider|string
      */
     private $modelProvider;
+
+    /**
+     * @var string
+     */
+    protected static $modelNamespace;
 
     /**
      * @var ModelInterface|string
@@ -74,6 +75,11 @@ abstract class BaseApiTest extends TestCase
      * @var ModelInterface|string
      */
     private $modelClass;
+
+    /**
+     * @var ModelInterface
+     */
+    private $resource;
 
     /**
      * @var string
@@ -168,6 +174,40 @@ abstract class BaseApiTest extends TestCase
         }
 
         return $this->client;
+    }
+
+    /**
+     * Lazy-loader for the tests decorator
+     *
+     * @return object
+     */
+    protected function getDecorator(): object
+    {
+        if (null === $this->decorator) {
+            // Create the decorator class name
+            $clientNamespace = explode("\\", $this->clientClass);
+            $decoratorClass = implode("\\", [
+                "\\" . $clientNamespace[0],
+                $clientNamespace[1],
+                "TestHelper",
+                "Decorator",
+                $clientNamespace[3] . "Decorator"
+            ]);
+
+            // Create the decorator object
+            if (class_exists($decoratorClass)) {
+                $this->decorator = new $decoratorClass();
+            } else {
+                $this->decorator = new NullDecorator();
+            }
+
+            // Set dependencies
+            if ($this->decorator instanceof ContainerAwareInterface) {
+                $this->decorator->setContainer(static::$container);
+            }
+        }
+
+        return $this->decorator;
     }
 
     /**
