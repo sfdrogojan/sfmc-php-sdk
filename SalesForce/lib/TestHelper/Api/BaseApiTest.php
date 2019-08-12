@@ -278,7 +278,7 @@ abstract class BaseApiTest extends TestCase
         $model = $this->provisioner->provision($this->modelProvider::getTestModel());
 
         /** @var ModelInterface $resource */
-        $this->resource = call_user_func([$client, $clientMethod], $model->__toString());
+        $this->resource = call_user_func([$client, $clientMethod], $model);
     }
 
     /**
@@ -322,10 +322,10 @@ abstract class BaseApiTest extends TestCase
         $updatedResource = call_user_func(
             [$client, $clientMethod],
             $this->getResourceId(),
-            $this->modelProvider::getPatchedModel($this->resource)->__toString()
+            $this->modelProvider::getPatchedModel($this->resource)
         );
 
-        $this->assertNotEquals($this->resource->__toString(), $updatedResource->__toString());
+        $this->assertNotEquals($this->resource, $updatedResource);
     }
 
     /**

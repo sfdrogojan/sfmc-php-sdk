@@ -28,6 +28,7 @@
 
 namespace SalesForce\MarketingCloud\Test\Api;
 
+use PHPUnit\Framework\ExpectationFailedException;
 use SalesForce\MarketingCloud\Model\Recipient;
 use SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest;
 use SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest;
@@ -61,7 +62,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     protected static $modelNamespace = "\SalesForce\MarketingCloud\Model";
 
-    
+
     /**
      * Test case for createEmailDefinition
      *
@@ -78,7 +79,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("POST", "createEmailDefinition");
     }
-    
+
     /**
      * Test case for createSmsDefinition
      *
@@ -95,7 +96,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("POST", "createSmsDefinition");
     }
-    
+
     /**
      * Test case for deleteEmailDefinition
      *
@@ -160,7 +161,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
 
         $this->assertNotNull($response->getRequestId());
     }
-    
+
     /**
      * Test case for deleteSmsDefinition
      *
@@ -177,7 +178,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("DELETE", "deleteSmsDefinition");
     }
-    
+
     /**
      * Test case for getEmailDefinition
      *
@@ -194,7 +195,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getEmailDefinition");
     }
-    
+
     /**
      * Test case for getEmailDefinitions
      *
@@ -234,8 +235,8 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $provisioner = new EmailDefinition();
         $provisioner->setContainer(static::$container);
 
-        $emailDefinition = $provisioner->provision(EmailDefinitionProvider::getTestModel());
-        $emailDefinition = $client->createEmailDefinition($emailDefinition->__toString());
+        $definition = $provisioner->provision(EmailDefinitionProvider::getTestModel());
+        $definition = $client->createEmailDefinition($definition);
 
         // Construct the email request
         $messageKey = md5(rand(0, 9999));
@@ -244,7 +245,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         ]);
 
         $messageRequestBody = new SendEmailToSingleRecipientRequest([
-            "definitionKey" => $emailDefinition->getDefinitionKey(),
+            "definitionKey" => $definition->getDefinitionKey(),
             "recipient" => $recipient
         ]);
 
@@ -254,8 +255,15 @@ class TransactionalMessagingApiTest extends BaseApiTest
         // Effect check
         $result = $client->getEmailSendStatusForRecipient($messageKey);
 
-        $this->assertNotNull($result->getRequestId());
-        $this->assertContains($result->getEventCategoryType(), $eventCategories);
+        try {
+            $this->assertNotNull($result->getRequestId());
+            $this->assertContains($result->getEventCategoryType(), $eventCategories);
+        } catch (ExpectationFailedException $e) {
+            throw $e;
+        } finally {
+            $client->deleteEmailDefinition($definition->getDefinitionKey());
+            $provisioner->deplete($definition);
+        }
     }
 
     /**
@@ -276,7 +284,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->assertNotNull($response->getRequestId());
         $this->assertNotNull($response->getCount());
     }
-    
+
     /**
      * Test case for getQueueMetricsForEmailDefinition
      *
@@ -293,7 +301,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getQueueMetricsForEmailDefinition");
     }
-    
+
     /**
      * Test case for getQueueMetricsForSmsDefinition
      *
@@ -344,7 +352,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("GET", "getSmsDefinition");
     }
-    
+
     /**
      * Test case for getSmsDefinitions
      *
@@ -385,7 +393,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $provisioner->setContainer(static::$container);
 
         $definition = $provisioner->provision(SmsDefinitionProvider::getTestModel());
-        $definition = $client->createSmsDefinition($definition->__toString());
+        $definition = $client->createSmsDefinition($definition);
 
         // Construct the email request
         $messageKey = md5(rand(0, 9999));
@@ -404,10 +412,17 @@ class TransactionalMessagingApiTest extends BaseApiTest
         // Effect check
         $result = $client->getSmsSendStatusForRecipient($messageKey);
 
-        $this->assertNotNull($result->getRequestId());
-        $this->assertContains($result->getEventCategoryType(), $eventCategories);
+        try {
+            $this->assertNotNull($result->getRequestId());
+            $this->assertContains($result->getEventCategoryType(), $eventCategories);
+        } catch (ExpectationFailedException $e) {
+            throw $e;
+        } finally {
+            $client->deleteSmsDefinition($definition->getDefinitionKey());
+            $provisioner->deplete($definition);
+        }
     }
-    
+
     /**
      * Test case for partiallyUpdateEmailDefinition
      *
@@ -424,7 +439,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $this->createResourceOnEndpoint();
         $this->executeOperation("PATCH", "partiallyUpdateEmailDefinition");
     }
-    
+
     /**
      * Test case for partiallyUpdateSmsDefinition
      *
@@ -458,11 +473,11 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $provisioner = new EmailDefinition();
         $provisioner->setContainer(static::$container);
 
-        $emailDefinition = $provisioner->provision(EmailDefinitionProvider::getTestModel());
-        $emailDefinition = $client->createEmailDefinition($emailDefinition->__toString());
+        $definition = $provisioner->provision(EmailDefinitionProvider::getTestModel());
+        $definition = $client->createEmailDefinition($definition);
 
         $messageRequestBody = new SendEmailToMultipleRecipientsRequest([
-            "definitionKey" => $emailDefinition->getDefinitionKey(),
+            "definitionKey" => $definition->getDefinitionKey(),
             "recipients" => [
                 new Recipient(["contactKey" => "johnDoe@gmail.com"]),
                 new Recipient(["contactKey" => "johnDoe2@gmail.com"]),
@@ -472,7 +487,14 @@ class TransactionalMessagingApiTest extends BaseApiTest
         // SUT
         $result = $client->sendEmailToMultipleRecipients($messageRequestBody);
 
-        $this->assertNotNull($result->getRequestId());
+        try {
+            $this->assertNotNull($result->getRequestId());
+        } catch (ExpectationFailedException $e) {
+            throw $e;
+        } finally {
+            $client->deleteEmailDefinition($definition->getDefinitionKey());
+            $provisioner->deplete($definition);
+        }
     }
 
     /**
@@ -491,8 +513,8 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $provisioner = new EmailDefinition();
         $provisioner->setContainer(static::$container);
 
-        $emailDefinition = $provisioner->provision(EmailDefinitionProvider::getTestModel());
-        $emailDefinition = $client->createEmailDefinition($emailDefinition->__toString());
+        $definition = $provisioner->provision(EmailDefinitionProvider::getTestModel());
+        $definition = $client->createEmailDefinition($definition);
 
         // Construct the email request
         $messageKey = md5(rand(0, 9999));
@@ -501,14 +523,21 @@ class TransactionalMessagingApiTest extends BaseApiTest
         ]);
 
         $messageRequestBody = new SendEmailToSingleRecipientRequest([
-            "definitionKey" => $emailDefinition->getDefinitionKey(),
+            "definitionKey" => $definition->getDefinitionKey(),
             "recipient" => $recipient
         ]);
 
         // SUT
         $result = $client->sendEmailToSingleRecipient($messageKey, $messageRequestBody);
 
-        $this->assertNotNull($result->getRequestId());
+        try {
+            $this->assertNotNull($result->getRequestId());
+        } catch (ExpectationFailedException $e) {
+            throw $e;
+        } finally {
+            $client->deleteEmailDefinition($definition->getDefinitionKey());
+            $provisioner->deplete($definition);
+        }
     }
 
     /**
@@ -528,7 +557,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $provisioner->setContainer(static::$container);
 
         $definition = $provisioner->provision(SmsDefinitionProvider::getTestModel());
-        $definition = $client->createSmsDefinition($definition->__toString());
+        $definition = $client->createSmsDefinition($definition);
 
         $body = new SendSmsToMultipleRecipientsRequest([
             "definitionKey" => $definition->getDefinitionKey(),
@@ -541,7 +570,14 @@ class TransactionalMessagingApiTest extends BaseApiTest
         // SUT
         $result = $client->sendSmsToMultipleRecipients($body);
 
-        $this->assertNotNull($result->getRequestId());
+        try {
+            $this->assertNotNull($result->getRequestId());
+        } catch (ExpectationFailedException $e) {
+            throw $e;
+        } finally {
+            $client->deleteSmsDefinition($definition->getDefinitionKey());
+            $provisioner->deplete($definition);
+        }
     }
 
     /**
@@ -561,7 +597,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
         $provisioner->setContainer(static::$container);
 
         $definition = $provisioner->provision(SmsDefinitionProvider::getTestModel());
-        $definition = $client->createSmsDefinition($definition->__toString());
+        $definition = $client->createSmsDefinition($definition);
 
         // Construct the email request
         $messageKey = md5(rand(0, 9999));
@@ -577,6 +613,13 @@ class TransactionalMessagingApiTest extends BaseApiTest
         // SUT
         $result = $client->sendSmsToSingleRecipient($messageKey, $body);
 
-        $this->assertNotNull($result->getRequestId());
+        try {
+            $this->assertNotNull($result->getRequestId());
+        } catch (ExpectationFailedException $e) {
+            throw $e;
+        } finally {
+            $client->deleteSmsDefinition($definition->getDefinitionKey());
+            $provisioner->deplete($definition);
+        }
     }
 }
