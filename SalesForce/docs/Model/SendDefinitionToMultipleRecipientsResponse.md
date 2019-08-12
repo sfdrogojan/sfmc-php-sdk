@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **requestId** | **string** | The ID of the request | [optional] 
-**errorCode** | **float** | The specific error code | [optional] 
+**errorcode** | **float** | The specific error code | [optional] 
 **message** | **string** |  | [optional] 
 **responses** | [**\SalesForce\MarketingCloud\Model\SendDefinitionResponseItem[]**](SendDefinitionResponseItem.md) |  | [optional] 
 

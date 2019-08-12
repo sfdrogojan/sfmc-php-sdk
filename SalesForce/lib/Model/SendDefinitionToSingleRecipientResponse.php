@@ -58,7 +58,7 @@ class SendDefinitionToSingleRecipientResponse implements ModelInterface, ArrayAc
       */
     protected static $swaggerTypes = [
         'requestId' => 'string',
-        'errorCode' => 'float',
+        'errorcode' => 'float',
         'responses' => '\SalesForce\MarketingCloud\Model\SendDefinitionResponseItem[]'
     ];
 
@@ -69,7 +69,7 @@ class SendDefinitionToSingleRecipientResponse implements ModelInterface, ArrayAc
       */
     protected static $swaggerFormats = [
         'requestId' => null,
-        'errorCode' => null,
+        'errorcode' => null,
         'responses' => null
     ];
 
@@ -101,7 +101,7 @@ class SendDefinitionToSingleRecipientResponse implements ModelInterface, ArrayAc
      */
     protected static $attributeMap = [
         'requestId' => 'requestId',
-        'errorCode' => 'errorCode',
+        'errorcode' => 'errorcode',
         'responses' => 'responses'
     ];
 
@@ -112,7 +112,7 @@ class SendDefinitionToSingleRecipientResponse implements ModelInterface, ArrayAc
      */
     protected static $setters = [
         'requestId' => 'setRequestId',
-        'errorCode' => 'setErrorCode',
+        'errorcode' => 'setErrorcode',
         'responses' => 'setResponses'
     ];
 
@@ -123,7 +123,7 @@ class SendDefinitionToSingleRecipientResponse implements ModelInterface, ArrayAc
      */
     protected static $getters = [
         'requestId' => 'getRequestId',
-        'errorCode' => 'getErrorCode',
+        'errorcode' => 'getErrorcode',
         'responses' => 'getResponses'
     ];
 
@@ -188,7 +188,7 @@ class SendDefinitionToSingleRecipientResponse implements ModelInterface, ArrayAc
     public function __construct(array $data = null)
     {
         $this->container['requestId'] = isset($data['requestId']) ? $data['requestId'] : null;
-        $this->container['errorCode'] = isset($data['errorCode']) ? $data['errorCode'] : null;
+        $this->container['errorcode'] = isset($data['errorcode']) ? $data['errorcode'] : null;
         $this->container['responses'] = isset($data['responses']) ? $data['responses'] : null;
     }
 
@@ -241,25 +241,25 @@ class SendDefinitionToSingleRecipientResponse implements ModelInterface, ArrayAc
     }
 
     /**
-     * Gets errorCode
+     * Gets errorcode
      *
      * @return float
      */
-    public function getErrorCode()
+    public function getErrorcode()
     {
-        return $this->container['errorCode'];
+        return $this->container['errorcode'];
     }
 
     /**
-     * Sets errorCode
+     * Sets errorcode
      *
-     * @param float $errorCode The specific error code
+     * @param float $errorcode The specific error code
      *
      * @return $this
      */
-    public function setErrorCode($errorCode)
+    public function setErrorcode($errorcode)
     {
-        $this->container['errorCode'] = $errorCode;
+        $this->container['errorcode'] = $errorcode;
 
         return $this;
     }

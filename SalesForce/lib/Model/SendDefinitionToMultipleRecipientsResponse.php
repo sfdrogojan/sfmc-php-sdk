@@ -58,7 +58,7 @@ class SendDefinitionToMultipleRecipientsResponse implements ModelInterface, Arra
       */
     protected static $swaggerTypes = [
         'requestId' => 'string',
-        'errorCode' => 'float',
+        'errorcode' => 'float',
         'message' => 'string',
         'responses' => '\SalesForce\MarketingCloud\Model\SendDefinitionResponseItem[]'
     ];
@@ -70,7 +70,7 @@ class SendDefinitionToMultipleRecipientsResponse implements ModelInterface, Arra
       */
     protected static $swaggerFormats = [
         'requestId' => null,
-        'errorCode' => null,
+        'errorcode' => null,
         'message' => null,
         'responses' => null
     ];
@@ -103,7 +103,7 @@ class SendDefinitionToMultipleRecipientsResponse implements ModelInterface, Arra
      */
     protected static $attributeMap = [
         'requestId' => 'requestId',
-        'errorCode' => 'errorCode',
+        'errorcode' => 'errorcode',
         'message' => 'message',
         'responses' => 'responses'
     ];
@@ -115,7 +115,7 @@ class SendDefinitionToMultipleRecipientsResponse implements ModelInterface, Arra
      */
     protected static $setters = [
         'requestId' => 'setRequestId',
-        'errorCode' => 'setErrorCode',
+        'errorcode' => 'setErrorcode',
         'message' => 'setMessage',
         'responses' => 'setResponses'
     ];
@@ -127,7 +127,7 @@ class SendDefinitionToMultipleRecipientsResponse implements ModelInterface, Arra
      */
     protected static $getters = [
         'requestId' => 'getRequestId',
-        'errorCode' => 'getErrorCode',
+        'errorcode' => 'getErrorcode',
         'message' => 'getMessage',
         'responses' => 'getResponses'
     ];
@@ -193,7 +193,7 @@ class SendDefinitionToMultipleRecipientsResponse implements ModelInterface, Arra
     public function __construct(array $data = null)
     {
         $this->container['requestId'] = isset($data['requestId']) ? $data['requestId'] : null;
-        $this->container['errorCode'] = isset($data['errorCode']) ? $data['errorCode'] : null;
+        $this->container['errorcode'] = isset($data['errorcode']) ? $data['errorcode'] : null;
         $this->container['message'] = isset($data['message']) ? $data['message'] : null;
         $this->container['responses'] = isset($data['responses']) ? $data['responses'] : null;
     }
@@ -247,25 +247,25 @@ class SendDefinitionToMultipleRecipientsResponse implements ModelInterface, Arra
     }
 
     /**
-     * Gets errorCode
+     * Gets errorcode
      *
      * @return float
      */
-    public function getErrorCode()
+    public function getErrorcode()
     {
-        return $this->container['errorCode'];
+        return $this->container['errorcode'];
     }
 
     /**
-     * Sets errorCode
+     * Sets errorcode
      *
-     * @param float $errorCode The specific error code
+     * @param float $errorcode The specific error code
      *
      * @return $this
      */
-    public function setErrorCode($errorCode)
+    public function setErrorcode($errorcode)
     {
-        $this->container['errorCode'] = $errorCode;
+        $this->container['errorcode'] = $errorcode;
 
         return $this;
     }
