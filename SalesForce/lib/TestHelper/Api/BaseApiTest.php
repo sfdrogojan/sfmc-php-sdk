@@ -15,9 +15,7 @@ use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\Model\ModelInterface;
 use SalesForce\MarketingCloud\TestHelper\Decorator\NullDecorator;
 use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\AbstractModelProvisioner;
-use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\ProvisionerResolver;
 use SalesForce\MarketingCloud\TestHelper\Model\Provider\AbstractModelProvider;
-use SalesForce\MarketingCloud\TestHelper\Model\Provider\ModelProviderResolver;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -47,6 +45,11 @@ abstract class BaseApiTest extends TestCase
     private $client;
 
     /**
+     * @var ResourceCreator
+     */
+    private $resourceCreator;
+
+    /**
      * @var object
      */
     private $decorator;
@@ -67,16 +70,6 @@ abstract class BaseApiTest extends TestCase
     protected static $modelNamespace;
 
     /**
-     * @var ModelInterface|string
-     */
-    private $originalModelClass;
-
-    /**
-     * @var ModelInterface|string
-     */
-    private $modelClass;
-
-    /**
      * @var ModelInterface
      */
     private $resource;
@@ -85,11 +78,6 @@ abstract class BaseApiTest extends TestCase
      * @var string
      */
     private $httpMethod;
-
-    /**
-     * @var string
-     */
-    private $apiMethod;
 
     /**
      * @inheritDoc
@@ -150,7 +138,7 @@ abstract class BaseApiTest extends TestCase
     public function tearDown(): void
     {
         // For manual written cases
-        if (empty($this->modelProvider)) {
+        if (null === $this->resourceCreator) {
             return;
         }
 
@@ -159,6 +147,11 @@ abstract class BaseApiTest extends TestCase
         }
 
         $this->provisioner->deplete($this->resource);
+
+        // Object reset
+        $this->resource = null;
+        $this->modelProvider = null;
+        $this->provisioner = null;
     }
 
     /**
@@ -174,6 +167,24 @@ abstract class BaseApiTest extends TestCase
         }
 
         return $this->client;
+    }
+
+    /**
+     * Returns a resource creator instance
+     *
+     * @return ResourceCreator
+     * @throws \Exception
+     */
+    protected function getResourceCreator(): ResourceCreator
+    {
+        if (null === $this->resourceCreator) {
+            $this->resourceCreator = new ResourceCreator();
+            $this->resourceCreator->setContainer(static::$container);
+            $this->resourceCreator->setClient($this->getClient());
+            $this->resourceCreator->setModelNamespace(static::$modelNamespace);
+        }
+
+        return $this->resourceCreator;
     }
 
     /**
@@ -210,23 +221,6 @@ abstract class BaseApiTest extends TestCase
         return $this->decorator;
     }
 
-    /**
-     * Sets the class of the model in the SUT
-     *
-     * @param string $invokerMethod
-     * @param string|null $modelClass
-     */
-    protected function setModelClass(string $invokerMethod, ?string $modelClass): void
-    {
-        $this->apiMethod = lcfirst(ltrim($invokerMethod, "test"));
-        $this->originalModelClass = $modelClass;
-
-        if (empty($modelClass)) {
-            $modelClass = $this->guessModelClass($this->apiMethod);
-        }
-
-        $this->modelClass = $modelClass;
-    }
 
     /**
      * Sets the HTTP method of the test
@@ -241,11 +235,10 @@ abstract class BaseApiTest extends TestCase
     /**
      * Selects the appropriate action method
      *
-     * @param string $httpMethod
      * @param string $operation
      * @return void
      */
-    protected function executeOperation(string $httpMethod, string $operation): void
+    protected function executeOperation(string $operation): void
     {
         $methodMap = [
             "GET" => "doGetAction",
@@ -254,13 +247,11 @@ abstract class BaseApiTest extends TestCase
             "DELETE" => "doDeleteAction",
         ];
 
-        if (!isset($methodMap[$httpMethod])) {
-            throw new \InvalidArgumentException("The {$httpMethod} action is not supported");
+        if (!isset($methodMap[$this->httpMethod])) {
+            throw new \InvalidArgumentException("The {$this->httpMethod} action is not supported");
         }
 
-        $this->httpMethod = $httpMethod;
-
-        call_user_func([$this, $methodMap[$httpMethod]], $operation);
+        call_user_func([$this, $methodMap[$this->httpMethod]], $operation);
     }
 
     /**
@@ -274,26 +265,6 @@ abstract class BaseApiTest extends TestCase
     }
 
     /**
-     * Tries to guess the model class
-     *
-     * @param string $clientMethod
-     * @return string
-     */
-    protected static function guessModelClass(string $clientMethod): string
-    {
-        // Strip the prefix
-        $clientMethod = ltrim($clientMethod, "get");
-        $clientMethod = ltrim($clientMethod, "create");
-        $clientMethod = ltrim($clientMethod, "partiallyUpdate");
-        $clientMethod = ltrim($clientMethod, "delete");
-
-        // Strip the suffix
-        $clientMethod = rtrim($clientMethod, "ById");
-
-        return strval(static::$modelNamespace) . "\\" . ucfirst($clientMethod);
-    }
-
-    /**
      * Creates the resource on the API
      *
      * @return void
@@ -301,24 +272,11 @@ abstract class BaseApiTest extends TestCase
      */
     protected function createResourceOnEndpoint(): void
     {
-        $client = $this->getClient();
+        $resourceCreator = $this->getResourceCreator();
 
-        // Creating the provisioner
-        $provisionerClass = ProvisionerResolver::resolve($this->modelClass, $this->apiMethod);
-        $this->provisioner = new $provisionerClass();
-        if ($this->provisioner instanceof ContainerAwareInterface) {
-            $this->provisioner->setContainer(static::$container);
-        }
-
-        // Store this for later use
-        $this->modelProvider = ModelProviderResolver::resolve($this->modelClass, $this->apiMethod);
-
-        // Setup
-        $clientMethod = $this->modelProvider::getApiCreateMethod();
-        $model = $this->provisioner->provision($this->modelProvider::getTestModel());
-
-        /** @var ModelInterface $resource */
-        $this->resource = call_user_func([$client, $clientMethod], $model);
+        $this->resource = $resourceCreator->create();
+        $this->modelProvider = $resourceCreator->getModelProvider();
+        $this->provisioner = $resourceCreator->getProvisioner();
     }
 
     /**
@@ -341,12 +299,10 @@ abstract class BaseApiTest extends TestCase
      */
     protected function doGetAction(string $clientMethod): void
     {
-        $client = $this->getClient();
-
         /** @var ModelInterface $resource */
-        $resource = call_user_func([$client, $clientMethod], $this->getResourceId());
+        $resource = call_user_func([$this->getClient(), $clientMethod], $this->getResourceId());
 
-        $this->assertInstanceOf($this->originalModelClass, $resource);
+        $this->assertInstanceOf($this->getResourceCreator()->getModelClass(), $resource);
     }
 
     /**
@@ -357,10 +313,8 @@ abstract class BaseApiTest extends TestCase
      */
     protected function doPatchAction(string $clientMethod): void
     {
-        $client = $this->getClient();
-
         $updatedResource = call_user_func(
-            [$client, $clientMethod],
+            [$this->getClient(), $clientMethod],
             $this->getResourceId(),
             $this->modelProvider::getPatchedModel($this->resource)
         );

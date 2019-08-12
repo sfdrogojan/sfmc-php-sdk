@@ -61,13 +61,25 @@ class AssetApiTest extends BaseApiTest
      */
     public function testCreateAsset()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("POST");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\AssetApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testCreateAsset")) {
+            return $decorator->testCreateAsset();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\Asset"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("POST", "createAsset");
+        $this->executeOperation("createAsset");
     }
     
     /**
@@ -78,13 +90,25 @@ class AssetApiTest extends BaseApiTest
      */
     public function testDeleteAssetById()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("DELETE");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\AssetApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testDeleteAssetById")) {
+            return $decorator->testDeleteAssetById();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             ""
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("DELETE", "deleteAssetById");
+        $this->executeOperation("deleteAssetById");
     }
     
     /**
@@ -95,13 +119,25 @@ class AssetApiTest extends BaseApiTest
      */
     public function testGetAssetById()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("GET");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\AssetApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testGetAssetById")) {
+            return $decorator->testGetAssetById();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\Asset"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("GET", "getAssetById");
+        $this->executeOperation("getAssetById");
     }
     
     /**
@@ -112,12 +148,24 @@ class AssetApiTest extends BaseApiTest
      */
     public function testPartiallyUpdateAssetById()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("PATCH");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\AssetApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testPartiallyUpdateAssetById")) {
+            return $decorator->testPartiallyUpdateAssetById();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\Asset"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("PATCH", "partiallyUpdateAssetById");
+        $this->executeOperation("partiallyUpdateAssetById");
     }
 }

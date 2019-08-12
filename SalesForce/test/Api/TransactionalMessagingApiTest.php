@@ -28,17 +28,7 @@
 
 namespace SalesForce\MarketingCloud\Test\Api;
 
-use PHPUnit\Framework\ExpectationFailedException;
-use SalesForce\MarketingCloud\Model\Recipient;
-use SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest;
-use SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest;
-use SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest;
-use SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest;
 use SalesForce\MarketingCloud\TestHelper\Api\BaseApiTest;
-use SalesForce\MarketingCloud\TestHelper\Model\Provider\EmailDefinitionProvider;
-use SalesForce\MarketingCloud\TestHelper\Model\Provider\SmsDefinitionProvider;
-use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\EmailDefinition;
-use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\SmsDefinition;
 
 /**
  * TransactionalMessagingApiTest Class Doc Comment
@@ -62,7 +52,7 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     protected static $modelNamespace = "\SalesForce\MarketingCloud\Model";
 
-
+    
     /**
      * Test case for createEmailDefinition
      *
@@ -71,15 +61,27 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testCreateEmailDefinition()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("POST");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testCreateEmailDefinition")) {
+            return $decorator->testCreateEmailDefinition();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("POST", "createEmailDefinition");
+        $this->executeOperation("createEmailDefinition");
     }
-
+    
     /**
      * Test case for createSmsDefinition
      *
@@ -88,15 +90,27 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testCreateSmsDefinition()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("POST");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testCreateSmsDefinition")) {
+            return $decorator->testCreateSmsDefinition();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("POST", "createSmsDefinition");
+        $this->executeOperation("createSmsDefinition");
     }
-
+    
     /**
      * Test case for deleteEmailDefinition
      *
@@ -105,63 +119,85 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testDeleteEmailDefinition()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("DELETE");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testDeleteEmailDefinition")) {
+            return $decorator->testDeleteEmailDefinition();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("DELETE", "deleteEmailDefinition");
+        $this->executeOperation("deleteEmailDefinition");
     }
-
+    
     /**
      * Test case for deleteQueuedMessagesForEmailDefinition
      *
      * deleteQueuedMessagesForEmailDefinition.
      * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testDeleteQueuedMessagesForEmailDefinition()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("DELETE");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testDeleteQueuedMessagesForEmailDefinition")) {
+            return $decorator->testDeleteQueuedMessagesForEmailDefinition();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-
-        // The actual test
-        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
-        $client = $this->getClient();
-        $response = $client->deleteQueuedMessagesForEmailDefinition($this->getResourceId());
-
-        $this->assertNotNull($response->getRequestId());
+        $this->executeOperation("deleteQueuedMessagesForEmailDefinition");
     }
-
+    
     /**
      * Test case for deleteQueuedMessagesForSmsDefinition
      *
      * deleteQueuedMessagesForSmsDefinition.
      * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testDeleteQueuedMessagesForSmsDefinition()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("DELETE");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testDeleteQueuedMessagesForSmsDefinition")) {
+            return $decorator->testDeleteQueuedMessagesForSmsDefinition();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-
-        // The actual test
-        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
-        $client = $this->getClient();
-        $response = $client->deleteQueuedMessagesForSmsDefinition($this->getResourceId());
-
-        $this->assertNotNull($response->getRequestId());
+        $this->executeOperation("deleteQueuedMessagesForSmsDefinition");
     }
-
+    
     /**
      * Test case for deleteSmsDefinition
      *
@@ -170,15 +206,27 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testDeleteSmsDefinition()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("DELETE");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testDeleteSmsDefinition")) {
+            return $decorator->testDeleteSmsDefinition();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("DELETE", "deleteSmsDefinition");
+        $this->executeOperation("deleteSmsDefinition");
     }
-
+    
     /**
      * Test case for getEmailDefinition
      *
@@ -187,15 +235,27 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testGetEmailDefinition()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("GET");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testGetEmailDefinition")) {
+            return $decorator->testGetEmailDefinition();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("GET", "getEmailDefinition");
+        $this->executeOperation("getEmailDefinition");
     }
-
+    
     /**
      * Test case for getEmailDefinitions
      *
@@ -204,87 +264,85 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testGetEmailDefinitions()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("GET");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testGetEmailDefinitions")) {
+            return $decorator->testGetEmailDefinitions();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\GetEmailDefinitionsResponse"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("GET", "getEmailDefinitions");
+        $this->executeOperation("getEmailDefinitions");
     }
-
+    
     /**
      * Test case for getEmailSendStatusForRecipient
      *
      * getEmailSendStatusForRecipient.
      * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testGetEmailSendStatusForRecipient()
     {
-        $eventCategories = [
-            "TransactionalSendEvents.EmailSent",
-            "TransactionalSendEvents.EmailQueued",
-            "TransactionalSendEvents.EmailNotSent"
-        ];
+        $this->setHttpMethod("GET");
 
-        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
-        $client = $this->getClient();
-
-        // Create the email definition
-        $provisioner = new EmailDefinition();
-        $provisioner->setContainer(static::$container);
-
-        $definition = $provisioner->provision(EmailDefinitionProvider::getTestModel());
-        $definition = $client->createEmailDefinition($definition);
-
-        // Construct the email request
-        $messageKey = md5(rand(0, 9999));
-        $recipient = new Recipient([
-            "contactKey" => "johnDoe@gmail.com"
-        ]);
-
-        $messageRequestBody = new SendEmailToSingleRecipientRequest([
-            "definitionKey" => $definition->getDefinitionKey(),
-            "recipient" => $recipient
-        ]);
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testGetEmailSendStatusForRecipient")) {
+            return $decorator->testGetEmailSendStatusForRecipient();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse"
+        );
 
         // SUT
-        $client->sendEmailToSingleRecipient($messageKey, $messageRequestBody);
-
-        // Effect check
-        $result = $client->getEmailSendStatusForRecipient($messageKey);
-
-        try {
-            $this->assertNotNull($result->getRequestId());
-            $this->assertContains($result->getEventCategoryType(), $eventCategories);
-        } catch (ExpectationFailedException $e) {
-            throw $e;
-        } finally {
-            $client->deleteEmailDefinition($definition->getDefinitionKey());
-            $provisioner->deplete($definition);
-        }
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("getEmailSendStatusForRecipient");
     }
-
+    
     /**
      * Test case for getEmailsNotSentToRecipients
      *
      * getEmailsNotSentToRecipients.
-     *
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \SalesForce\MarketingCloud\ApiException
      * @throws \Exception
      */
     public function testGetEmailsNotSentToRecipients()
     {
-        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
-        $client = $this->getClient();
-        $response = $client->getEmailsNotSentToRecipients("notSent");
+        $this->setHttpMethod("GET");
 
-        $this->assertNotNull($response->getRequestId());
-        $this->assertNotNull($response->getCount());
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testGetEmailsNotSentToRecipients")) {
+            return $decorator->testGetEmailsNotSentToRecipients();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse"
+        );
+
+        // SUT
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("getEmailsNotSentToRecipients");
     }
-
+    
     /**
      * Test case for getQueueMetricsForEmailDefinition
      *
@@ -293,15 +351,27 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testGetQueueMetricsForEmailDefinition()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("GET");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testGetQueueMetricsForEmailDefinition")) {
+            return $decorator->testGetQueueMetricsForEmailDefinition();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("GET", "getQueueMetricsForEmailDefinition");
+        $this->executeOperation("getQueueMetricsForEmailDefinition");
     }
-
+    
     /**
      * Test case for getQueueMetricsForSmsDefinition
      *
@@ -310,32 +380,56 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testGetQueueMetricsForSmsDefinition()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("GET");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testGetQueueMetricsForSmsDefinition")) {
+            return $decorator->testGetQueueMetricsForSmsDefinition();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("GET", "getQueueMetricsForSmsDefinition");
+        $this->executeOperation("getQueueMetricsForSmsDefinition");
     }
-
+    
     /**
      * Test case for getSMSsNotSentToRecipients
      *
      * getSMSsNotSentToRecipients.
      * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testGetSMSsNotSentToRecipients()
     {
-        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
-        $client = $this->getClient();
-        $response = $client->getSMSsNotSentToRecipients("notSent");
+        $this->setHttpMethod("GET");
 
-        $this->assertNotNull($response->getRequestId());
-        $this->assertNotNull($response->getCount());
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testGetSMSsNotSentToRecipients")) {
+            return $decorator->testGetSMSsNotSentToRecipients();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse"
+        );
+
+        // SUT
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("getSMSsNotSentToRecipients");
     }
-
+    
     /**
      * Test case for getSmsDefinition
      *
@@ -344,15 +438,27 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testGetSmsDefinition()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("GET");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testGetSmsDefinition")) {
+            return $decorator->testGetSmsDefinition();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("GET", "getSmsDefinition");
+        $this->executeOperation("getSmsDefinition");
     }
-
+    
     /**
      * Test case for getSmsDefinitions
      *
@@ -361,68 +467,56 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testGetSmsDefinitions()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("GET");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testGetSmsDefinitions")) {
+            return $decorator->testGetSmsDefinitions();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\GetSmsDefinitionsResponse"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("GET", "getSmsDefinitions");
+        $this->executeOperation("getSmsDefinitions");
     }
-
+    
     /**
      * Test case for getSmsSendStatusForRecipient
      *
      * getSmsSendStatusForRecipient.
      * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testGetSmsSendStatusForRecipient()
     {
-        $eventCategories = [
-            "TransactionalSendEvents.SMSSent",
-            "TransactionalSendEvents.SMSQueued",
-            "TransactionalSendEvents.SMSNotSent"
-        ];
+        $this->setHttpMethod("GET");
 
-        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
-        $client = $this->getClient();
-
-        // Create the email definition
-        $provisioner = new SmsDefinition();
-        $provisioner->setContainer(static::$container);
-
-        $definition = $provisioner->provision(SmsDefinitionProvider::getTestModel());
-        $definition = $client->createSmsDefinition($definition);
-
-        // Construct the email request
-        $messageKey = md5(rand(0, 9999));
-        $recipient = new Recipient([
-            "contactKey" => "johnDoe@gmail.com"
-        ]);
-
-        $body = new SendSmsToSingleRecipientRequest([
-            "definitionKey" => $definition->getDefinitionKey(),
-            "recipient" => $recipient
-        ]);
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testGetSmsSendStatusForRecipient")) {
+            return $decorator->testGetSmsSendStatusForRecipient();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse"
+        );
 
         // SUT
-        $client->sendSmsToSingleRecipient($messageKey, $body);
-
-        // Effect check
-        $result = $client->getSmsSendStatusForRecipient($messageKey);
-
-        try {
-            $this->assertNotNull($result->getRequestId());
-            $this->assertContains($result->getEventCategoryType(), $eventCategories);
-        } catch (ExpectationFailedException $e) {
-            throw $e;
-        } finally {
-            $client->deleteSmsDefinition($definition->getDefinitionKey());
-            $provisioner->deplete($definition);
-        }
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("getSmsSendStatusForRecipient");
     }
-
+    
     /**
      * Test case for partiallyUpdateEmailDefinition
      *
@@ -431,15 +525,27 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testPartiallyUpdateEmailDefinition()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("PATCH");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testPartiallyUpdateEmailDefinition")) {
+            return $decorator->testPartiallyUpdateEmailDefinition();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("PATCH", "partiallyUpdateEmailDefinition");
+        $this->executeOperation("partiallyUpdateEmailDefinition");
     }
-
+    
     /**
      * Test case for partiallyUpdateSmsDefinition
      *
@@ -448,162 +554,140 @@ class TransactionalMessagingApiTest extends BaseApiTest
      */
     public function testPartiallyUpdateSmsDefinition()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("PATCH");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testPartiallyUpdateSmsDefinition")) {
+            return $decorator->testPartiallyUpdateSmsDefinition();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("PATCH", "partiallyUpdateSmsDefinition");
+        $this->executeOperation("partiallyUpdateSmsDefinition");
     }
-
+    
     /**
      * Test case for sendEmailToMultipleRecipients
      *
      * sendEmailToMultipleRecipients.
      * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testSendEmailToMultipleRecipients()
     {
-        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
-        $client = $this->getClient();
+        $this->setHttpMethod("POST");
 
-        // Create the email definition
-        $provisioner = new EmailDefinition();
-        $provisioner->setContainer(static::$container);
-
-        $definition = $provisioner->provision(EmailDefinitionProvider::getTestModel());
-        $definition = $client->createEmailDefinition($definition);
-
-        $messageRequestBody = new SendEmailToMultipleRecipientsRequest([
-            "definitionKey" => $definition->getDefinitionKey(),
-            "recipients" => [
-                new Recipient(["contactKey" => "johnDoe@gmail.com"]),
-                new Recipient(["contactKey" => "johnDoe2@gmail.com"]),
-            ]
-        ]);
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testSendEmailToMultipleRecipients")) {
+            return $decorator->testSendEmailToMultipleRecipients();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse"
+        );
 
         // SUT
-        $result = $client->sendEmailToMultipleRecipients($messageRequestBody);
-
-        try {
-            $this->assertNotNull($result->getRequestId());
-        } catch (ExpectationFailedException $e) {
-            throw $e;
-        } finally {
-            $client->deleteEmailDefinition($definition->getDefinitionKey());
-            $provisioner->deplete($definition);
-        }
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("sendEmailToMultipleRecipients");
     }
-
+    
     /**
      * Test case for sendEmailToSingleRecipient
      *
      * sendEmailToSingleRecipient.
      * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testSendEmailToSingleRecipient()
     {
-        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
-        $client = $this->getClient();
+        $this->setHttpMethod("POST");
 
-        // Create the email definition
-        $provisioner = new EmailDefinition();
-        $provisioner->setContainer(static::$container);
-
-        $definition = $provisioner->provision(EmailDefinitionProvider::getTestModel());
-        $definition = $client->createEmailDefinition($definition);
-
-        // Construct the email request
-        $messageKey = md5(rand(0, 9999));
-        $recipient = new Recipient([
-            "contactKey" => "johnDoe@gmail.com"
-        ]);
-
-        $messageRequestBody = new SendEmailToSingleRecipientRequest([
-            "definitionKey" => $definition->getDefinitionKey(),
-            "recipient" => $recipient
-        ]);
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testSendEmailToSingleRecipient")) {
+            return $decorator->testSendEmailToSingleRecipient();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse"
+        );
 
         // SUT
-        $result = $client->sendEmailToSingleRecipient($messageKey, $messageRequestBody);
-
-        try {
-            $this->assertNotNull($result->getRequestId());
-        } catch (ExpectationFailedException $e) {
-            throw $e;
-        } finally {
-            $client->deleteEmailDefinition($definition->getDefinitionKey());
-            $provisioner->deplete($definition);
-        }
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("sendEmailToSingleRecipient");
     }
-
+    
     /**
      * Test case for sendSmsToMultipleRecipients
      *
      * sendSmsToMultipleRecipients.
      * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testSendSmsToMultipleRecipients()
     {
-        /** @var \SalesForce\MarketingCloud\Api\TransactionalMessagingApi $client */
-        $client = $this->getClient();
+        $this->setHttpMethod("POST");
 
-        // Create the email definition
-        $provisioner = new SmsDefinition();
-        $provisioner->setContainer(static::$container);
-
-        $definition = $provisioner->provision(SmsDefinitionProvider::getTestModel());
-        $definition = $client->createSmsDefinition($definition);
-
-        $body = new SendSmsToMultipleRecipientsRequest([
-            "definitionKey" => $definition->getDefinitionKey(),
-            "recipients" => [
-                new Recipient(["contactKey" => "johnDoe@gmail.com"]),
-                new Recipient(["contactKey" => "johnDoe2@gmail.com"]),
-            ]
-        ]);
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testSendSmsToMultipleRecipients")) {
+            return $decorator->testSendSmsToMultipleRecipients();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
+            __FUNCTION__,
+            "\SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse"
+        );
 
         // SUT
-        $result = $client->sendSmsToMultipleRecipients($body);
-
-        try {
-            $this->assertNotNull($result->getRequestId());
-        } catch (ExpectationFailedException $e) {
-            throw $e;
-        } finally {
-            $client->deleteSmsDefinition($definition->getDefinitionKey());
-            $provisioner->deplete($definition);
-        }
+        $this->createResourceOnEndpoint();
+        $this->executeOperation("sendSmsToMultipleRecipients");
     }
-
+    
     /**
      * Test case for sendSmsToSingleRecipient
      *
      * sendSmsToSingleRecipient.
      * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testSendSmsToSingleRecipient()
     {
+        $this->setHttpMethod("POST");
+
         // Looking for a decorator first
         /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\TransactionalMessagingApiDecorator $decorator */
         $decorator = $this->getDecorator();
         if (method_exists($decorator, "testSendSmsToSingleRecipient")) {
             return $decorator->testSendSmsToSingleRecipient();
         }
-
-        // Setting the model to use
-        $this->setModelClass(
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
-            "\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest"
+            "\SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse"
         );
 
         // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("PATCH", "sendSmsToSingleRecipient");
+        $this->executeOperation("sendSmsToSingleRecipient");
     }
 }

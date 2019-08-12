@@ -28,7 +28,6 @@
 
 namespace SalesForce\MarketingCloud\Test\Api;
 
-use SalesForce\MarketingCloud\ApiException;
 use SalesForce\MarketingCloud\TestHelper\Api\BaseApiTest;
 
 /**
@@ -62,43 +61,54 @@ class CampaignApiTest extends BaseApiTest
      */
     public function testCreateCampaign()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("POST");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\CampaignApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testCreateCampaign")) {
+            return $decorator->testCreateCampaign();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\Campaign"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("POST", "createCampaign");
+        $this->executeOperation("createCampaign");
     }
-
+    
     /**
      * Test case for deleteCampaignById
      *
      * deleteCampaignById.
      * @throws \Exception
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function testDeleteCampaignById()
     {
-        $this->expectException(ApiException::class);
-        $this->expectExceptionCode(400);
-
         $this->setHttpMethod("DELETE");
-        $this->setModelClass(
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\CampaignApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testDeleteCampaignById")) {
+            return $decorator->testDeleteCampaignById();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             ""
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-
-        // The actual test
-        $resourceId = $this->getResourceId();
-
-        /** @var \SalesForce\MarketingCloud\Api\CampaignApi $client */
-        $client = $this->getClient();
-
-        $client->deleteCampaignById($resourceId);
-        $client->getCampaignById($resourceId);
+        $this->executeOperation("deleteCampaignById");
     }
     
     /**
@@ -109,12 +119,24 @@ class CampaignApiTest extends BaseApiTest
      */
     public function testGetCampaignById()
     {
-        $this->setModelClass(
+        $this->setHttpMethod("GET");
+
+        // Looking for a decorator first
+        /** @var \SalesForce\MarketingCloud\TestHelper\Decorator\CampaignApiDecorator $decorator */
+        $decorator = $this->getDecorator();
+        if (method_exists($decorator, "testGetCampaignById")) {
+            return $decorator->testGetCampaignById();
+        }
+        
+        // Setting up the resource creator
+        $resourceCreator = $this->getResourceCreator();
+        $resourceCreator->setModelClass(
             __FUNCTION__,
             "\SalesForce\MarketingCloud\Model\Campaign"
         );
 
+        // SUT
         $this->createResourceOnEndpoint();
-        $this->executeOperation("GET", "getCampaignById");
+        $this->executeOperation("getCampaignById");
     }
 }

@@ -57,9 +57,9 @@ class SendDefinitionToSingleRecipientResponseTest extends TestCase
     }
 
     /**
-     * Test attribute "errorCode"
+     * Test attribute "errorcode"
      */
-    public function testPropertyErrorCode()
+    public function testPropertyErrorcode()
     {
     }
 
