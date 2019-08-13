@@ -10,8 +10,9 @@ use SalesForce\MarketingCloud\Api\CampaignApi;
 use SalesForce\MarketingCloud\Api\Configuration\ConfigFactory;
 use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
 use SalesForce\MarketingCloud\ApiException;
+use SalesForce\MarketingCloud\Authorization\AuthService;
+use SalesForce\MarketingCloud\Authorization\AuthServiceSetup;
 use SalesForce\MarketingCloud\Configuration;
-use SalesForce\MarketingCloud\TestHelper\Authorization\AuthServiceTestFactory;
 use SalesForce\MarketingCloud\Model\ModelInterface;
 use SalesForce\MarketingCloud\TestHelper\Decorator\NullDecorator;
 use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\AbstractModelProvisioner;
@@ -86,15 +87,6 @@ abstract class BaseApiTest extends TestCase
     {
         parent::setUpBeforeClass();
 
-        // Configure the authentication service
-        AuthServiceTestFactory::setConfig([
-            'accountId' => getenv('ACCOUNT_ID'),
-            'clientId' => getenv('CLIENT_ID'),
-            'clientSecret' => getenv('CLIENT_SECRET'),
-            'urlAuthorize' => getenv('URL_AUTHORIZE'),
-            'urlAccessToken' => getenv('URL_ACCESS_TOKEN'),
-        ]);
-
         static::setupContainer();
     }
 
@@ -105,27 +97,47 @@ abstract class BaseApiTest extends TestCase
      */
     private static function setupContainer(): void
     {
-        $configRef = new Reference("config");
-        $clientRef = new Reference("client");
-
         // Setup the dependency container
         static::$container = new ContainerBuilder();
 
-        // Register the authentication service
-        static::$container->setParameter("auth.service", [AuthServiceTestFactory::class, 'factory']);
+        static::registerSettingsAndServices();
+        static::registerApiClients();
+    }
 
-        // Sets the client service
-        static::$container->set("client", new Client(['verify' => false]));
-
+    /**
+     * Register settings and services
+     *
+     * @return void
+     */
+    private static function registerSettingsAndServices(): void
+    {
         // Register the config object
-        static::$container->register("config", Configuration::class)
+        static::$container
+            ->register("config", Configuration::class)
             ->setFactory([ConfigFactory::class, "factory"]);
 
-        // Register the AssetApi service
+        // Sets the client adapter
+        static::$container->set("http.client.adapter", new Client(['verify' => false]));
+
+        // Authentication service (the factory updates the container)
+        (new AuthServiceSetup(static::$container))->run();
+    }
+
+    /**
+     * Registers the API clients
+     *
+     * @return void
+     */
+    private static function registerApiClients(): void
+    {
+        $configRef = new Reference("config");
+        $clientRef = new Reference("http.client.adapter");
+        $authServiceRef = new Reference(AuthService::CONTAINER_ID);
+
         foreach ([AssetApi::class, CampaignApi::class, TransactionalMessagingApi::class] as $apiClientClass) {
             static::$container
                 ->register($apiClientClass, $apiClientClass)
-                ->addArgument("%auth.service%")
+                ->addArgument($authServiceRef)
                 ->addArgument($clientRef)
                 ->addArgument($configRef);
         }

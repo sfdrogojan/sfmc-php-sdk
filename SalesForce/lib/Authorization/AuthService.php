@@ -15,6 +15,8 @@ use League\OAuth2\Client\Provider\GenericProvider;
  */
 class AuthService implements CacheAwareInterface, AuthServiceInterface
 {
+    const CONTAINER_ID = "sfmc.auth.service";
+
     /**
      * @var CacheItemPoolInterface
      */

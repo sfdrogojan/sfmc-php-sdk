@@ -11,6 +11,11 @@ use SalesForce\MarketingCloud\Configuration;
  */
 final class ConfigFactory
 {
+    /**
+     * Creates the required configuration object
+     *
+     * @return Configuration
+     */
     public static function factory(): Configuration
     {
         return (new Configuration())->setHost(getenv("API_URL"));

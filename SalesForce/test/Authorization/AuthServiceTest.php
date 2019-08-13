@@ -9,7 +9,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\InvalidArgumentException;
 use SalesForce\MarketingCloud\Authorization\AuthService;
-use SalesForce\MarketingCloud\Authorization\AuthServiceFactory;
+use SalesForce\MarketingCloud\Authorization\AuthServiceSetup;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 /**
@@ -19,15 +19,23 @@ use Symfony\Component\Cache\Adapter\ArrayAdapter;
  */
 class AuthServiceTest extends TestCase
 {
+    /**
+     * @throws \Exception
+     */
     public function testBuildAuthServiceUsingCallable()
     {
         $this->assertInstanceOf(
             AuthService::class,
-            call_user_func([AuthServiceFactory::class, "factory"])
+            (new AuthServiceSetup())->run()->getContainer()->get(AuthService::CONTAINER_ID)
         );
     }
 
-    public function authCacheStatesDataProvider()
+    /**
+     * Returns test data
+     *
+     * @return array
+     */
+    public function authCacheStatesDataProvider(): array
     {
         // Params are: $expires_in, $callCount, $sleep
         return [

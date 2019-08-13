@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;
 use SalesForce\MarketingCloud\Api\Exception\ClientUnauthorizedException;
-use SalesForce\MarketingCloud\Authorization\AuthServiceFactory;
+use SalesForce\MarketingCloud\Authorization\AuthService;
 use SalesForce\MarketingCloud\Authorization\AuthServiceInterface;
 use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\HeaderSelector;
@@ -39,32 +39,23 @@ abstract class AbstractApi
     private $authService;
 
     /**
-     * @var callable|\Closure
-     */
-    private $authServiceCallable;
-
-    /**
-     * @param callable $authServiceCallable
+     * @param AuthService $authService
      * @param ClientInterface $client
      * @param Configuration $config
      * @param HeaderSelector $selector
      */
     public function __construct(
-        callable $authServiceCallable = null,
+        AuthService $authService,
         ClientInterface $client = null,
         Configuration $config = null,
         HeaderSelector $selector = null
     ) {
-        // Default callable
-        if (null === $authServiceCallable) {
-            $authServiceCallable = [AuthServiceFactory::class, "factory"];
-        }
-
         // Setting the properties
-        $this->authServiceCallable = $authServiceCallable;
+        $this->authService = $authService;
         $this->client = $client ?: new Client();
         $this->config = $config ?: new Configuration();
         $this->headerSelector = $selector ?: new HeaderSelector();
+
     }
 
     /**
@@ -74,10 +65,6 @@ abstract class AbstractApi
      */
     protected function getAuthService(): AuthServiceInterface
     {
-        if (null === $this->authService) {
-            $this->authService = call_user_func($this->authServiceCallable);
-        }
-
         return $this->authService;
     }
 
