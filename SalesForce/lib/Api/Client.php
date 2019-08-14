@@ -80,7 +80,7 @@ class Client
         if (isset($options[$optionName])) {
             $options[$optionName] = trim(strval($arguments[0]));
         }
-        
+
         // Update the options
         $this->container->setParameter("auth.client.options", $options);
 
