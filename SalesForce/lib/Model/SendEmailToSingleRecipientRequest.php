@@ -334,3 +334,4 @@ class SendEmailToSingleRecipientRequest implements ModelInterface, ArrayAccess
     }
 }
 
+

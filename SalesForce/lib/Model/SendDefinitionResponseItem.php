@@ -358,3 +358,4 @@ class SendDefinitionResponseItem implements ModelInterface, ArrayAccess
     }
 }
 
+

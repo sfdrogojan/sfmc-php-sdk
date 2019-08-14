@@ -358,3 +358,4 @@ class SendDefinitionToSingleRecipientResponse implements ModelInterface, ArrayAc
     }
 }
 
+

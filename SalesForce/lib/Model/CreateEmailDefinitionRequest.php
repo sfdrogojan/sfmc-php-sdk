@@ -640,3 +640,4 @@ class CreateEmailDefinitionRequest implements ModelInterface, ArrayAccess
     }
 }
 
+

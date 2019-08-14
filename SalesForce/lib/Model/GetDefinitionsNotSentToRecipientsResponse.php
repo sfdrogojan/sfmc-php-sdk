@@ -418,3 +418,4 @@ class GetDefinitionsNotSentToRecipientsResponse implements ModelInterface, Array
     }
 }
 
+

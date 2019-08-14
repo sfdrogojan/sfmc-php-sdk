@@ -365,3 +365,4 @@ class AssetType implements ModelInterface, ArrayAccess
     }
 }
 
+

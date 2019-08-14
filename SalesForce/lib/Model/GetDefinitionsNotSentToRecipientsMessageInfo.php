@@ -358,3 +358,4 @@ class GetDefinitionsNotSentToRecipientsMessageInfo implements ModelInterface, Ar
     }
 }
 
+

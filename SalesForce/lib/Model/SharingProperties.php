@@ -362,3 +362,4 @@ class SharingProperties implements ModelInterface, ArrayAccess
     }
 }
 
+

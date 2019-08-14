@@ -418,3 +418,4 @@ class GetDefinitionSendStatusForRecipientResponseInfo implements ModelInterface,
     }
 }
 
+

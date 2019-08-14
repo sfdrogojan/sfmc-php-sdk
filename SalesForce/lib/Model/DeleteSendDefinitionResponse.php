@@ -358,3 +358,4 @@ class DeleteSendDefinitionResponse implements ModelInterface, ArrayAccess
     }
 }
 
+

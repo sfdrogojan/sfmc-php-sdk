@@ -388,3 +388,4 @@ class SendDefinitionToMultipleRecipientsResponse implements ModelInterface, Arra
     }
 }
 
+

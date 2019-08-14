@@ -418,3 +418,4 @@ class GetEmailDefinitionsResponse implements ModelInterface, ArrayAccess
     }
 }
 
+
