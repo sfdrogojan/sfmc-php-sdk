@@ -5,21 +5,13 @@ namespace SalesForce\MarketingCloud\TestHelper\Api;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 use SalesForce\MarketingCloud\Api\AbstractApi;
-use SalesForce\MarketingCloud\Api\AssetApi;
-use SalesForce\MarketingCloud\Api\CampaignApi;
-use SalesForce\MarketingCloud\Api\Configuration\ConfigFactory;
-use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
 use SalesForce\MarketingCloud\ApiException;
-use SalesForce\MarketingCloud\Authorization\AuthService;
-use SalesForce\MarketingCloud\Authorization\AuthServiceSetup;
-use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\Model\ModelInterface;
 use SalesForce\MarketingCloud\TestHelper\Decorator\NullDecorator;
 use SalesForce\MarketingCloud\TestHelper\Model\Provisioner\AbstractModelProvisioner;
 use SalesForce\MarketingCloud\TestHelper\Model\Provider\AbstractModelProvider;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Base class for the unit tests
@@ -32,6 +24,11 @@ abstract class BaseApiTest extends TestCase
      * @var ContainerBuilder
      */
     protected static $container;
+
+    /**
+     * @var \SalesForce\MarketingCloud\Api\Client
+     */
+    protected static $apiFactory;
 
     /**
      * The client class to use in order to build the client object
@@ -82,11 +79,11 @@ abstract class BaseApiTest extends TestCase
 
     /**
      * @inheritDoc
+     * @throws \Exception
      */
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
-
         static::setupContainer();
     }
 
@@ -94,14 +91,16 @@ abstract class BaseApiTest extends TestCase
      * Sets up the container
      *
      * @return void
+     * @throws \Exception
      */
     private static function setupContainer(): void
     {
         // Setup the dependency container
         static::$container = new ContainerBuilder();
+        static::$apiFactory = new \SalesForce\MarketingCloud\Api\Client(static::$container);
 
         static::registerSettingsAndServices();
-        static::registerApiClients();
+        static::preloadClients();
     }
 
     /**
@@ -111,36 +110,20 @@ abstract class BaseApiTest extends TestCase
      */
     private static function registerSettingsAndServices(): void
     {
-        // Register the config object
-        static::$container
-            ->register("config", Configuration::class)
-            ->setFactory([ConfigFactory::class, "factory"]);
-
         // Sets the client adapter
         static::$container->set("http.client.adapter", new Client(['verify' => false]));
-
-        // Authentication service (the factory updates the container)
-        (new AuthServiceSetup(static::$container))->run();
     }
 
     /**
-     * Registers the API clients
+     * Pre-loads the clients to they are available in all the tests
      *
-     * @return void
+     * @throws \Exception
      */
-    private static function registerApiClients(): void
+    private static function preloadClients(): void
     {
-        $configRef = new Reference("config");
-        $clientRef = new Reference("http.client.adapter");
-        $authServiceRef = new Reference(AuthService::CONTAINER_ID);
-
-        foreach ([AssetApi::class, CampaignApi::class, TransactionalMessagingApi::class] as $apiClientClass) {
-            static::$container
-                ->register($apiClientClass, $apiClientClass)
-                ->addArgument($authServiceRef)
-                ->addArgument($clientRef)
-                ->addArgument($configRef);
-        }
+        static::$apiFactory->getAssetApi();
+        static::$apiFactory->getCampaignApi();
+        static::$apiFactory->getTransactionalMessagingApi();
     }
 
     /**
@@ -175,7 +158,7 @@ abstract class BaseApiTest extends TestCase
     protected function getClient(): AbstractApi
     {
         if (null === $this->client) {
-            $this->client = static::$container->get($this->clientClass);
+            $this->client = static::$apiFactory->getClient($this->clientClass);
         }
 
         return $this->client;

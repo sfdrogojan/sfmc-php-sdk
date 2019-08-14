@@ -11,6 +11,7 @@ use Psr\Cache\InvalidArgumentException;
 use SalesForce\MarketingCloud\Authorization\AuthService;
 use SalesForce\MarketingCloud\Authorization\AuthServiceSetup;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Class AuthServiceTest
@@ -22,11 +23,23 @@ class AuthServiceTest extends TestCase
     /**
      * @throws \Exception
      */
-    public function testBuildAuthServiceUsingCallable()
+    public function testCreateAuthService()
     {
+        $container = new ContainerBuilder();
+        $container->setParameter("auth.client.options", [
+            'accountId' => getenv('ACCOUNT_ID'),
+            'clientId' => getenv('CLIENT_ID'),
+            'clientSecret' => getenv('CLIENT_SECRET'),
+            'urlAuthorize' => getenv('URL_AUTHORIZE'),
+            'urlAccessToken' => getenv('URL_ACCESS_TOKEN'),
+            'urlResourceOwnerDetails' => ''
+        ]);
+
+        AuthServiceSetup::execute($container);
+
         $this->assertInstanceOf(
             AuthService::class,
-            (new AuthServiceSetup())->run()->getContainer()->get(AuthService::CONTAINER_ID)
+            $container->get(AuthService::CONTAINER_ID)
         );
     }
 
@@ -40,7 +53,7 @@ class AuthServiceTest extends TestCase
         // Params are: $expires_in, $callCount, $sleep
         return [
             [60, 1, 0], // 60s cache, getAccessToken() method should be called 1 time
-            [3, 2, 5]   // 03s cache, getAccessToken() method should be called 2 times
+            [33, 2, 3]   // 30s cache, getAccessToken() method should be called 2 times
         ];
     }
 

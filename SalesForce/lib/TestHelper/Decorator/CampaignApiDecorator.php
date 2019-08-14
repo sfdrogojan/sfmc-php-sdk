@@ -4,7 +4,6 @@ namespace SalesForce\MarketingCloud\TestHelper\Decorator;
 
 use PHPUnit\Framework\Assert;
 use SalesForce\MarketingCloud\Api\CampaignApi;
-use SalesForce\MarketingCloud\Api\TransactionalMessagingApi;
 use SalesForce\MarketingCloud\ApiException;
 use SalesForce\MarketingCloud\Model\Campaign;
 use SalesForce\MarketingCloud\TestHelper\Api\ResourceCreator;

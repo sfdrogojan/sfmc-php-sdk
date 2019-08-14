@@ -16,76 +16,40 @@ use Symfony\Component\DependencyInjection\Reference;
 class AuthServiceSetup
 {
     /**
-     * @var ContainerBuilder
-     */
-    private $container;
-
-    /**
-     * AuthServiceFactory constructor.
-     *
-     * @param ContainerBuilder $container
-     * @param array|null $clientOptions
-     */
-    public function __construct(ContainerBuilder $container = null, array $clientOptions = array())
-    {
-        // Container create
-        $this->container = $container ?? new ContainerBuilder();
-
-        // Authentication client options
-        if (!$this->container->hasParameter("auth.client.options")) {
-            $this->container->setParameter("auth.client.options", array_merge([
-                'accountId' => getenv('ACCOUNT_ID'),
-                'clientId' => getenv('CLIENT_ID'),
-                'clientSecret' => getenv('CLIENT_SECRET'),
-                'urlAuthorize' => getenv('URL_AUTHORIZE'),
-                'urlAccessToken' => getenv('URL_ACCESS_TOKEN'),
-                'urlResourceOwnerDetails' => ''
-            ], $clientOptions));
-        }
-    }
-
-    /**
      * Setup the container to create the object
      *
-     * @return AuthServiceSetup
+     * @param ContainerBuilder|null $container
+     * @return ContainerBuilder $container
      */
-    public function run(): AuthServiceSetup
+    public static function execute(ContainerBuilder $container = null): ContainerBuilder
     {
+        $clientOptions = $container->getParameter("auth.client.options");
+
         // HTTP client
-        if (!$this->container->has("http.client.adapter")) {
-            $this->container->set("http.client.adapter", new Client());
+        if (!$container->has("http.client.adapter")) {
+            $container->set("http.client.adapter", new Client());
         }
 
         // Authentication cache
-        if (!$this->container->has("auth.cache")) {
-            $this->container->register("auth.cache", ArrayAdapter::class);
+        if (!$container->has("auth.cache")) {
+            $container->register("auth.cache", ArrayAdapter::class);
         }
 
         // Authentication client
-        if (!$this->container->has("auth.client")) {
-            $this->container
+        if (!$container->has("auth.client")) {
+            $container
                 ->register("auth.client", GenericProvider::class)
-                ->setArgument("options", "%auth.client.options%")
+                ->setArgument("options", $clientOptions)
                 ->addMethodCall("setHttpClient", [new Reference("http.client.adapter")]);
         }
 
         // Authentication service
-        $this->container
+        $container
             ->register(AuthService::CONTAINER_ID, AuthService::class)
             ->addMethodCall("setCache", [new Reference("auth.cache")])
-            ->addMethodCall("setCacheKey", [getenv('CLIENT_ID') . getenv('ACCOUNT_ID')])
+            ->addMethodCall("setCacheKey", [$clientOptions["clientId"] . $clientOptions["accountId"]])
             ->addMethodCall("setClient", [new Reference("auth.client")]);
 
-        return $this;
-    }
-
-    /**
-     * Retrieves the configured container
-     *
-     * @return ContainerBuilder
-     */
-    public function getContainer(): ContainerBuilder
-    {
-        return $this->container;
+        return $container;
     }
 }

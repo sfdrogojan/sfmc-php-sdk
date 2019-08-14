@@ -15,7 +15,7 @@ use League\OAuth2\Client\Provider\GenericProvider;
  */
 class AuthService implements CacheAwareInterface, AuthServiceInterface
 {
-    const CONTAINER_ID = "sfmc.auth.service";
+    const CONTAINER_ID = "auth.service";
 
     /**
      * @var CacheItemPoolInterface
@@ -93,6 +93,7 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
 
             $dateTime = new \DateTime();
             $dateTime->setTimestamp($accessToken->getExpires());
+            $dateTime->modify("-30 seconds");
 
             // Configuring the cache item
             $cacheItem->set($accessToken);

@@ -3,21 +3,23 @@
 namespace SalesForce\MarketingCloud\Api;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use SalesForce\MarketingCloud\Api\Configuration\ConfigFactory;
+use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\Authorization\AuthServiceSetup;
 use SalesForce\MarketingCloud\Authorization\AuthService;
 
 /**
  * Class Client
  *
- * @package \SalesForce\MarketingCloud
- * @method self setApiUrl(string $url)
+ * NOTE: This class is auto generated
+ *
+ * @package SalesForce\MarketingCloud\Api
  * @method self setAccountId(string $accountId)
  * @method self setClientId(string $clientId)
  * @method self setClientSecret(string $clientSecret)
  * @method self setUrlAuthorize(string $urlAuthorize)
  * @method self setUrlAccessToken(string $urlAccessToken)
  * @method self setUrlResourceOwnerDetails(string $urlResourceOwnerDetails)
+ * @version 1.0.0
  */
 class Client
 {
@@ -42,15 +44,21 @@ class Client
     {
         $this->container = $container ?? new ContainerBuilder();
 
-        // Set default config 
-        $this->container->setParameter("auth.client.options", [
-            'accountId' => getenv('ACCOUNT_ID'),
-            'clientId' => getenv('CLIENT_ID'),
-            'clientSecret' => getenv('CLIENT_SECRET'),
-            'urlAuthorize' => getenv('URL_AUTHORIZE'),
-            'urlAccessToken' => getenv('URL_ACCESS_TOKEN'),
-            'urlResourceOwnerDetails' => ''
-        ]);
+        // Set default config
+        if (!$this->container->hasParameter("auth.client.options")) {
+            $this->container->setParameter("auth.client.options", [
+                'accountId' => getenv('ACCOUNT_ID'),
+                'clientId' => getenv('CLIENT_ID'),
+                'clientSecret' => getenv('CLIENT_SECRET'),
+                'urlAuthorize' => getenv('URL_AUTHORIZE'),
+                'urlAccessToken' => getenv('URL_ACCESS_TOKEN'),
+                'urlResourceOwnerDetails' => ''
+            ]);
+        }
+
+        if (!$this->container->hasParameter("api.baseUrl")) {
+            $this->setApiUrl(getenv("API_URL"));
+        }
     }
 
     /**
@@ -60,6 +68,19 @@ class Client
      */
     public function getConfig(): self
     {
+        return $this;
+    }
+
+    /**
+     * Sets the API Url configuration
+     *
+     * @param string $url
+     * @return self
+     */
+    public function setApiUrl(string $url): self
+    {
+        $this->container->setParameter("api.baseUrl", $url);
+
         return $this;
     }
 
@@ -88,7 +109,7 @@ class Client
     }
 
     /**
-     * Creates / retrieves the requested client object
+     * Creates/retrieves the requested client object
      *
      * @param string $class
      * @return AbstractApi|AssetApi|CampaignApi|TransactionalMessagingApi
@@ -102,7 +123,7 @@ class Client
 
             // Auth container will not be preset in the container at first load
             if (!$this->container->has(AuthService::CONTAINER_ID)) {
-                (new AuthServiceSetup($this->container))->run(); // Sets the service AuthService::CONTAINER_ID
+                AuthServiceSetup::execute($this->container); // Sets the service AuthService::CONTAINER_ID
             }
 
             /** @var AuthService $authService */
@@ -111,7 +132,7 @@ class Client
             $this->container->set($class, new $class(
                 $authService,
                 $httpClient,
-                ConfigFactory::factory()
+                (new Configuration())->setHost($this->container->getParameter("api.baseUrl"))
             ));
         }
 
@@ -153,6 +174,5 @@ class Client
     {
         return $this->getClient(self::CLIENT_TRANSACTIONAL_MESSAGING_API);
     }
-
 
 }
