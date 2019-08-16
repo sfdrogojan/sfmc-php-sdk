@@ -10,6 +10,12 @@
             <directory>./test/Api</directory>
             <directory>./test/Model</directory>
         </testsuite>
+        <testsuite name="php-sdk-api">
+            <directory>./test/Api</directory>
+        </testsuite>
+        <testsuite name="php-sdk-auth">
+            <directory>./test/Authorization</directory>
+        </testsuite>
     </testsuites>
 
     <filter>
