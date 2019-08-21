@@ -39,7 +39,7 @@ class EmailDefinition extends AbstractModelProvisioner
         $asset = AssetProvider::getTestModel();
         $asset->setAssetType(new AssetType(["id" => 208, "name" => "htmlemail", "displayName" => "htmlemail"]));
 
-        return $client->createAsset($asset->__toString());
+        return $client->createAsset($asset);
     }
 
     /**

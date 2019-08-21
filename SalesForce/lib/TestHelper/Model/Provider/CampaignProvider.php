@@ -24,7 +24,7 @@ class CampaignProvider extends AbstractModelProvider
             "description" => "Random description",
             "campaignCode" => "100",
             "color" => "red",
-            "favourite" => 0
+            "favorite" => 0
         ]);
 
         return $object;

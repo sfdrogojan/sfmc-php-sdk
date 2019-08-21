@@ -31,8 +31,10 @@ namespace SalesForce\MarketingCloud\Api;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
+use SalesForce\MarketingCloud\Api\Exception\InvalidRequestException;
 use SalesForce\MarketingCloud\ApiException;
 use SalesForce\MarketingCloud\ObjectSerializer;
+
 
 /**
  * CampaignApi Class Doc Comment
@@ -50,14 +52,14 @@ class CampaignApi extends AbstractApi
      *
      * createCampaign
      *
-     * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\Campaign
      */
-    public function createCampaign($body = null)
+    public function createCampaign(\SalesForce\MarketingCloud\Model\Campaign $body)
     {
         list($response) = $this->createCampaignWithHttpInfo($body);
         return $response;
@@ -68,14 +70,14 @@ class CampaignApi extends AbstractApi
      *
      * createCampaign
      *
-     * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (required)
      *
      * @return array of \SalesForce\MarketingCloud\Model\Campaign, HTTP status code, HTTP response headers (array of strings)
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function createCampaignWithHttpInfo($body = null)
+    public function createCampaignWithHttpInfo(\SalesForce\MarketingCloud\Model\Campaign $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\Campaign';
         $request = $this->createCampaignRequest($body);
@@ -144,13 +146,13 @@ class CampaignApi extends AbstractApi
      *
      * createCampaign
      *
-     * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function createCampaignAsync($body = null)
+    public function createCampaignAsync(\SalesForce\MarketingCloud\Model\Campaign $body)
     {
         return $this->createCampaignAsyncWithHttpInfo($body)
             ->then(
@@ -165,13 +167,13 @@ class CampaignApi extends AbstractApi
      *
      * createCampaign
      *
-     * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function createCampaignAsyncWithHttpInfo($body = null)
+    public function createCampaignAsyncWithHttpInfo(\SalesForce\MarketingCloud\Model\Campaign $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\Campaign';
         $request = $this->createCampaignRequest($body);
@@ -216,16 +218,26 @@ class CampaignApi extends AbstractApi
     /**
      * Create request for operation 'createCampaign'
      *
-     * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Campaign $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function createCampaignRequest($body = null)
+    protected function createCampaignRequest(\SalesForce\MarketingCloud\Model\Campaign $body)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling createCampaign'
+            );
+        }
 
         $resourcePath = '/hub/v1/campaigns';
         $formParams = [];
@@ -320,7 +332,7 @@ class CampaignApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return void
      */
-    public function deleteCampaignById($id)
+    public function deleteCampaignById(string $id)
     {
         $this->deleteCampaignByIdWithHttpInfo($id);
     }
@@ -337,7 +349,7 @@ class CampaignApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function deleteCampaignByIdWithHttpInfo($id)
+    public function deleteCampaignByIdWithHttpInfo(string $id)
     {
         $returnType = '';
         $request = $this->deleteCampaignByIdRequest($id);
@@ -406,7 +418,7 @@ class CampaignApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function deleteCampaignByIdAsync($id)
+    public function deleteCampaignByIdAsync(string $id)
     {
         return $this->deleteCampaignByIdAsyncWithHttpInfo($id)
             ->then(
@@ -427,7 +439,7 @@ class CampaignApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function deleteCampaignByIdAsyncWithHttpInfo($id)
+    public function deleteCampaignByIdAsyncWithHttpInfo(string $id)
     {
         $returnType = '';
         $request = $this->deleteCampaignByIdRequest($id);
@@ -464,8 +476,12 @@ class CampaignApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function deleteCampaignByIdRequest($id)
+    protected function deleteCampaignByIdRequest(string $id)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'id' is set
@@ -573,7 +589,7 @@ class CampaignApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\Campaign
      */
-    public function getCampaignById($id)
+    public function getCampaignById(string $id)
     {
         list($response) = $this->getCampaignByIdWithHttpInfo($id);
         return $response;
@@ -591,7 +607,7 @@ class CampaignApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function getCampaignByIdWithHttpInfo($id)
+    public function getCampaignByIdWithHttpInfo(string $id)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\Campaign';
         $request = $this->getCampaignByIdRequest($id);
@@ -666,7 +682,7 @@ class CampaignApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function getCampaignByIdAsync($id)
+    public function getCampaignByIdAsync(string $id)
     {
         return $this->getCampaignByIdAsyncWithHttpInfo($id)
             ->then(
@@ -687,7 +703,7 @@ class CampaignApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function getCampaignByIdAsyncWithHttpInfo($id)
+    public function getCampaignByIdAsyncWithHttpInfo(string $id)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\Campaign';
         $request = $this->getCampaignByIdRequest($id);
@@ -738,8 +754,12 @@ class CampaignApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getCampaignByIdRequest($id)
+    protected function getCampaignByIdRequest(string $id)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'id' is set
