@@ -10,6 +10,7 @@ use SalesForce\MarketingCloud\Authorization\AuthService;
 use SalesForce\MarketingCloud\Authorization\AuthServiceInterface;
 use SalesForce\MarketingCloud\Configuration;
 use SalesForce\MarketingCloud\HeaderSelector;
+use SalesForce\MarketingCloud\Http\Header\UserAgent;
 
 /**
  * Class AbstractApi
@@ -101,5 +102,15 @@ abstract class AbstractApi
         }
 
         $this->config->setAccessToken($accessToken);
+    }
+
+    /**
+     * Returns the User-Agent string
+     *
+     * @return string
+     */
+    final protected static function getUserAgent(): string
+    {
+        return UserAgent::fromSysInfo();
     }
 }

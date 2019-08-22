@@ -4,9 +4,9 @@ namespace SalesForce\MarketingCloud\Authorization;
 
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
+use SalesForce\MarketingCloud\Authorization\Client\GenericClient;
 use SalesForce\MarketingCloud\Cache\CacheAwareInterface;
 use Psr\Cache\CacheItemPoolInterface;
-use League\OAuth2\Client\Provider\GenericProvider;
 
 /**
  * Class AuthService
@@ -28,7 +28,7 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
     private $cacheKey = 'access_token';
 
     /**
-     * @var GenericProvider
+     * @var GenericClient
      */
     private $client;
 
@@ -60,9 +60,9 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
     /**
      * Sets the client used for the authorization
      *
-     * @param GenericProvider $client
+     * @param GenericClient $client
      */
-    public function setClient(GenericProvider $client): void
+    public function setClient(GenericClient $client): void
     {
         $this->client = $client;
     }
