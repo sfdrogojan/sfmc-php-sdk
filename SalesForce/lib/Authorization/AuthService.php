@@ -7,6 +7,8 @@ use League\OAuth2\Client\Token\AccessTokenInterface;
 use SalesForce\MarketingCloud\Authorization\Client\GenericClient;
 use SalesForce\MarketingCloud\Cache\CacheAwareInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use SalesForce\MarketingCloud\Event\AuthSuccessEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Class AuthService
@@ -36,6 +38,11 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
      * @var string
      */
     private $grantType = 'client_credentials';
+
+    /**
+     * @var EventDispatcher
+     */
+    private $eventDispatcher;
 
     /**
      * Sets the cache
@@ -76,6 +83,26 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
     }
 
     /**
+     * @return EventDispatcher
+     */
+    public function getEventDispatcher(): EventDispatcher
+    {
+        if (null === $this->eventDispatcher) {
+            $this->eventDispatcher = new EventDispatcher();
+        }
+
+        return $this->eventDispatcher;
+    }
+
+    /**
+     * @param EventDispatcher $eventDispatcher
+     */
+    public function setEventDispatcher(EventDispatcher $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
+    /**
      * Authorizes the client
      *
      * @return AuthServiceInterface
@@ -90,6 +117,7 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
         $cacheItem = $this->cache->getItem($this->cacheKey);
         if (!$cacheItem->isHit()) {
             $accessToken = $this->client->getAccessToken($this->grantType);
+            $response = $this->client->getLastParsedResponse();
 
             $dateTime = new \DateTime();
             $dateTime->setTimestamp($accessToken->getExpires());
@@ -101,6 +129,13 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
 
             // Saves the cache item
             $this->cache->save($cacheItem);
+
+            $event = new AuthSuccessEvent();
+            $event->setAccessToken($accessToken);
+            $event->setRestInstanceUrl($response["rest_instance_url"]);
+
+            // Dispatch the event
+            $this->getEventDispatcher()->dispatch($event, AuthSuccessEvent::NAME);
         }
 
         return $this;

@@ -8,8 +8,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\InvalidArgumentException;
 use SalesForce\MarketingCloud\Authorization\AuthService;
-use SalesForce\MarketingCloud\Authorization\AuthServiceSetup;
+use SalesForce\MarketingCloud\Authorization\AuthServiceBuilder;
 use SalesForce\MarketingCloud\Authorization\Client\GenericClient;
+use SalesForce\MarketingCloud\Event\Subscriber\AuthEventSub;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -35,11 +36,9 @@ class AuthServiceTest extends TestCase
             'urlResourceOwnerDetails' => ''
         ]);
 
-        AuthServiceSetup::execute($container);
-
         $this->assertInstanceOf(
             AuthService::class,
-            $container->get(AuthService::CONTAINER_ID)
+            AuthServiceBuilder::execute($container)
         );
     }
 
@@ -79,6 +78,16 @@ class AuthServiceTest extends TestCase
                     "access_token" => "test",
                     "expires_in" => $expires_in
                 ]);
+            });
+
+        $clientMock->expects($this->exactly($callCount))
+            ->method("getLastParsedResponse")
+            ->willReturnCallback(function () use ($expires_in) {
+                return [
+                    "access_token" => "test",
+                    "expires_in" => $expires_in,
+                    "rest_instance_url" => "https://www.example.com/"
+                ];
             });
 
         // SUT
