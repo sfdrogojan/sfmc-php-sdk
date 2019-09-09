@@ -100,8 +100,6 @@ abstract class AbstractApi
         if (empty($accessToken)) {
             throw new ClientUnauthorizedException();
         }
-
-        $this->config->setAccessToken($accessToken);
     }
 
     /**

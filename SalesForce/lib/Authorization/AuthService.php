@@ -4,6 +4,7 @@ namespace SalesForce\MarketingCloud\Authorization;
 
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
+use SalesForce\MarketingCloud\Api\Exception\ClientUnauthorizedException;
 use SalesForce\MarketingCloud\Authorization\Client\GenericClient;
 use SalesForce\MarketingCloud\Cache\CacheAwareInterface;
 use Psr\Cache\CacheItemPoolInterface;
@@ -119,24 +120,32 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
             $accessToken = $this->client->getAccessToken($this->grantType);
             $response = $this->client->getLastParsedResponse();
 
+            if (empty($accessToken)) {
+                throw new ClientUnauthorizedException("Authentication failed");
+            }
+
+            // Set the expire time
             $dateTime = new \DateTime();
             $dateTime->setTimestamp($accessToken->getExpires());
             $dateTime->modify("-30 seconds");
 
             // Configuring the cache item
-            $cacheItem->set($accessToken);
+            $cacheItem->set([$accessToken, $response]);
             $cacheItem->expiresAt($dateTime);
 
             // Saves the cache item
             $this->cache->save($cacheItem);
-
-            $event = new AuthSuccessEvent();
-            $event->setAccessToken($accessToken);
-            $event->setRestInstanceUrl($response["rest_instance_url"]);
-
-            // Dispatch the event
-            $this->getEventDispatcher()->dispatch($event, AuthSuccessEvent::NAME);
+        } else {
+            list($accessToken, $response) = $cacheItem->get();
         }
+
+        // Create the event
+        $event = new AuthSuccessEvent();
+        $event->setAccessToken($accessToken);
+        $event->setRestInstanceUrl($response["rest_instance_url"]);
+
+        // Dispatch the event
+        $this->getEventDispatcher()->dispatch($event, AuthSuccessEvent::NAME);
 
         return $this;
     }
@@ -153,7 +162,7 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
         $cacheItem = $this->cache->getItem($this->cacheKey);
         if ($cacheItem->isHit()) {
             /** @var AccessTokenInterface $accessToken */
-            $accessToken = $cacheItem->get();
+            list($accessToken,) = $cacheItem->get();
 
             return $accessToken->getToken();
         }

@@ -61,5 +61,6 @@ class AuthEventSub implements EventSubscriberInterface
     public function onAuthSuccess(AuthSuccessEvent $event)
     {
         $this->configuration->setHost($event->getRestInstanceUrl());
+        $this->configuration->setAccessToken($event->getAccessToken());
     }
 }
