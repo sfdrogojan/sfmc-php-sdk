@@ -42,7 +42,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\SalesForce\MarketingCloud\Model\Asset**](../Model/Asset.md)| JSON Parameters | [optional]
+ **body** | [**\SalesForce\MarketingCloud\Model\Asset**](../Model/Asset.md)| JSON Parameters |
 
 ### Return type
 
@@ -190,7 +190,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **float**| The ID of the asset to update |
- **body** | [**\SalesForce\MarketingCloud\Model\Asset**](../Model/Asset.md)| JSON Parameters | [optional]
+ **body** | [**\SalesForce\MarketingCloud\Model\Asset**](../Model/Asset.md)| JSON Parameters |
 
 ### Return type
 

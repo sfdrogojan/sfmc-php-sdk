@@ -60,7 +60,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest**](../Model/CreateEmailDefinitionRequest.md)| JSON Parameters | [optional]
+ **body** | [**\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest**](../Model/CreateEmailDefinitionRequest.md)| JSON Parameters |
 
 ### Return type
 
@@ -109,7 +109,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest**](../Model/CreateSmsDefinitionRequest.md)| JSON Parameters | [optional]
+ **body** | [**\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest**](../Model/CreateSmsDefinitionRequest.md)| JSON Parameters |
 
 ### Return type
 
@@ -866,7 +866,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **definitionKey** | **string**| Unique identifier of the definition. |
- **body** | [**\SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest**](../Model/UpdateEmailDefinitionRequest.md)| JSON Parameters | [optional]
+ **body** | [**\SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest**](../Model/UpdateEmailDefinitionRequest.md)| JSON Parameters |
 
 ### Return type
 
@@ -966,7 +966,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest**](../Model/SendEmailToMultipleRecipientsRequest.md)| JSON Parameters | [optional]
+ **body** | [**\SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest**](../Model/SendEmailToMultipleRecipientsRequest.md)| JSON Parameters |
 
 ### Return type
 
@@ -1017,7 +1017,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **messageKey** | **string**| Unique identifier used to track message status. Can be automatically created when you create a message or provided as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. |
- **body** | [**\SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest**](../Model/SendEmailToSingleRecipientRequest.md)| JSON Parameters | [optional]
+ **body** | [**\SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest**](../Model/SendEmailToSingleRecipientRequest.md)| JSON Parameters |
 
 ### Return type
 
@@ -1066,7 +1066,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest**](../Model/SendSmsToMultipleRecipientsRequest.md)| JSON Parameters | [optional]
+ **body** | [**\SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest**](../Model/SendSmsToMultipleRecipientsRequest.md)| JSON Parameters |
 
 ### Return type
 
@@ -1117,7 +1117,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **messageKey** | **string**| Unique identifier of the definition used to track message status. The messageKey can be created automatically when you create a message, or you can provide it as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. |
- **body** | [**\SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest**](../Model/SendSmsToSingleRecipientRequest.md)| JSON Parameters | [optional]
+ **body** | [**\SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest**](../Model/SendSmsToSingleRecipientRequest.md)| JSON Parameters |
 
 ### Return type
 

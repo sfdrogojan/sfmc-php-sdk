@@ -31,8 +31,10 @@ namespace SalesForce\MarketingCloud\Api;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
+use SalesForce\MarketingCloud\Api\Exception\InvalidRequestException;
 use SalesForce\MarketingCloud\ApiException;
 use SalesForce\MarketingCloud\ObjectSerializer;
+
 
 /**
  * AssetApi Class Doc Comment
@@ -50,14 +52,14 @@ class AssetApi extends AbstractApi
      *
      * createAsset
      *
-     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\Asset
      */
-    public function createAsset($body = null)
+    public function createAsset(\SalesForce\MarketingCloud\Model\Asset $body)
     {
         list($response) = $this->createAssetWithHttpInfo($body);
         return $response;
@@ -68,14 +70,14 @@ class AssetApi extends AbstractApi
      *
      * createAsset
      *
-     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (required)
      *
      * @return array of \SalesForce\MarketingCloud\Model\Asset, HTTP status code, HTTP response headers (array of strings)
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function createAssetWithHttpInfo($body = null)
+    public function createAssetWithHttpInfo(\SalesForce\MarketingCloud\Model\Asset $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\Asset';
         $request = $this->createAssetRequest($body);
@@ -161,13 +163,13 @@ class AssetApi extends AbstractApi
      *
      * createAsset
      *
-     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function createAssetAsync($body = null)
+    public function createAssetAsync(\SalesForce\MarketingCloud\Model\Asset $body)
     {
         return $this->createAssetAsyncWithHttpInfo($body)
             ->then(
@@ -182,13 +184,13 @@ class AssetApi extends AbstractApi
      *
      * createAsset
      *
-     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function createAssetAsyncWithHttpInfo($body = null)
+    public function createAssetAsyncWithHttpInfo(\SalesForce\MarketingCloud\Model\Asset $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\Asset';
         $request = $this->createAssetRequest($body);
@@ -236,16 +238,26 @@ class AssetApi extends AbstractApi
     /**
      * Create request for operation 'createAsset'
      *
-     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function createAssetRequest($body = null)
+    protected function createAssetRequest(\SalesForce\MarketingCloud\Model\Asset $body)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling createAsset'
+            );
+        }
 
         $resourcePath = '/asset/v1/content/assets';
         $formParams = [];
@@ -338,7 +350,7 @@ class AssetApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return void
      */
-    public function deleteAssetById($id)
+    public function deleteAssetById(float $id)
     {
         $this->deleteAssetByIdWithHttpInfo($id);
     }
@@ -355,7 +367,7 @@ class AssetApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function deleteAssetByIdWithHttpInfo($id)
+    public function deleteAssetByIdWithHttpInfo(float $id)
     {
         $returnType = '';
         $request = $this->deleteAssetByIdRequest($id);
@@ -425,7 +437,7 @@ class AssetApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function deleteAssetByIdAsync($id)
+    public function deleteAssetByIdAsync(float $id)
     {
         return $this->deleteAssetByIdAsyncWithHttpInfo($id)
             ->then(
@@ -446,7 +458,7 @@ class AssetApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function deleteAssetByIdAsyncWithHttpInfo($id)
+    public function deleteAssetByIdAsyncWithHttpInfo(float $id)
     {
         $returnType = '';
         $request = $this->deleteAssetByIdRequest($id);
@@ -486,8 +498,12 @@ class AssetApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function deleteAssetByIdRequest($id)
+    protected function deleteAssetByIdRequest(float $id)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'id' is set
@@ -593,7 +609,7 @@ class AssetApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\Asset
      */
-    public function getAssetById($id)
+    public function getAssetById(float $id)
     {
         list($response) = $this->getAssetByIdWithHttpInfo($id);
         return $response;
@@ -611,7 +627,7 @@ class AssetApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function getAssetByIdWithHttpInfo($id)
+    public function getAssetByIdWithHttpInfo(float $id)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\Asset';
         $request = $this->getAssetByIdRequest($id);
@@ -703,7 +719,7 @@ class AssetApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function getAssetByIdAsync($id)
+    public function getAssetByIdAsync(float $id)
     {
         return $this->getAssetByIdAsyncWithHttpInfo($id)
             ->then(
@@ -724,7 +740,7 @@ class AssetApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function getAssetByIdAsyncWithHttpInfo($id)
+    public function getAssetByIdAsyncWithHttpInfo(float $id)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\Asset';
         $request = $this->getAssetByIdRequest($id);
@@ -778,8 +794,12 @@ class AssetApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getAssetByIdRequest($id)
+    protected function getAssetByIdRequest(float $id)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'id' is set
@@ -879,14 +899,14 @@ class AssetApi extends AbstractApi
      * partiallyUpdateAssetById
      *
      * @param  float $id The ID of the asset to update (required)
-     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\Asset
      */
-    public function partiallyUpdateAssetById($id, $body = null)
+    public function partiallyUpdateAssetById(float $id, \SalesForce\MarketingCloud\Model\Asset $body)
     {
         list($response) = $this->partiallyUpdateAssetByIdWithHttpInfo($id, $body);
         return $response;
@@ -898,14 +918,14 @@ class AssetApi extends AbstractApi
      * partiallyUpdateAssetById
      *
      * @param  float $id The ID of the asset to update (required)
-     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (required)
      *
      * @return array of \SalesForce\MarketingCloud\Model\Asset, HTTP status code, HTTP response headers (array of strings)
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function partiallyUpdateAssetByIdWithHttpInfo($id, $body = null)
+    public function partiallyUpdateAssetByIdWithHttpInfo(float $id, \SalesForce\MarketingCloud\Model\Asset $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\Asset';
         $request = $this->partiallyUpdateAssetByIdRequest($id, $body);
@@ -992,13 +1012,13 @@ class AssetApi extends AbstractApi
      * partiallyUpdateAssetById
      *
      * @param  float $id The ID of the asset to update (required)
-     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function partiallyUpdateAssetByIdAsync($id, $body = null)
+    public function partiallyUpdateAssetByIdAsync(float $id, \SalesForce\MarketingCloud\Model\Asset $body)
     {
         return $this->partiallyUpdateAssetByIdAsyncWithHttpInfo($id, $body)
             ->then(
@@ -1014,13 +1034,13 @@ class AssetApi extends AbstractApi
      * partiallyUpdateAssetById
      *
      * @param  float $id The ID of the asset to update (required)
-     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function partiallyUpdateAssetByIdAsyncWithHttpInfo($id, $body = null)
+    public function partiallyUpdateAssetByIdAsyncWithHttpInfo(float $id, \SalesForce\MarketingCloud\Model\Asset $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\Asset';
         $request = $this->partiallyUpdateAssetByIdRequest($id, $body);
@@ -1069,20 +1089,30 @@ class AssetApi extends AbstractApi
      * Create request for operation 'partiallyUpdateAssetById'
      *
      * @param  float $id The ID of the asset to update (required)
-     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\Asset $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function partiallyUpdateAssetByIdRequest($id, $body = null)
+    protected function partiallyUpdateAssetByIdRequest(float $id, \SalesForce\MarketingCloud\Model\Asset $body)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'id' is set
         if ($id === null || (is_array($id) && count($id) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $id when calling partiallyUpdateAssetById'
+            );
+        }
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling partiallyUpdateAssetById'
             );
         }
 

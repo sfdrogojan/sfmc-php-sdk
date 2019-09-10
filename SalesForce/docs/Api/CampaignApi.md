@@ -41,7 +41,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\SalesForce\MarketingCloud\Model\Campaign**](../Model/Campaign.md)| JSON Parameters | [optional]
+ **body** | [**\SalesForce\MarketingCloud\Model\Campaign**](../Model/Campaign.md)| JSON Parameters |
 
 ### Return type
 

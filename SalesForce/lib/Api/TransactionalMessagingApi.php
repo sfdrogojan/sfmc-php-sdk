@@ -31,8 +31,10 @@ namespace SalesForce\MarketingCloud\Api;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
+use SalesForce\MarketingCloud\Api\Exception\InvalidRequestException;
 use SalesForce\MarketingCloud\ApiException;
 use SalesForce\MarketingCloud\ObjectSerializer;
+
 
 /**
  * TransactionalMessagingApi Class Doc Comment
@@ -50,14 +52,14 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * createEmailDefinition
      *
-     * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest
      */
-    public function createEmailDefinition($body = null)
+    public function createEmailDefinition(\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body)
     {
         list($response) = $this->createEmailDefinitionWithHttpInfo($body);
         return $response;
@@ -68,14 +70,14 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * createEmailDefinition
      *
-     * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (required)
      *
      * @return array of \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest, HTTP status code, HTTP response headers (array of strings)
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function createEmailDefinitionWithHttpInfo($body = null)
+    public function createEmailDefinitionWithHttpInfo(\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest';
         $request = $this->createEmailDefinitionRequest($body);
@@ -177,13 +179,13 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * createEmailDefinition
      *
-     * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function createEmailDefinitionAsync($body = null)
+    public function createEmailDefinitionAsync(\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body)
     {
         return $this->createEmailDefinitionAsyncWithHttpInfo($body)
             ->then(
@@ -198,13 +200,13 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * createEmailDefinition
      *
-     * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function createEmailDefinitionAsyncWithHttpInfo($body = null)
+    public function createEmailDefinitionAsyncWithHttpInfo(\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest';
         $request = $this->createEmailDefinitionRequest($body);
@@ -252,16 +254,26 @@ class TransactionalMessagingApi extends AbstractApi
     /**
      * Create request for operation 'createEmailDefinition'
      *
-     * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function createEmailDefinitionRequest($body = null)
+    protected function createEmailDefinitionRequest(\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest $body)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling createEmailDefinition'
+            );
+        }
 
         $resourcePath = '/messaging/v1/email/definitions/';
         $formParams = [];
@@ -347,14 +359,14 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * createSmsDefinition
      *
-     * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest
      */
-    public function createSmsDefinition($body = null)
+    public function createSmsDefinition(\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body)
     {
         list($response) = $this->createSmsDefinitionWithHttpInfo($body);
         return $response;
@@ -365,14 +377,14 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * createSmsDefinition
      *
-     * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (required)
      *
      * @return array of \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest, HTTP status code, HTTP response headers (array of strings)
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function createSmsDefinitionWithHttpInfo($body = null)
+    public function createSmsDefinitionWithHttpInfo(\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest';
         $request = $this->createSmsDefinitionRequest($body);
@@ -474,13 +486,13 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * createSmsDefinition
      *
-     * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function createSmsDefinitionAsync($body = null)
+    public function createSmsDefinitionAsync(\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body)
     {
         return $this->createSmsDefinitionAsyncWithHttpInfo($body)
             ->then(
@@ -495,13 +507,13 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * createSmsDefinition
      *
-     * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function createSmsDefinitionAsyncWithHttpInfo($body = null)
+    public function createSmsDefinitionAsyncWithHttpInfo(\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest';
         $request = $this->createSmsDefinitionRequest($body);
@@ -549,16 +561,26 @@ class TransactionalMessagingApi extends AbstractApi
     /**
      * Create request for operation 'createSmsDefinition'
      *
-     * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function createSmsDefinitionRequest($body = null)
+    protected function createSmsDefinitionRequest(\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest $body)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling createSmsDefinition'
+            );
+        }
 
         $resourcePath = '/messaging/v1/sms/definitions';
         $formParams = [];
@@ -651,7 +673,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse
      */
-    public function deleteEmailDefinition($definitionKey)
+    public function deleteEmailDefinition(string $definitionKey)
     {
         list($response) = $this->deleteEmailDefinitionWithHttpInfo($definitionKey);
         return $response;
@@ -669,7 +691,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function deleteEmailDefinitionWithHttpInfo($definitionKey)
+    public function deleteEmailDefinitionWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse';
         $request = $this->deleteEmailDefinitionRequest($definitionKey);
@@ -777,7 +799,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function deleteEmailDefinitionAsync($definitionKey)
+    public function deleteEmailDefinitionAsync(string $definitionKey)
     {
         return $this->deleteEmailDefinitionAsyncWithHttpInfo($definitionKey)
             ->then(
@@ -798,7 +820,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function deleteEmailDefinitionAsyncWithHttpInfo($definitionKey)
+    public function deleteEmailDefinitionAsyncWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse';
         $request = $this->deleteEmailDefinitionRequest($definitionKey);
@@ -852,8 +874,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function deleteEmailDefinitionRequest($definitionKey)
+    protected function deleteEmailDefinitionRequest(string $definitionKey)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
@@ -959,7 +985,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse
      */
-    public function deleteQueuedMessagesForEmailDefinition($definitionKey)
+    public function deleteQueuedMessagesForEmailDefinition(string $definitionKey)
     {
         list($response) = $this->deleteQueuedMessagesForEmailDefinitionWithHttpInfo($definitionKey);
         return $response;
@@ -977,7 +1003,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function deleteQueuedMessagesForEmailDefinitionWithHttpInfo($definitionKey)
+    public function deleteQueuedMessagesForEmailDefinitionWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse';
         $request = $this->deleteQueuedMessagesForEmailDefinitionRequest($definitionKey);
@@ -1069,7 +1095,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function deleteQueuedMessagesForEmailDefinitionAsync($definitionKey)
+    public function deleteQueuedMessagesForEmailDefinitionAsync(string $definitionKey)
     {
         return $this->deleteQueuedMessagesForEmailDefinitionAsyncWithHttpInfo($definitionKey)
             ->then(
@@ -1090,7 +1116,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function deleteQueuedMessagesForEmailDefinitionAsyncWithHttpInfo($definitionKey)
+    public function deleteQueuedMessagesForEmailDefinitionAsyncWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse';
         $request = $this->deleteQueuedMessagesForEmailDefinitionRequest($definitionKey);
@@ -1144,8 +1170,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function deleteQueuedMessagesForEmailDefinitionRequest($definitionKey)
+    protected function deleteQueuedMessagesForEmailDefinitionRequest(string $definitionKey)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
@@ -1251,7 +1281,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse
      */
-    public function deleteQueuedMessagesForSmsDefinition($definitionKey)
+    public function deleteQueuedMessagesForSmsDefinition(string $definitionKey)
     {
         list($response) = $this->deleteQueuedMessagesForSmsDefinitionWithHttpInfo($definitionKey);
         return $response;
@@ -1269,7 +1299,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function deleteQueuedMessagesForSmsDefinitionWithHttpInfo($definitionKey)
+    public function deleteQueuedMessagesForSmsDefinitionWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse';
         $request = $this->deleteQueuedMessagesForSmsDefinitionRequest($definitionKey);
@@ -1361,7 +1391,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function deleteQueuedMessagesForSmsDefinitionAsync($definitionKey)
+    public function deleteQueuedMessagesForSmsDefinitionAsync(string $definitionKey)
     {
         return $this->deleteQueuedMessagesForSmsDefinitionAsyncWithHttpInfo($definitionKey)
             ->then(
@@ -1382,7 +1412,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function deleteQueuedMessagesForSmsDefinitionAsyncWithHttpInfo($definitionKey)
+    public function deleteQueuedMessagesForSmsDefinitionAsyncWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\DeleteQueuedMessagesForSendDefinitionResponse';
         $request = $this->deleteQueuedMessagesForSmsDefinitionRequest($definitionKey);
@@ -1436,8 +1466,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function deleteQueuedMessagesForSmsDefinitionRequest($definitionKey)
+    protected function deleteQueuedMessagesForSmsDefinitionRequest(string $definitionKey)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
@@ -1543,7 +1577,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse
      */
-    public function deleteSmsDefinition($definitionKey)
+    public function deleteSmsDefinition(string $definitionKey)
     {
         list($response) = $this->deleteSmsDefinitionWithHttpInfo($definitionKey);
         return $response;
@@ -1561,7 +1595,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function deleteSmsDefinitionWithHttpInfo($definitionKey)
+    public function deleteSmsDefinitionWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse';
         $request = $this->deleteSmsDefinitionRequest($definitionKey);
@@ -1669,7 +1703,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function deleteSmsDefinitionAsync($definitionKey)
+    public function deleteSmsDefinitionAsync(string $definitionKey)
     {
         return $this->deleteSmsDefinitionAsyncWithHttpInfo($definitionKey)
             ->then(
@@ -1690,7 +1724,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function deleteSmsDefinitionAsyncWithHttpInfo($definitionKey)
+    public function deleteSmsDefinitionAsyncWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\DeleteSendDefinitionResponse';
         $request = $this->deleteSmsDefinitionRequest($definitionKey);
@@ -1744,8 +1778,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function deleteSmsDefinitionRequest($definitionKey)
+    protected function deleteSmsDefinitionRequest(string $definitionKey)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
@@ -1851,7 +1889,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest
      */
-    public function getEmailDefinition($definitionKey)
+    public function getEmailDefinition(string $definitionKey)
     {
         list($response) = $this->getEmailDefinitionWithHttpInfo($definitionKey);
         return $response;
@@ -1869,7 +1907,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function getEmailDefinitionWithHttpInfo($definitionKey)
+    public function getEmailDefinitionWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest';
         $request = $this->getEmailDefinitionRequest($definitionKey);
@@ -1977,7 +2015,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function getEmailDefinitionAsync($definitionKey)
+    public function getEmailDefinitionAsync(string $definitionKey)
     {
         return $this->getEmailDefinitionAsyncWithHttpInfo($definitionKey)
             ->then(
@@ -1998,7 +2036,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function getEmailDefinitionAsyncWithHttpInfo($definitionKey)
+    public function getEmailDefinitionAsyncWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest';
         $request = $this->getEmailDefinitionRequest($definitionKey);
@@ -2052,8 +2090,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getEmailDefinitionRequest($definitionKey)
+    protected function getEmailDefinitionRequest(string $definitionKey)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
@@ -2162,7 +2204,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetEmailDefinitionsResponse
      */
-    public function getEmailDefinitions($status = null, $pageSize = null, $page = null, $orderBy = null)
+    public function getEmailDefinitions(string $status = null, float $pageSize = null, float $page = null, string $orderBy = null)
     {
         list($response) = $this->getEmailDefinitionsWithHttpInfo($status, $pageSize, $page, $orderBy);
         return $response;
@@ -2183,7 +2225,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function getEmailDefinitionsWithHttpInfo($status = null, $pageSize = null, $page = null, $orderBy = null)
+    public function getEmailDefinitionsWithHttpInfo(string $status = null, float $pageSize = null, float $page = null, string $orderBy = null)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetEmailDefinitionsResponse';
         $request = $this->getEmailDefinitionsRequest($status, $pageSize, $page, $orderBy);
@@ -2286,7 +2328,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function getEmailDefinitionsAsync($status = null, $pageSize = null, $page = null, $orderBy = null)
+    public function getEmailDefinitionsAsync(string $status = null, float $pageSize = null, float $page = null, string $orderBy = null)
     {
         return $this->getEmailDefinitionsAsyncWithHttpInfo($status, $pageSize, $page, $orderBy)
             ->then(
@@ -2310,7 +2352,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function getEmailDefinitionsAsyncWithHttpInfo($status = null, $pageSize = null, $page = null, $orderBy = null)
+    public function getEmailDefinitionsAsyncWithHttpInfo(string $status = null, float $pageSize = null, float $page = null, string $orderBy = null)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetEmailDefinitionsResponse';
         $request = $this->getEmailDefinitionsRequest($status, $pageSize, $page, $orderBy);
@@ -2367,8 +2409,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getEmailDefinitionsRequest($status = null, $pageSize = null, $page = null, $orderBy = null)
+    protected function getEmailDefinitionsRequest(string $status = null, float $pageSize = null, float $page = null, string $orderBy = null)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
 
@@ -2476,7 +2522,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse
      */
-    public function getEmailSendStatusForRecipient($messageKey)
+    public function getEmailSendStatusForRecipient(string $messageKey)
     {
         list($response) = $this->getEmailSendStatusForRecipientWithHttpInfo($messageKey);
         return $response;
@@ -2494,7 +2540,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function getEmailSendStatusForRecipientWithHttpInfo($messageKey)
+    public function getEmailSendStatusForRecipientWithHttpInfo(string $messageKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse';
         $request = $this->getEmailSendStatusForRecipientRequest($messageKey);
@@ -2594,7 +2640,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function getEmailSendStatusForRecipientAsync($messageKey)
+    public function getEmailSendStatusForRecipientAsync(string $messageKey)
     {
         return $this->getEmailSendStatusForRecipientAsyncWithHttpInfo($messageKey)
             ->then(
@@ -2615,7 +2661,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function getEmailSendStatusForRecipientAsyncWithHttpInfo($messageKey)
+    public function getEmailSendStatusForRecipientAsyncWithHttpInfo(string $messageKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse';
         $request = $this->getEmailSendStatusForRecipientRequest($messageKey);
@@ -2669,8 +2715,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getEmailSendStatusForRecipientRequest($messageKey)
+    protected function getEmailSendStatusForRecipientRequest(string $messageKey)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'messageKey' is set
@@ -2778,7 +2828,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse
      */
-    public function getEmailsNotSentToRecipients($type, $pageSize = null, $lastEventId = null)
+    public function getEmailsNotSentToRecipients(string $type, int $pageSize = null, int $lastEventId = null)
     {
         list($response) = $this->getEmailsNotSentToRecipientsWithHttpInfo($type, $pageSize, $lastEventId);
         return $response;
@@ -2798,7 +2848,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function getEmailsNotSentToRecipientsWithHttpInfo($type, $pageSize = null, $lastEventId = null)
+    public function getEmailsNotSentToRecipientsWithHttpInfo(string $type, int $pageSize = null, int $lastEventId = null)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse';
         $request = $this->getEmailsNotSentToRecipientsRequest($type, $pageSize, $lastEventId);
@@ -2900,7 +2950,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function getEmailsNotSentToRecipientsAsync($type, $pageSize = null, $lastEventId = null)
+    public function getEmailsNotSentToRecipientsAsync(string $type, int $pageSize = null, int $lastEventId = null)
     {
         return $this->getEmailsNotSentToRecipientsAsyncWithHttpInfo($type, $pageSize, $lastEventId)
             ->then(
@@ -2923,7 +2973,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function getEmailsNotSentToRecipientsAsyncWithHttpInfo($type, $pageSize = null, $lastEventId = null)
+    public function getEmailsNotSentToRecipientsAsyncWithHttpInfo(string $type, int $pageSize = null, int $lastEventId = null)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse';
         $request = $this->getEmailsNotSentToRecipientsRequest($type, $pageSize, $lastEventId);
@@ -2979,8 +3029,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getEmailsNotSentToRecipientsRequest($type, $pageSize = null, $lastEventId = null)
+    protected function getEmailsNotSentToRecipientsRequest(string $type, int $pageSize = null, int $lastEventId = null)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'type' is set
@@ -3090,7 +3144,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse
      */
-    public function getQueueMetricsForEmailDefinition($definitionKey)
+    public function getQueueMetricsForEmailDefinition(string $definitionKey)
     {
         list($response) = $this->getQueueMetricsForEmailDefinitionWithHttpInfo($definitionKey);
         return $response;
@@ -3108,7 +3162,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function getQueueMetricsForEmailDefinitionWithHttpInfo($definitionKey)
+    public function getQueueMetricsForEmailDefinitionWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse';
         $request = $this->getQueueMetricsForEmailDefinitionRequest($definitionKey);
@@ -3200,7 +3254,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function getQueueMetricsForEmailDefinitionAsync($definitionKey)
+    public function getQueueMetricsForEmailDefinitionAsync(string $definitionKey)
     {
         return $this->getQueueMetricsForEmailDefinitionAsyncWithHttpInfo($definitionKey)
             ->then(
@@ -3221,7 +3275,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function getQueueMetricsForEmailDefinitionAsyncWithHttpInfo($definitionKey)
+    public function getQueueMetricsForEmailDefinitionAsyncWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse';
         $request = $this->getQueueMetricsForEmailDefinitionRequest($definitionKey);
@@ -3275,8 +3329,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getQueueMetricsForEmailDefinitionRequest($definitionKey)
+    protected function getQueueMetricsForEmailDefinitionRequest(string $definitionKey)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
@@ -3382,7 +3440,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse
      */
-    public function getQueueMetricsForSmsDefinition($definitionKey)
+    public function getQueueMetricsForSmsDefinition(string $definitionKey)
     {
         list($response) = $this->getQueueMetricsForSmsDefinitionWithHttpInfo($definitionKey);
         return $response;
@@ -3400,7 +3458,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function getQueueMetricsForSmsDefinitionWithHttpInfo($definitionKey)
+    public function getQueueMetricsForSmsDefinitionWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse';
         $request = $this->getQueueMetricsForSmsDefinitionRequest($definitionKey);
@@ -3492,7 +3550,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function getQueueMetricsForSmsDefinitionAsync($definitionKey)
+    public function getQueueMetricsForSmsDefinitionAsync(string $definitionKey)
     {
         return $this->getQueueMetricsForSmsDefinitionAsyncWithHttpInfo($definitionKey)
             ->then(
@@ -3513,7 +3571,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function getQueueMetricsForSmsDefinitionAsyncWithHttpInfo($definitionKey)
+    public function getQueueMetricsForSmsDefinitionAsyncWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetQueueMetricsForSendDefinitionResponse';
         $request = $this->getQueueMetricsForSmsDefinitionRequest($definitionKey);
@@ -3567,8 +3625,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getQueueMetricsForSmsDefinitionRequest($definitionKey)
+    protected function getQueueMetricsForSmsDefinitionRequest(string $definitionKey)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
@@ -3676,7 +3738,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse
      */
-    public function getSMSsNotSentToRecipients($type, $pageSize = null, $lastEventId = null)
+    public function getSMSsNotSentToRecipients(string $type, int $pageSize = null, int $lastEventId = null)
     {
         list($response) = $this->getSMSsNotSentToRecipientsWithHttpInfo($type, $pageSize, $lastEventId);
         return $response;
@@ -3696,7 +3758,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function getSMSsNotSentToRecipientsWithHttpInfo($type, $pageSize = null, $lastEventId = null)
+    public function getSMSsNotSentToRecipientsWithHttpInfo(string $type, int $pageSize = null, int $lastEventId = null)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse';
         $request = $this->getSMSsNotSentToRecipientsRequest($type, $pageSize, $lastEventId);
@@ -3798,7 +3860,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function getSMSsNotSentToRecipientsAsync($type, $pageSize = null, $lastEventId = null)
+    public function getSMSsNotSentToRecipientsAsync(string $type, int $pageSize = null, int $lastEventId = null)
     {
         return $this->getSMSsNotSentToRecipientsAsyncWithHttpInfo($type, $pageSize, $lastEventId)
             ->then(
@@ -3821,7 +3883,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function getSMSsNotSentToRecipientsAsyncWithHttpInfo($type, $pageSize = null, $lastEventId = null)
+    public function getSMSsNotSentToRecipientsAsyncWithHttpInfo(string $type, int $pageSize = null, int $lastEventId = null)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetDefinitionsNotSentToRecipientsResponse';
         $request = $this->getSMSsNotSentToRecipientsRequest($type, $pageSize, $lastEventId);
@@ -3877,8 +3939,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getSMSsNotSentToRecipientsRequest($type, $pageSize = null, $lastEventId = null)
+    protected function getSMSsNotSentToRecipientsRequest(string $type, int $pageSize = null, int $lastEventId = null)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'type' is set
@@ -3988,7 +4054,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest
      */
-    public function getSmsDefinition($definitionKey)
+    public function getSmsDefinition(string $definitionKey)
     {
         list($response) = $this->getSmsDefinitionWithHttpInfo($definitionKey);
         return $response;
@@ -4006,7 +4072,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function getSmsDefinitionWithHttpInfo($definitionKey)
+    public function getSmsDefinitionWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest';
         $request = $this->getSmsDefinitionRequest($definitionKey);
@@ -4114,7 +4180,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function getSmsDefinitionAsync($definitionKey)
+    public function getSmsDefinitionAsync(string $definitionKey)
     {
         return $this->getSmsDefinitionAsyncWithHttpInfo($definitionKey)
             ->then(
@@ -4135,7 +4201,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function getSmsDefinitionAsyncWithHttpInfo($definitionKey)
+    public function getSmsDefinitionAsyncWithHttpInfo(string $definitionKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest';
         $request = $this->getSmsDefinitionRequest($definitionKey);
@@ -4189,8 +4255,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getSmsDefinitionRequest($definitionKey)
+    protected function getSmsDefinitionRequest(string $definitionKey)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
@@ -4299,7 +4369,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetSmsDefinitionsResponse
      */
-    public function getSmsDefinitions($status = null, $pageSize = null, $page = null, $orderBy = null)
+    public function getSmsDefinitions(string $status = null, float $pageSize = null, float $page = null, string $orderBy = null)
     {
         list($response) = $this->getSmsDefinitionsWithHttpInfo($status, $pageSize, $page, $orderBy);
         return $response;
@@ -4320,7 +4390,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function getSmsDefinitionsWithHttpInfo($status = null, $pageSize = null, $page = null, $orderBy = null)
+    public function getSmsDefinitionsWithHttpInfo(string $status = null, float $pageSize = null, float $page = null, string $orderBy = null)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetSmsDefinitionsResponse';
         $request = $this->getSmsDefinitionsRequest($status, $pageSize, $page, $orderBy);
@@ -4423,7 +4493,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function getSmsDefinitionsAsync($status = null, $pageSize = null, $page = null, $orderBy = null)
+    public function getSmsDefinitionsAsync(string $status = null, float $pageSize = null, float $page = null, string $orderBy = null)
     {
         return $this->getSmsDefinitionsAsyncWithHttpInfo($status, $pageSize, $page, $orderBy)
             ->then(
@@ -4447,7 +4517,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function getSmsDefinitionsAsyncWithHttpInfo($status = null, $pageSize = null, $page = null, $orderBy = null)
+    public function getSmsDefinitionsAsyncWithHttpInfo(string $status = null, float $pageSize = null, float $page = null, string $orderBy = null)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetSmsDefinitionsResponse';
         $request = $this->getSmsDefinitionsRequest($status, $pageSize, $page, $orderBy);
@@ -4504,8 +4574,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getSmsDefinitionsRequest($status = null, $pageSize = null, $page = null, $orderBy = null)
+    protected function getSmsDefinitionsRequest(string $status = null, float $pageSize = null, float $page = null, string $orderBy = null)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
 
@@ -4613,7 +4687,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse
      */
-    public function getSmsSendStatusForRecipient($messageKey)
+    public function getSmsSendStatusForRecipient(string $messageKey)
     {
         list($response) = $this->getSmsSendStatusForRecipientWithHttpInfo($messageKey);
         return $response;
@@ -4631,7 +4705,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function getSmsSendStatusForRecipientWithHttpInfo($messageKey)
+    public function getSmsSendStatusForRecipientWithHttpInfo(string $messageKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse';
         $request = $this->getSmsSendStatusForRecipientRequest($messageKey);
@@ -4731,7 +4805,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function getSmsSendStatusForRecipientAsync($messageKey)
+    public function getSmsSendStatusForRecipientAsync(string $messageKey)
     {
         return $this->getSmsSendStatusForRecipientAsyncWithHttpInfo($messageKey)
             ->then(
@@ -4752,7 +4826,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function getSmsSendStatusForRecipientAsyncWithHttpInfo($messageKey)
+    public function getSmsSendStatusForRecipientAsyncWithHttpInfo(string $messageKey)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\GetDefinitionSendStatusForRecipientResponse';
         $request = $this->getSmsSendStatusForRecipientRequest($messageKey);
@@ -4806,8 +4880,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getSmsSendStatusForRecipientRequest($messageKey)
+    protected function getSmsSendStatusForRecipientRequest(string $messageKey)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'messageKey' is set
@@ -4907,14 +4985,14 @@ class TransactionalMessagingApi extends AbstractApi
      * partiallyUpdateEmailDefinition
      *
      * @param  string $definitionKey Unique identifier of the definition. (required)
-     * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest
      */
-    public function partiallyUpdateEmailDefinition($definitionKey, $body = null)
+    public function partiallyUpdateEmailDefinition(string $definitionKey, \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body)
     {
         list($response) = $this->partiallyUpdateEmailDefinitionWithHttpInfo($definitionKey, $body);
         return $response;
@@ -4926,14 +5004,14 @@ class TransactionalMessagingApi extends AbstractApi
      * partiallyUpdateEmailDefinition
      *
      * @param  string $definitionKey Unique identifier of the definition. (required)
-     * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (required)
      *
      * @return array of \SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest, HTTP status code, HTTP response headers (array of strings)
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function partiallyUpdateEmailDefinitionWithHttpInfo($definitionKey, $body = null)
+    public function partiallyUpdateEmailDefinitionWithHttpInfo(string $definitionKey, \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest';
         $request = $this->partiallyUpdateEmailDefinitionRequest($definitionKey, $body);
@@ -5028,13 +5106,13 @@ class TransactionalMessagingApi extends AbstractApi
      * partiallyUpdateEmailDefinition
      *
      * @param  string $definitionKey Unique identifier of the definition. (required)
-     * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function partiallyUpdateEmailDefinitionAsync($definitionKey, $body = null)
+    public function partiallyUpdateEmailDefinitionAsync(string $definitionKey, \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body)
     {
         return $this->partiallyUpdateEmailDefinitionAsyncWithHttpInfo($definitionKey, $body)
             ->then(
@@ -5050,13 +5128,13 @@ class TransactionalMessagingApi extends AbstractApi
      * partiallyUpdateEmailDefinition
      *
      * @param  string $definitionKey Unique identifier of the definition. (required)
-     * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function partiallyUpdateEmailDefinitionAsyncWithHttpInfo($definitionKey, $body = null)
+    public function partiallyUpdateEmailDefinitionAsyncWithHttpInfo(string $definitionKey, \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\CreateEmailDefinitionRequest';
         $request = $this->partiallyUpdateEmailDefinitionRequest($definitionKey, $body);
@@ -5105,20 +5183,30 @@ class TransactionalMessagingApi extends AbstractApi
      * Create request for operation 'partiallyUpdateEmailDefinition'
      *
      * @param  string $definitionKey Unique identifier of the definition. (required)
-     * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function partiallyUpdateEmailDefinitionRequest($definitionKey, $body = null)
+    protected function partiallyUpdateEmailDefinitionRequest(string $definitionKey, \SalesForce\MarketingCloud\Model\UpdateEmailDefinitionRequest $body)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
         if ($definitionKey === null || (is_array($definitionKey) && count($definitionKey) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $definitionKey when calling partiallyUpdateEmailDefinition'
+            );
+        }
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling partiallyUpdateEmailDefinition'
             );
         }
 
@@ -5222,7 +5310,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest
      */
-    public function partiallyUpdateSmsDefinition($definitionKey, $body = null)
+    public function partiallyUpdateSmsDefinition(string $definitionKey, \SalesForce\MarketingCloud\Model\UpdateSmsDefinitionRequest $body = null)
     {
         list($response) = $this->partiallyUpdateSmsDefinitionWithHttpInfo($definitionKey, $body);
         return $response;
@@ -5241,7 +5329,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function partiallyUpdateSmsDefinitionWithHttpInfo($definitionKey, $body = null)
+    public function partiallyUpdateSmsDefinitionWithHttpInfo(string $definitionKey, \SalesForce\MarketingCloud\Model\UpdateSmsDefinitionRequest $body = null)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest';
         $request = $this->partiallyUpdateSmsDefinitionRequest($definitionKey, $body);
@@ -5342,7 +5430,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function partiallyUpdateSmsDefinitionAsync($definitionKey, $body = null)
+    public function partiallyUpdateSmsDefinitionAsync(string $definitionKey, \SalesForce\MarketingCloud\Model\UpdateSmsDefinitionRequest $body = null)
     {
         return $this->partiallyUpdateSmsDefinitionAsyncWithHttpInfo($definitionKey, $body)
             ->then(
@@ -5364,7 +5452,7 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function partiallyUpdateSmsDefinitionAsyncWithHttpInfo($definitionKey, $body = null)
+    public function partiallyUpdateSmsDefinitionAsyncWithHttpInfo(string $definitionKey, \SalesForce\MarketingCloud\Model\UpdateSmsDefinitionRequest $body = null)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\CreateSmsDefinitionRequest';
         $request = $this->partiallyUpdateSmsDefinitionRequest($definitionKey, $body);
@@ -5419,8 +5507,12 @@ class TransactionalMessagingApi extends AbstractApi
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function partiallyUpdateSmsDefinitionRequest($definitionKey, $body = null)
+    protected function partiallyUpdateSmsDefinitionRequest(string $definitionKey, \SalesForce\MarketingCloud\Model\UpdateSmsDefinitionRequest $body = null)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'definitionKey' is set
@@ -5522,14 +5614,14 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * sendEmailToMultipleRecipients
      *
-     * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse
      */
-    public function sendEmailToMultipleRecipients($body = null)
+    public function sendEmailToMultipleRecipients(\SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body)
     {
         list($response) = $this->sendEmailToMultipleRecipientsWithHttpInfo($body);
         return $response;
@@ -5540,14 +5632,14 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * sendEmailToMultipleRecipients
      *
-     * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (required)
      *
      * @return array of \SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function sendEmailToMultipleRecipientsWithHttpInfo($body = null)
+    public function sendEmailToMultipleRecipientsWithHttpInfo(\SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse';
         $request = $this->sendEmailToMultipleRecipientsRequest($body);
@@ -5641,13 +5733,13 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * sendEmailToMultipleRecipients
      *
-     * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function sendEmailToMultipleRecipientsAsync($body = null)
+    public function sendEmailToMultipleRecipientsAsync(\SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body)
     {
         return $this->sendEmailToMultipleRecipientsAsyncWithHttpInfo($body)
             ->then(
@@ -5662,13 +5754,13 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * sendEmailToMultipleRecipients
      *
-     * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function sendEmailToMultipleRecipientsAsyncWithHttpInfo($body = null)
+    public function sendEmailToMultipleRecipientsAsyncWithHttpInfo(\SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse';
         $request = $this->sendEmailToMultipleRecipientsRequest($body);
@@ -5716,16 +5808,26 @@ class TransactionalMessagingApi extends AbstractApi
     /**
      * Create request for operation 'sendEmailToMultipleRecipients'
      *
-     * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function sendEmailToMultipleRecipientsRequest($body = null)
+    protected function sendEmailToMultipleRecipientsRequest(\SalesForce\MarketingCloud\Model\SendEmailToMultipleRecipientsRequest $body)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling sendEmailToMultipleRecipients'
+            );
+        }
 
         $resourcePath = '/messaging/v1/email/messages/';
         $formParams = [];
@@ -5812,14 +5914,14 @@ class TransactionalMessagingApi extends AbstractApi
      * sendEmailToSingleRecipient
      *
      * @param  string $messageKey Unique identifier used to track message status. Can be automatically created when you create a message or provided as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
-     * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse
      */
-    public function sendEmailToSingleRecipient($messageKey, $body = null)
+    public function sendEmailToSingleRecipient(string $messageKey, \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body)
     {
         list($response) = $this->sendEmailToSingleRecipientWithHttpInfo($messageKey, $body);
         return $response;
@@ -5831,14 +5933,14 @@ class TransactionalMessagingApi extends AbstractApi
      * sendEmailToSingleRecipient
      *
      * @param  string $messageKey Unique identifier used to track message status. Can be automatically created when you create a message or provided as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
-     * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (required)
      *
      * @return array of \SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function sendEmailToSingleRecipientWithHttpInfo($messageKey, $body = null)
+    public function sendEmailToSingleRecipientWithHttpInfo(string $messageKey, \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse';
         $request = $this->sendEmailToSingleRecipientRequest($messageKey, $body);
@@ -5941,13 +6043,13 @@ class TransactionalMessagingApi extends AbstractApi
      * sendEmailToSingleRecipient
      *
      * @param  string $messageKey Unique identifier used to track message status. Can be automatically created when you create a message or provided as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
-     * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function sendEmailToSingleRecipientAsync($messageKey, $body = null)
+    public function sendEmailToSingleRecipientAsync(string $messageKey, \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body)
     {
         return $this->sendEmailToSingleRecipientAsyncWithHttpInfo($messageKey, $body)
             ->then(
@@ -5963,13 +6065,13 @@ class TransactionalMessagingApi extends AbstractApi
      * sendEmailToSingleRecipient
      *
      * @param  string $messageKey Unique identifier used to track message status. Can be automatically created when you create a message or provided as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
-     * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function sendEmailToSingleRecipientAsyncWithHttpInfo($messageKey, $body = null)
+    public function sendEmailToSingleRecipientAsyncWithHttpInfo(string $messageKey, \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse';
         $request = $this->sendEmailToSingleRecipientRequest($messageKey, $body);
@@ -6018,20 +6120,30 @@ class TransactionalMessagingApi extends AbstractApi
      * Create request for operation 'sendEmailToSingleRecipient'
      *
      * @param  string $messageKey Unique identifier used to track message status. Can be automatically created when you create a message or provided as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
-     * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function sendEmailToSingleRecipientRequest($messageKey, $body = null)
+    protected function sendEmailToSingleRecipientRequest(string $messageKey, \SalesForce\MarketingCloud\Model\SendEmailToSingleRecipientRequest $body)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'messageKey' is set
         if ($messageKey === null || (is_array($messageKey) && count($messageKey) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $messageKey when calling sendEmailToSingleRecipient'
+            );
+        }
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling sendEmailToSingleRecipient'
             );
         }
 
@@ -6127,14 +6239,14 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * sendSmsToMultipleRecipients
      *
-     * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse
      */
-    public function sendSmsToMultipleRecipients($body = null)
+    public function sendSmsToMultipleRecipients(\SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body)
     {
         list($response) = $this->sendSmsToMultipleRecipientsWithHttpInfo($body);
         return $response;
@@ -6145,14 +6257,14 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * sendSmsToMultipleRecipients
      *
-     * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (required)
      *
      * @return array of \SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function sendSmsToMultipleRecipientsWithHttpInfo($body = null)
+    public function sendSmsToMultipleRecipientsWithHttpInfo(\SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse';
         $request = $this->sendSmsToMultipleRecipientsRequest($body);
@@ -6246,13 +6358,13 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * sendSmsToMultipleRecipients
      *
-     * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function sendSmsToMultipleRecipientsAsync($body = null)
+    public function sendSmsToMultipleRecipientsAsync(\SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body)
     {
         return $this->sendSmsToMultipleRecipientsAsyncWithHttpInfo($body)
             ->then(
@@ -6267,13 +6379,13 @@ class TransactionalMessagingApi extends AbstractApi
      *
      * sendSmsToMultipleRecipients
      *
-     * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function sendSmsToMultipleRecipientsAsyncWithHttpInfo($body = null)
+    public function sendSmsToMultipleRecipientsAsyncWithHttpInfo(\SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\SendDefinitionToMultipleRecipientsResponse';
         $request = $this->sendSmsToMultipleRecipientsRequest($body);
@@ -6321,16 +6433,26 @@ class TransactionalMessagingApi extends AbstractApi
     /**
      * Create request for operation 'sendSmsToMultipleRecipients'
      *
-     * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function sendSmsToMultipleRecipientsRequest($body = null)
+    protected function sendSmsToMultipleRecipientsRequest(\SalesForce\MarketingCloud\Model\SendSmsToMultipleRecipientsRequest $body)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling sendSmsToMultipleRecipients'
+            );
+        }
 
         $resourcePath = '/messaging/v1/sms/messages/';
         $formParams = [];
@@ -6417,14 +6539,14 @@ class TransactionalMessagingApi extends AbstractApi
      * sendSmsToSingleRecipient
      *
      * @param  string $messageKey Unique identifier of the definition used to track message status. The messageKey can be created automatically when you create a message, or you can provide it as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
-     * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      * @return \SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse
      */
-    public function sendSmsToSingleRecipient($messageKey, $body = null)
+    public function sendSmsToSingleRecipient(string $messageKey, \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body)
     {
         list($response) = $this->sendSmsToSingleRecipientWithHttpInfo($messageKey, $body);
         return $response;
@@ -6436,14 +6558,14 @@ class TransactionalMessagingApi extends AbstractApi
      * sendSmsToSingleRecipient
      *
      * @param  string $messageKey Unique identifier of the definition used to track message status. The messageKey can be created automatically when you create a message, or you can provide it as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
-     * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (required)
      *
      * @return array of \SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \SalesForce\MarketingCloud\ApiException on non-2xx response
      */
-    public function sendSmsToSingleRecipientWithHttpInfo($messageKey, $body = null)
+    public function sendSmsToSingleRecipientWithHttpInfo(string $messageKey, \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse';
         $request = $this->sendSmsToSingleRecipientRequest($messageKey, $body);
@@ -6546,13 +6668,13 @@ class TransactionalMessagingApi extends AbstractApi
      * sendSmsToSingleRecipient
      *
      * @param  string $messageKey Unique identifier of the definition used to track message status. The messageKey can be created automatically when you create a message, or you can provide it as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
-     * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      */
-    public function sendSmsToSingleRecipientAsync($messageKey, $body = null)
+    public function sendSmsToSingleRecipientAsync(string $messageKey, \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body)
     {
         return $this->sendSmsToSingleRecipientAsyncWithHttpInfo($messageKey, $body)
             ->then(
@@ -6568,13 +6690,13 @@ class TransactionalMessagingApi extends AbstractApi
      * sendSmsToSingleRecipient
      *
      * @param  string $messageKey Unique identifier of the definition used to track message status. The messageKey can be created automatically when you create a message, or you can provide it as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
-     * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (required)
      *
      * @return \GuzzleHttp\Promise\PromiseInterface
      * @throws Exception\ClientUnauthorizedException
      * @throws \InvalidArgumentException
      */
-    public function sendSmsToSingleRecipientAsyncWithHttpInfo($messageKey, $body = null)
+    public function sendSmsToSingleRecipientAsyncWithHttpInfo(string $messageKey, \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body)
     {
         $returnType = '\SalesForce\MarketingCloud\Model\SendDefinitionToSingleRecipientResponse';
         $request = $this->sendSmsToSingleRecipientRequest($messageKey, $body);
@@ -6623,20 +6745,30 @@ class TransactionalMessagingApi extends AbstractApi
      * Create request for operation 'sendSmsToSingleRecipient'
      *
      * @param  string $messageKey Unique identifier of the definition used to track message status. The messageKey can be created automatically when you create a message, or you can provide it as part of the request. Each recipient in a request must have a unique messageKey. If you use a duplicate messageKey in the same send request, the message is rejected. (required)
-     * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (optional)
+     * @param  \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body JSON Parameters (required)
      *
      * @throws \InvalidArgumentException
      * @throws Exception\ClientUnauthorizedException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function sendSmsToSingleRecipientRequest($messageKey, $body = null)
+    protected function sendSmsToSingleRecipientRequest(string $messageKey, \SalesForce\MarketingCloud\Model\SendSmsToSingleRecipientRequest $body)
     {
+        if (isset($body) && !$body->valid()) {
+            throw new InvalidRequestException($body, "The request data is invalid");
+        }
+
         $this->authorizeClient();
 
         // verify the required parameter 'messageKey' is set
         if ($messageKey === null || (is_array($messageKey) && count($messageKey) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $messageKey when calling sendSmsToSingleRecipient'
+            );
+        }
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling sendSmsToSingleRecipient'
             );
         }
 
