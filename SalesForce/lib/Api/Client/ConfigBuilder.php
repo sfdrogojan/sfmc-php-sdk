@@ -2,7 +2,6 @@
 
 namespace SalesForce\MarketingCloud\Api\Client;
 
-use SalesForce\MarketingCloud\Api\Client;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -30,11 +29,24 @@ class ConfigBuilder
      * ConfigBuilder constructor.
      *
      * @param ContainerBuilder $container
+     * @param bool $useDefaults
      */
-    public function __construct(ContainerBuilder $container = null)
+    public function __construct(ContainerBuilder $container = null, bool $useDefaults = false)
     {
         $this->container = $container ?? new ContainerBuilder();
 
+        if ($useDefaults) {
+            $this->setFromEnv();
+        }
+    }
+
+    /**
+     * Sets the configuration in the container using the default config location (ENV)
+     *
+     * @return $this
+     */
+    public function setFromEnv()
+    {
         // Set default config
         if (!$this->container->hasParameter("auth.client.options")) {
             $this->container->setParameter("auth.client.options", [
@@ -46,6 +58,8 @@ class ConfigBuilder
                 'urlResourceOwnerDetails' => ''
             ]);
         }
+
+        return $this;
     }
 
     /**
@@ -70,15 +84,5 @@ class ConfigBuilder
         $this->container->setParameter("auth.client.options", $options);
 
         return $this;
-    }
-
-    /**
-     * Returns the container object
-     *
-     * @return ContainerBuilder
-     */
-    public function getContainer(): ContainerBuilder
-    {
-        return $this->container;
     }
 }

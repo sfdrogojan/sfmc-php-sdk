@@ -5,9 +5,11 @@ namespace SalesForce\MarketingCloud\Authorization\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\GenericProvider;
+use League\OAuth2\Client\Token\AccessTokenInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use SalesForce\MarketingCloud\Authorization\Client\Tool\RequestFactory;
+use UnexpectedValueException;
 
 /**
  * Class GenericClient
@@ -16,11 +18,6 @@ use SalesForce\MarketingCloud\Authorization\Client\Tool\RequestFactory;
  */
 class GenericClient extends GenericProvider
 {
-    /**
-     * @var mixed
-     */
-    private $lastParsedResponse;
-
     /**
      * GenericClient constructor.
      *
@@ -45,52 +42,46 @@ class GenericClient extends GenericProvider
     }
 
     /**
-     * Sends a request instance and returns a response instance.
+     * Requests an access token using a specified grant and option set.
      *
-     * WARNING: This method does not attempt to catch exceptions caused by HTTP
-     * errors! It is recommended to wrap this method in a try/catch block.
-     *
-     * @param RequestInterface $request
-     * @return ResponseInterface
-     */
-    public function getResponse(RequestInterface $request)
-    {
-        $this->lastParsedResponse = null; // Reset the last parsed response
-
-        return parent::getResponse($request);
-    }
-
-    /**
-     * Sends a request and returns the parsed response.
-     *
-     * @param RequestInterface $request
-     * @return mixed
+     * @param mixed $grant
+     * @param array $options
+     * @return array
      * @throws IdentityProviderException
      */
-    public function getParsedResponse(RequestInterface $request)
+    public function getAccessTokenResponse($grant, array $options = []): array
     {
-        if (null === $this->lastParsedResponse) {
-            try {
-                $response = $this->getResponse($request);
-            } catch (BadResponseException $e) {
-                $response = $e->getResponse();
-            }
+        $grant = $this->verifyGrant($grant);
 
-            $this->lastParsedResponse = $this->parseResponse($response);
+        $params = $grant->prepareRequestParameters([
+            'client_id' => $this->clientId,
+            'client_secret' => $this->clientSecret,
+            'redirect_uri' => $this->redirectUri,
+        ], $options);
 
-            $this->checkResponse($response, $this->lastParsedResponse);
+        $request = $this->getAccessTokenRequest($params);
+        $response = $this->getParsedResponse($request);
+
+        if (false === is_array($response)) {
+            throw new UnexpectedValueException(
+                'Invalid response received from Authorization Server. Expected JSON.'
+            );
         }
 
-        return $this->lastParsedResponse;
+        return $response;
     }
 
     /**
-     * Returns the last response that was parsed
+     * Returns an access token using the provided response
      *
-     * @return mixed
+     * @param array $response
+     * @param string $grant
+     * @return AccessTokenInterface
      */
-    public function getLastParsedResponse()
+    public function getAccessTokenFromResponse(array $response, string $grant): AccessTokenInterface
     {
-        return $this->lastParsedResponse;
+        $prepared = $this->prepareAccessTokenResponse($response);
+
+        return $this->createAccessToken($prepared, $this->verifyGrant($grant));
     }
 }

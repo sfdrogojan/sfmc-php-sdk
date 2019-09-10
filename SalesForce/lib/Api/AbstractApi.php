@@ -95,9 +95,9 @@ abstract class AbstractApi
      */
     protected function authorizeClient(): void
     {
-        $accessToken = $this->getAuthService()->authorize()->getAccessToken();
+        $token = $this->getAuthService()->authorize();
 
-        if (empty($accessToken)) {
+        if (empty($token)) {
             throw new ClientUnauthorizedException();
         }
     }

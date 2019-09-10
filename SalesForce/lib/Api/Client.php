@@ -39,17 +39,42 @@ class Client
     private $container;
 
     /**
+     * @var ConfigBuilder
+     */
+    private $config;
+
+    /**
      * Client constructor.
      *
-     * @param ConfigBuilder|null $configBuilder
+     * @param ContainerBuilder|null $container
      * @param HttpClient|null $httpClient
+     * @param bool $cfgFromEnv
      */
-    public function __construct(ConfigBuilder $configBuilder = null, HttpClient $httpClient = null)
-    {
-        $this->container = ($configBuilder ?? new ConfigBuilder())->getContainer();
+    public function __construct(
+        ContainerBuilder $container = null,
+        HttpClient $httpClient = null,
+        bool $cfgFromEnv = true
+    ) {
+        $this->container = $container ?? new ContainerBuilder();
+        $this->config = new ConfigBuilder($this->container);
 
         // Set the provided HTTP client
         $this->container->set("auth.http.client", $httpClient ?? new HttpClient());
+
+        // Setting configurations
+        if ($cfgFromEnv) {
+            $this->config->setFromEnv();
+        }
+    }
+
+    /**
+     * Returns the configuration builder
+     *
+     * @return ConfigBuilder
+     */
+    public function getConfig(): ConfigBuilder
+    {
+        return $this->config;
     }
 
     /**

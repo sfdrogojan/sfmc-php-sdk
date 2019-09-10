@@ -2,6 +2,7 @@
 
 namespace SalesForce\MarketingCloud\Authorization;
 
+use League\OAuth2\Client\Token\AccessTokenInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use SalesForce\MarketingCloud\Authorization\Client\GenericClient;
 
@@ -37,14 +38,7 @@ interface AuthServiceInterface
     /**
      * Performs the authorization process
      *
-     * @return AuthServiceInterface
+     * @return AccessTokenInterface
      */
-    public function authorize(): AuthServiceInterface;
-
-    /**
-     * Returns a valid access token that was obtain via the call to authorize()
-     *
-     * @return string
-     */
-    public function getAccessToken(): string;
+    public function authorize(): AccessTokenInterface;
 }
