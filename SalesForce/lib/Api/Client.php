@@ -109,7 +109,7 @@ class Client
 
         return $client;
     }
-
+    
     /**
      * Creates a new AssetApi object
      *
@@ -120,7 +120,7 @@ class Client
     {
         return $this->getClient(self::CLIENT_ASSET_API);
     }
-
+    
     /**
      * Creates a new CampaignApi object
      *
@@ -131,7 +131,7 @@ class Client
     {
         return $this->getClient(self::CLIENT_CAMPAIGN_API);
     }
-
+    
     /**
      * Creates a new TransactionalMessagingApi object
      *
@@ -142,5 +142,4 @@ class Client
     {
         return $this->getClient(self::CLIENT_TRANSACTIONAL_MESSAGING_API);
     }
-
 }
