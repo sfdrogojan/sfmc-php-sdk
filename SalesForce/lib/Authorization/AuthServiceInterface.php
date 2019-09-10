@@ -2,8 +2,8 @@
 
 namespace SalesForce\MarketingCloud\Authorization;
 
-use League\OAuth2\Client\Provider\GenericProvider;
 use Psr\Cache\CacheItemPoolInterface;
+use SalesForce\MarketingCloud\Authorization\Client\GenericClient;
 
 /**
  * Class AuthService
@@ -23,9 +23,9 @@ interface AuthServiceInterface
     /**
      * Sets the client used for the authorization
      *
-     * @param GenericProvider $client
+     * @param GenericClient $client
      */
-    public function setClient(GenericProvider $client): void;
+    public function setClient(GenericClient $client): void;
 
     /**
      * Set the type of grant type for the authorization server

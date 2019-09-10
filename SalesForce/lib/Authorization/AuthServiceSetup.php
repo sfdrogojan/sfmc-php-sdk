@@ -2,8 +2,8 @@
 
 namespace SalesForce\MarketingCloud\Authorization;
 
-use GuzzleHttp\Client;
-use League\OAuth2\Client\Provider\GenericProvider;
+use GuzzleHttp\Client as HttpClient;
+use SalesForce\MarketingCloud\Authorization\Client\GenericClient as AuthClient;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -26,8 +26,8 @@ class AuthServiceSetup
         $clientOptions = $container->getParameter("auth.client.options");
 
         // HTTP client
-        if (!$container->has("http.client.adapter")) {
-            $container->set("http.client.adapter", new Client());
+        if (!$container->has("auth.http.client")) {
+            $container->set("auth.http.client", new HttpClient());
         }
 
         // Authentication cache
@@ -38,9 +38,9 @@ class AuthServiceSetup
         // Authentication client
         if (!$container->has("auth.client")) {
             $container
-                ->register("auth.client", GenericProvider::class)
+                ->register("auth.client", AuthClient::class)
                 ->setArgument("options", $clientOptions)
-                ->addMethodCall("setHttpClient", [new Reference("http.client.adapter")]);
+                ->addMethodCall("setHttpClient", [new Reference("auth.http.client")]);
         }
 
         // Authentication service

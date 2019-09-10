@@ -83,6 +83,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -212,6 +213,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -229,6 +231,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -321,15 +325,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -378,6 +380,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -507,6 +510,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -524,6 +528,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -616,15 +622,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -673,6 +677,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -802,6 +807,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -819,6 +825,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -922,15 +930,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -979,6 +985,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -1092,6 +1099,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -1109,6 +1117,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -1212,15 +1222,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -1269,6 +1277,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -1382,6 +1391,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -1399,6 +1409,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -1502,15 +1514,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -1559,6 +1569,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -1688,6 +1699,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -1705,6 +1717,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -1808,15 +1822,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -1865,6 +1877,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -1994,6 +2007,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -2011,6 +2025,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -2114,15 +2130,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -2177,6 +2191,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -2304,6 +2319,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -2321,6 +2337,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -2429,15 +2447,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -2486,6 +2502,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -2607,6 +2624,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -2624,6 +2642,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -2727,15 +2747,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -2788,6 +2806,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -2913,6 +2932,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -2930,6 +2950,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -3039,15 +3061,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -3096,6 +3116,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -3209,6 +3230,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -3226,6 +3248,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -3329,15 +3353,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -3386,6 +3408,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -3499,6 +3522,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -3516,6 +3540,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -3619,15 +3645,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -3680,6 +3704,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -3805,6 +3830,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -3822,6 +3848,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -3931,15 +3959,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -3988,6 +4014,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -4117,6 +4144,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -4134,6 +4162,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -4237,15 +4267,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -4300,6 +4328,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -4427,6 +4456,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -4444,6 +4474,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -4552,15 +4584,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -4609,6 +4639,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -4730,6 +4761,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -4747,6 +4779,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -4850,15 +4884,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -4909,6 +4941,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -5032,6 +5065,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -5049,6 +5083,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -5156,15 +5192,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -5215,6 +5249,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -5338,6 +5373,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -5355,6 +5391,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -5462,15 +5500,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -5519,6 +5555,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -5640,6 +5677,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -5657,6 +5695,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -5749,15 +5789,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -5808,6 +5846,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -5939,6 +5978,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -5956,6 +5996,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -6063,15 +6105,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -6120,6 +6160,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -6241,6 +6282,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -6258,6 +6300,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -6350,15 +6394,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -6409,6 +6451,7 @@ class TransactionalMessagingApi extends AbstractApi
         try {
             $options = $this->createHttpClientOption();
             try {
+                /** @var \GuzzleHttp\Psr7\Response $response */
                 $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
@@ -6540,6 +6583,7 @@ class TransactionalMessagingApi extends AbstractApi
             ->sendAsync($request, $this->createHttpClientOption())
             ->then(
                 function ($response) use ($returnType) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
                     $responseBody = $response->getBody();
                     if ($returnType === '\SplFileObject') {
                         $content = $responseBody; //stream goes to serializer
@@ -6557,6 +6601,8 @@ class TransactionalMessagingApi extends AbstractApi
                     ];
                 },
                 function ($exception) {
+                    /** @var \GuzzleHttp\Psr7\Response $response */
+                    /** @var \GuzzleHttp\Exception\RequestException $exception */
                     $response = $exception->getResponse();
                     $statusCode = $response->getStatusCode();
                     throw new ApiException(
@@ -6664,15 +6710,13 @@ class TransactionalMessagingApi extends AbstractApi
         }
 
         $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
         $headers = array_merge(
             $defaultHeaders,
             $headerParams,
             $headers
         );
+
+        $headers['User-Agent'] = static::getUserAgent();
 
         $query = \GuzzleHttp\Psr7\build_query($queryParams);
         return new Request(
@@ -6683,22 +6727,4 @@ class TransactionalMessagingApi extends AbstractApi
         );
     }
 
-    /**
-     * Create http client option
-     *
-     * @throws \RuntimeException on file opening failure
-     * @return array of http client options
-     */
-    protected function createHttpClientOption()
-    {
-        $options = [];
-        if ($this->config->getDebug()) {
-            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-            if (!$options[RequestOptions::DEBUG]) {
-                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
-            }
-        }
-
-        return $options;
-    }
 }

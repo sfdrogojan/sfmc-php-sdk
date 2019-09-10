@@ -19,10 +19,11 @@ use SalesForce\MarketingCloud\Authorization\AuthService;
  * @method self setUrlAuthorize(string $urlAuthorize)
  * @method self setUrlAccessToken(string $urlAccessToken)
  * @method self setUrlResourceOwnerDetails(string $urlResourceOwnerDetails)
- * @version 1.0.0
  */
 class Client
 {
+    const API_VERSION = "1.0.0";
+
     # List of available clients
     const CLIENT_ASSET_API = \SalesForce\MarketingCloud\Api\AssetApi::class;
     const CLIENT_CAMPAIGN_API = \SalesForce\MarketingCloud\Api\CampaignApi::class;
@@ -119,7 +120,7 @@ class Client
     {
         if (!$this->container->has($class)) {
             /** @var \GuzzleHttp\Client $httpClient */
-            $httpClient = $this->container->get("http.client.adapter");
+            $httpClient = $this->container->get("auth.http.client");
 
             // Auth container will not be preset in the container at first load
             if (!$this->container->has(AuthService::CONTAINER_ID)) {

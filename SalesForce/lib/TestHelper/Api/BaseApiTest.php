@@ -111,7 +111,7 @@ abstract class BaseApiTest extends TestCase
     private static function registerSettingsAndServices(): void
     {
         // Sets the client adapter
-        static::$container->set("http.client.adapter", new Client(['verify' => false]));
+        static::$container->set("auth.http.client", new Client(['verify' => false]));
     }
 
     /**

@@ -1,15 +1,15 @@
 <?php
 
-namespace SalesForce\MarketingCloud;
+namespace SalesForce\MarketingCloud\Test\Authorization;
 
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
-use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Token\AccessToken;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\InvalidArgumentException;
 use SalesForce\MarketingCloud\Authorization\AuthService;
 use SalesForce\MarketingCloud\Authorization\AuthServiceSetup;
+use SalesForce\MarketingCloud\Authorization\Client\GenericClient;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -67,8 +67,8 @@ class AuthServiceTest extends TestCase
      */
     public function testAuthorizeWithDummyAuthClient(int $expires_in, int $callCount, int $sleep = 3)
     {
-        /** @var GenericProvider|MockObject $clientMock */
-        $clientMock = $this->getMockBuilder(GenericProvider::class)
+        /** @var GenericClient|MockObject $clientMock */
+        $clientMock = $this->getMockBuilder(GenericClient::class)
             ->disableOriginalConstructor()
             ->getMock();
 
