@@ -3,10 +3,14 @@
 namespace SalesForce\MarketingCloud\Authorization;
 
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Token\AccessTokenInterface;
+use SalesForce\MarketingCloud\Api\Exception\ClientUnauthorizedException;
 use SalesForce\MarketingCloud\Authorization\Client\GenericClient;
 use SalesForce\MarketingCloud\Cache\CacheAwareInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use SalesForce\MarketingCloud\Event\AuthSuccessEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Class AuthService
@@ -36,6 +40,11 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
      * @var string
      */
     private $grantType = 'client_credentials';
+
+    /**
+     * @var EventDispatcher
+     */
+    private $eventDispatcher;
 
     /**
      * Sets the cache
@@ -76,53 +85,85 @@ class AuthService implements CacheAwareInterface, AuthServiceInterface
     }
 
     /**
+     * @return EventDispatcher
+     */
+    public function getEventDispatcher(): EventDispatcher
+    {
+        if (null === $this->eventDispatcher) {
+            $this->eventDispatcher = new EventDispatcher();
+        }
+
+        return $this->eventDispatcher;
+    }
+
+    /**
+     * @param EventDispatcher $eventDispatcher
+     */
+    public function setEventDispatcher(EventDispatcher $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
+    /**
      * Authorizes the client
      *
-     * @return AuthServiceInterface
+     * @return AccessTokenInterface
      * @throws IdentityProviderException
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws IdentityProviderException
      * @throws \Exception
      */
-    public function authorize(): AuthServiceInterface
+    public function authorize(): AccessTokenInterface
     {
         // First we look into the cache
         $cacheItem = $this->cache->getItem($this->cacheKey);
         if (!$cacheItem->isHit()) {
-            $accessToken = $this->client->getAccessToken($this->grantType);
+            $response = $this->client->getAccessTokenResponse($this->grantType);
+            $token = $this->client->getAccessTokenFromResponse($response, $this->grantType);
 
+            if (empty($token)) {
+                throw new ClientUnauthorizedException("Authentication failed");
+            }
+
+            // Set the expire time
             $dateTime = new \DateTime();
-            $dateTime->setTimestamp($accessToken->getExpires());
+            $dateTime->setTimestamp($token->getExpires());
             $dateTime->modify("-30 seconds");
 
             // Configuring the cache item
-            $cacheItem->set($accessToken);
+            $cacheItem->set($response);
             $cacheItem->expiresAt($dateTime);
 
             // Saves the cache item
             $this->cache->save($cacheItem);
+        } else {
+            $response = $cacheItem->get();
+            $token = $this->client->getAccessTokenFromResponse($response, $this->grantType);
         }
 
-        return $this;
+        // Dispatch the event
+        $this->getEventDispatcher()->dispatch($this->createSuccessEvent($response, $token), AuthSuccessEvent::NAME);
+
+        return $token;
     }
 
     /**
-     * Returns the access token
+     * Creates the authorize success event
      *
-     * @return string
-     * @throws \Psr\Cache\InvalidArgumentException
-     * @throws Exception\TokenExpiredException
+     * @param array $response
+     * @param string|null $accessToken
+     * @return AuthSuccessEvent
      */
-    public function getAccessToken(): string
+    private function createSuccessEvent(array $response, string $accessToken = null): AuthSuccessEvent
     {
-        $cacheItem = $this->cache->getItem($this->cacheKey);
-        if ($cacheItem->isHit()) {
-            /** @var AccessTokenInterface $accessToken */
-            $accessToken = $cacheItem->get();
-
-            return $accessToken->getToken();
+        if (null === $accessToken) {
+            $accessToken = $this->client->getAccessTokenFromResponse($response, $this->grantType);
         }
 
-        throw new Exception\TokenExpiredException('The access token has expired');
+        $event = new AuthSuccessEvent();
+        $event->setAccessToken($accessToken);
+        $event->setRestInstanceUrl($response["rest_instance_url"]);
+
+        return $event;
     }
 }

@@ -2,8 +2,14 @@
 
 namespace SalesForce\MarketingCloud\Authorization\Client;
 
+use GuzzleHttp\Exception\BadResponseException;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\GenericProvider;
+use League\OAuth2\Client\Token\AccessTokenInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use SalesForce\MarketingCloud\Authorization\Client\Tool\RequestFactory;
+use UnexpectedValueException;
 
 /**
  * Class GenericClient
@@ -33,5 +39,49 @@ class GenericClient extends GenericProvider
         }
 
         parent::__construct($options, $collaborators);
+    }
+
+    /**
+     * Requests an access token using a specified grant and option set.
+     *
+     * @param mixed $grant
+     * @param array $options
+     * @return array
+     * @throws IdentityProviderException
+     */
+    public function getAccessTokenResponse($grant, array $options = []): array
+    {
+        $grant = $this->verifyGrant($grant);
+
+        $params = $grant->prepareRequestParameters([
+            'client_id' => $this->clientId,
+            'client_secret' => $this->clientSecret,
+            'redirect_uri' => $this->redirectUri,
+        ], $options);
+
+        $request = $this->getAccessTokenRequest($params);
+        $response = $this->getParsedResponse($request);
+
+        if (false === is_array($response)) {
+            throw new UnexpectedValueException(
+                'Invalid response received from Authorization Server. Expected JSON.'
+            );
+        }
+
+        return $response;
+    }
+
+    /**
+     * Returns an access token using the provided response
+     *
+     * @param array $response
+     * @param string $grant
+     * @return AccessTokenInterface
+     */
+    public function getAccessTokenFromResponse(array $response, string $grant): AccessTokenInterface
+    {
+        $prepared = $this->prepareAccessTokenResponse($response);
+
+        return $this->createAccessToken($prepared, $this->verifyGrant($grant));
     }
 }

@@ -5,6 +5,7 @@ namespace SalesForce\MarketingCloud\TestHelper\Api;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 use SalesForce\MarketingCloud\Api\AbstractApi;
+use SalesForce\MarketingCloud\Api\Client as ApiFactory;
 use SalesForce\MarketingCloud\ApiException;
 use SalesForce\MarketingCloud\Model\ModelInterface;
 use SalesForce\MarketingCloud\TestHelper\Decorator\NullDecorator;
@@ -26,7 +27,7 @@ abstract class BaseApiTest extends TestCase
     protected static $container;
 
     /**
-     * @var \SalesForce\MarketingCloud\Api\Client
+     * @var ApiFactory
      */
     protected static $apiFactory;
 
@@ -95,23 +96,17 @@ abstract class BaseApiTest extends TestCase
      */
     private static function setupContainer(): void
     {
+        // HTTP client config
+        $clientConfig = ['verify' => false];
+        if ((int) getenv("FIDDLER_ENABLE") == 1) {
+            $clientConfig["proxy"] = '127.0.0.1:8888';
+        }
+
         // Setup the dependency container
         static::$container = new ContainerBuilder();
-        static::$apiFactory = new \SalesForce\MarketingCloud\Api\Client(static::$container);
+        static::$apiFactory = new ApiFactory(static::$container, new Client($clientConfig));
 
-        static::registerSettingsAndServices();
         static::preloadClients();
-    }
-
-    /**
-     * Register settings and services
-     *
-     * @return void
-     */
-    private static function registerSettingsAndServices(): void
-    {
-        // Sets the client adapter
-        static::$container->set("auth.http.client", new Client(['verify' => false]));
     }
 
     /**

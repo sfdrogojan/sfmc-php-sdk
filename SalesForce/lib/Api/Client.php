@@ -2,10 +2,12 @@
 
 namespace SalesForce\MarketingCloud\Api;
 
+use GuzzleHttp\Client as HttpClient;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use SalesForce\MarketingCloud\Configuration;
-use SalesForce\MarketingCloud\Authorization\AuthServiceSetup;
-use SalesForce\MarketingCloud\Authorization\AuthService;
+use SalesForce\MarketingCloud\Api\Client\ConfigBuilder;
+use SalesForce\MarketingCloud\Authorization\AuthServiceBuilder;
+use SalesForce\MarketingCloud\Event\Subscriber\AuthEventSub;
 
 /**
  * Class Client
@@ -37,76 +39,42 @@ class Client
     private $container;
 
     /**
+     * @var ConfigBuilder
+     */
+    private $config;
+
+    /**
      * Client constructor.
      *
      * @param ContainerBuilder|null $container
+     * @param HttpClient|null $httpClient
+     * @param bool $cfgFromEnv
      */
-    public function __construct(ContainerBuilder $container = null)
-    {
+    public function __construct(
+        ContainerBuilder $container = null,
+        HttpClient $httpClient = null,
+        bool $cfgFromEnv = true
+    ) {
         $this->container = $container ?? new ContainerBuilder();
+        $this->config = new ConfigBuilder($this->container);
 
-        // Set default config
-        if (!$this->container->hasParameter("auth.client.options")) {
-            $this->container->setParameter("auth.client.options", [
-                'accountId' => getenv('ACCOUNT_ID'),
-                'clientId' => getenv('CLIENT_ID'),
-                'clientSecret' => getenv('CLIENT_SECRET'),
-                'urlAuthorize' => getenv('URL_AUTHORIZE'),
-                'urlAccessToken' => getenv('URL_ACCESS_TOKEN'),
-                'urlResourceOwnerDetails' => ''
-            ]);
-        }
+        // Set the provided HTTP client
+        $this->container->set("auth.http.client", $httpClient ?? new HttpClient());
 
-        if (!$this->container->hasParameter("api.baseUrl")) {
-            $this->setApiUrl(getenv("API_URL"));
+        // Setting configurations
+        if ($cfgFromEnv) {
+            $this->config->setFromEnv();
         }
     }
 
     /**
-     * Just a helper object but all the config will be set in the container
+     * Returns the configuration builder
      *
-     * @return self
+     * @return ConfigBuilder
      */
-    public function getConfig(): self
+    public function getConfig(): ConfigBuilder
     {
-        return $this;
-    }
-
-    /**
-     * Sets the API Url configuration
-     *
-     * @param string $url
-     * @return self
-     */
-    public function setApiUrl(string $url): self
-    {
-        $this->container->setParameter("api.baseUrl", $url);
-
-        return $this;
-    }
-
-    /**
-     * Used to set the config
-     *
-     * @param string $name
-     * @param array $arguments
-     * @return self
-     */
-    public function __call(string $name, array $arguments): self
-    {
-        // Get the options
-        $options = $this->container->getParameter("auth.client.options");
-
-        // Update the option only if it was set by default
-        $optionName = lcfirst(ltrim($name, "set"));
-        if (isset($options[$optionName])) {
-            $options[$optionName] = trim(strval($arguments[0]));
-        }
-
-        // Update the options
-        $this->container->setParameter("auth.client.options", $options);
-
-        return $this;
+        return $this->config;
     }
 
     /**
@@ -119,21 +87,20 @@ class Client
     public function getClient(string $class): \SalesForce\MarketingCloud\Api\AbstractApi
     {
         if (!$this->container->has($class)) {
-            /** @var \GuzzleHttp\Client $httpClient */
-            $httpClient = $this->container->get("auth.http.client");
+            $configuration = new Configuration();
 
-            // Auth container will not be preset in the container at first load
-            if (!$this->container->has(AuthService::CONTAINER_ID)) {
-                AuthServiceSetup::execute($this->container); // Sets the service AuthService::CONTAINER_ID
-            }
+            // Creating the AUTH service
+            $authService = AuthServiceBuilder::execute($this->container);
 
-            /** @var AuthService $authService */
-            $authService = $this->container->get(AuthService::CONTAINER_ID);
+            // Event handling
+            $eventDispatcher = $authService->getEventDispatcher();
+            $eventDispatcher->addSubscriber(new AuthEventSub($configuration));
 
+            // Registering the API client service
             $this->container->set($class, new $class(
                 $authService,
-                $httpClient,
-                (new Configuration())->setHost($this->container->getParameter("api.baseUrl"))
+                $this->container->get("auth.http.client"),
+                $configuration
             ));
         }
 
@@ -142,7 +109,7 @@ class Client
 
         return $client;
     }
-
+    
     /**
      * Creates a new AssetApi object
      *
@@ -153,7 +120,7 @@ class Client
     {
         return $this->getClient(self::CLIENT_ASSET_API);
     }
-
+    
     /**
      * Creates a new CampaignApi object
      *
@@ -164,7 +131,7 @@ class Client
     {
         return $this->getClient(self::CLIENT_CAMPAIGN_API);
     }
-
+    
     /**
      * Creates a new TransactionalMessagingApi object
      *
@@ -175,5 +142,4 @@ class Client
     {
         return $this->getClient(self::CLIENT_TRANSACTIONAL_MESSAGING_API);
     }
-
 }
